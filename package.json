@@ -1,0 +1,35 @@
+{
+  "name": "soapbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "funny": "ECHO \"wort wort wort\"",
+    "test": "jest",
+    "test2": "echo 'All tests passed'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blue-ocean-picard/soapbox.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blue-ocean-picard/soapbox/issues"
+  },
+  "homepage": "https://github.com/blue-ocean-picard/soapbox#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "mongoose": "^5.13.2"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  }
+}
