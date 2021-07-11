@@ -9,7 +9,7 @@ let app = express();
 
 require('../config/passport')(passport);
 
-app.use(express.static(path.resolve(__dirname, "./../client/dist")));
+app.use(express.static(path.resolve(__dirname, './../client/dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());

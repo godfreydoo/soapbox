@@ -9,7 +9,7 @@ router.get('/logout', (req, res) => {
   req.logout();
   // console.log('\x1b[36m', 'User has been logged out');
   res.redirect(200, '/users/login');
-})
+});
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
@@ -30,7 +30,7 @@ router.post('/login', (req, res, next) => {
       return res.redirect(200, '/dashboard');
     });
   })(req, res, next);
-})
+});
 
 router.post('/register', async (req, res) => {
   try {
@@ -52,20 +52,20 @@ router.post('/register', async (req, res) => {
     if (errors.length > 1) {
       res.send(errors);
     } else {
-        let user = await User.findOne({ email: email });
-        if (user) {
-          errors.push({msg: 'Email is already registered'});
-          // console.log('\x1b[31m', 'Email is already registered')
-          res.status(403).send(errors);
-        } else {
-          controllers.user.register(req, res, { name, email, password, usernames});
-        }
+      let user = await User.findOne({ email: email });
+      if (user) {
+        errors.push({msg: 'Email is already registered'});
+        // console.log('\x1b[31m', 'Email is already registered')
+        res.status(403).send(errors);
+      } else {
+        controllers.user.register(req, res, { name, email, password, usernames});
       }
+    }
   } catch (err) {
     console.error(err);
     console.error('\x1b[31m', 'Routing for registration at routes/user.js has an issue');
   }
-})
+});
 
 
 
