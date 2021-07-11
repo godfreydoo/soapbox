@@ -21,7 +21,6 @@ module.exports = {
     }
   },
   updateLastLogin: async function (user) {
-    console.log(user.email);
     try {
       await User.findOneAndUpdate({ email: user.email }, {$set: { lastLogin: Date.now() }}, { useFindAndModify: false });
     } catch (err) {

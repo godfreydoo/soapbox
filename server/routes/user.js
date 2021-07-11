@@ -17,7 +17,8 @@ router.post('/login', (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      console.log('\x1b[31m', 'User has failed to log in')
+      res.status(403);
+      console.log('\x1b[31m', 'User has failed to log in', res.statusCode);
       return res.redirect('/user/login');
     }
     req.logIn(user, function(err) {
@@ -26,7 +27,8 @@ router.post('/login', (req, res, next) => {
       }
       controllers.user.updateLastLogin(req, res, user);
       // redirect to login page like /dashboard or whatever route we decide on
-      console.log('\x1b[36m', 'User has successfully logged in')
+      res.status(200);
+      console.log('\x1b[36m', 'User has successfully logged in', res.statusCode);
       return res.redirect('/dashboard');
     });
   })(req, res, next);
@@ -55,6 +57,7 @@ router.post('/register', async (req, res) => {
         let user = await User.findOne({ email: email });
         if (user) {
           errors.push({msg: 'Email is already registered'});
+          console.log('\x1b[31m', 'Email is already registered')
           res.send(errors);
         } else {
           controllers.user.register(req, res, { name, email, password, usernames});
@@ -66,20 +69,6 @@ router.post('/register', async (req, res) => {
   }
 })
 
-/*
-1.) Curl command to login a user and will save to database if it doesn't already exist
-curl --header "Content-Type: application/json" --request POST --data '{"name": "testing do not delete me", "password": "password123", "password2": "password123", "email": "g@gmail.com", "usernames": {"twitter": "asdf"}}' 'http://localhost:3000/user/register'
-
-2.) No password or incorrect password provided, will fail and log error message
-curl --header "Content-Type: application/json" --request POST --data '{"email": "g@gmail.com"}' 'http://localhost:3000/user/login'
-curl --header "Content-Type: application/json" --request POST --data '{"email": "g@gmail.com", "password": "12"}' 'http://localhost:3000/user/login'
-
-3.) Password provided, will succeed and log success message and update last login date and time in database
-curl --header "Content-Type: application/json" --request POST --data '{"email": "g@gmail.com", "password": "password123"}' 'http://localhost:3000/user/login'
-
-4.) User log out
-curl 'http://localhost:3000/user/logout'
-*/
 
 
 module.exports = router;

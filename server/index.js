@@ -22,3 +22,6 @@ app.use('/user', require('./routes/user'));
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
+
+// used for testing and portability
+module.exports = app;
