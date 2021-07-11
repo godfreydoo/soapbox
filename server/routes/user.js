@@ -7,8 +7,8 @@ const passport = require('passport');
 
 router.get('/logout', (req, res) => {
   req.logout();
-  console.log('\x1b[36m', 'User has been logged out');
-  res.redirect('/users/login');
+  // console.log('\x1b[36m', 'User has been logged out');
+  res.redirect(200, '/users/login');
 })
 
 router.post('/login', (req, res, next) => {
@@ -17,9 +17,8 @@ router.post('/login', (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      res.status(403);
-      console.log('\x1b[31m', 'User has failed to log in', res.statusCode);
-      return res.redirect('/user/login');
+      // console.log('\x1b[31m', 'User has failed to log in');
+      return res.redirect(403, '/user/login');
     }
     req.logIn(user, function(err) {
       if (err) {
@@ -27,9 +26,8 @@ router.post('/login', (req, res, next) => {
       }
       controllers.user.updateLastLogin(req, res, user);
       // redirect to login page like /dashboard or whatever route we decide on
-      res.status(200);
-      console.log('\x1b[36m', 'User has successfully logged in', res.statusCode);
-      return res.redirect('/dashboard');
+      // console.log('\x1b[36m', 'User has successfully logged in');
+      return res.redirect(200, '/dashboard');
     });
   })(req, res, next);
 })
@@ -57,8 +55,8 @@ router.post('/register', async (req, res) => {
         let user = await User.findOne({ email: email });
         if (user) {
           errors.push({msg: 'Email is already registered'});
-          console.log('\x1b[31m', 'Email is already registered')
-          res.send(errors);
+          // console.log('\x1b[31m', 'Email is already registered')
+          res.status(403).send(errors);
         } else {
           controllers.user.register(req, res, { name, email, password, usernames});
         }

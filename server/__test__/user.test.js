@@ -1,6 +1,6 @@
 /*
 
-Manual testing until I can figure out Jest + Node.js
+Manual testing using curl commands
 
 1.) Curl command to login a user and will save to database if it doesn't already exist
 curl --header "Content-Type: application/json" --request POST --data '{"name": "testing do not delete me", "password": "password123", "password2": "password123", "email": "g@gmail.com", "usernames": {"twitter": "asdf"}}' 'http://localhost:3000/user/register'
@@ -16,47 +16,64 @@ curl --header "Content-Type: application/json" --request POST --data '{"email": 
 curl 'http://localhost:3000/user/logout'
 */
 
-
-
+const mongoose = require('mongoose');
+const { User } = require('../../db/schema');
 const faker = require('faker');
 const request = require('supertest');
-// const app = require('../index');
+const app = require('../index');
 
-const user = {
+const userRegister = {
   name: 'testing testing',
-  password: 'password123',
-  password2: 'password123',
-  email: '2@gmail.com',
+  password: 'test123',
+  password2: 'test123',
+  email: 'test@testing.com',
   usernames: {
     twitter: "hello",
     youtube: "hello"
   }
-}
+};
 
-xdescribe('Authentication routes', () => {
+const userLogin = {
+  password: userRegister.password,
+  email: userRegister.email,
+};
+
+const userIncorrectLogin = {
+  password: 'tess123',
+  email: userRegister.email,
+};
+
+
+describe('Authentication routes', () => {
   var server;
   var agent;
 
   beforeEach((done) => {
     server = app.listen(5000, (err) => {
-      if (err) return done(err);
+      if (err) done(err);
       agent = request.agent(server);
       done();
     });
   });
 
   afterEach((done) => {
-    return server.close(done);
+    server.close(done);
+  });
+
+  afterAll( async () => {
+    await User.findOneAndDelete({email: userRegister.email})
+    mongoose.disconnect();
   });
 
   describe('Register', () => {
+
     test('should return 200 if all fields are correct and not already in db', async () => {
-      const response = await request(app).post('/user/register').send(user);
+      const response = await request(app).post('/user/register').send(userRegister);
       expect(response.statusCode).toBe(200);
     });
 
     test('should return 403 if email already exists', async () => {
-      const response = await request(app).post('/user/register').send(user);
+      const response = await request(app).post('/user/register').send(userRegister);
       expect(response.statusCode).toBe(403);
       expect(response.body).toBeDefined();
     });
@@ -64,12 +81,23 @@ xdescribe('Authentication routes', () => {
 
   describe('Login', () => {
 
-    test('should return 200 and session if email and password are correct', () => {
-
+    test('should return 200 and session if email and password are correct', async () => {
+      const response = await request(app).post('/user/login').send(userLogin);
+      expect(response.statusCode).toBe(200);
     });
 
-    test('should return 403 if email or password are incorrect', () => {
-
+    test('should return 403 if email or password are incorrect', async () => {
+      const response = await request(app).post('/user/login').send(userIncorrectLogin);
+      expect(response.statusCode).toBe(403);
     });
   });
+
+  describe('Logout', () => {
+
+    test('should return 200 if user logs out', async () => {
+      const response = await request(app).get('/user/logout');
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
 });

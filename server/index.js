@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../config/.env'});
+require('dotenv').config({ path: '../.env'});
 const express = require('express');
 const path = require('path');
 const db = require('../db');
@@ -19,9 +19,11 @@ app.use(passport.session());
 app.use('/', require('./routes/index'));
 app.use('/user', require('./routes/user'));
 
-app.listen(port, function () {
-  console.log(`Listening on port ${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+}
 
 // used for testing and portability
 module.exports = app;
