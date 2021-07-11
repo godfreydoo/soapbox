@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [ main ]
 
+env: test
+  MONGO_URI: ${{secrets.MONGO_URI}}
+
 jobs:
   build:
 
