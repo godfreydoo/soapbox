@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/twitter', require('./routes/twitter'));
-// app.use('/youtube', require('./routes/youtube'));
+app.use('/youtube', require('./routes/youtube'));
 app.use('/user', require('./routes/user'));
 
 if (process.env.NODE_ENV !== 'test') {
