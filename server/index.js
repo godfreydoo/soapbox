@@ -10,6 +10,8 @@ app.use(express.static(path.resolve(__dirname, "./../client/dist")));
 app.use(express.json());
 app.use(router);
 
+app.use('/api', require('./routes/routes'));
+
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
