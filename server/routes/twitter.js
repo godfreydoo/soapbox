@@ -1,6 +1,8 @@
 require('dotenv').config({ path: '../.env' });
 const router = require('express').Router();
 const axios = require('axios');
+// Pass ensureAuthenticated as a second parameter in routing to authenticate
+const { ensureAuthenticated } = require('../../config/auth');
 
 router.get('/hashtag-data', async (req, res) => {
   const options = {
@@ -9,17 +11,16 @@ router.get('/hashtag-data', async (req, res) => {
     headers: {
       'Authorization': `Bearer ${process.env.BEARER_TOKEN}`
     }
-  }
+  };
 
   try {
     const results = await axios(options);
 
-    res.status(200).end(JSON.stringify(analyzeHashtags(results.data.data)))
-  } catch {
-
-    (err) => res.status(404).end('There was an error fetching Twitter data:', err)
+    res.status(200).end(JSON.stringify(analyzeHashtags(results.data.data)));
+  } catch (err) {
+    res.status(404).end('There was an error fetching Twitter data:', err);
   }
-})
+});
 
 var analyzeHashtags = function (data) {
   var analytics = {};
@@ -42,6 +43,6 @@ var analyzeHashtags = function (data) {
   }
 
   return analytics;
-}
+};
 
 module.exports = router;
