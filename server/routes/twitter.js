@@ -5,7 +5,7 @@ const axios = require('axios');
 router.get('/hashtag-data', async (req, res) => {
   const options = {
     method: 'GET',
-    url: `https://api.twitter.com/2/users/${req.user_id}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.max_results}`,
+    url: `https://api.twitter.com/2/users/${req.body.user_id}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.max_results}`,
     headers: {
       'Authorization': `Bearer ${process.env.BEARER_TOKEN}`
     }
