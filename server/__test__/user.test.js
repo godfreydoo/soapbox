@@ -26,10 +26,10 @@ const userRegister = {
   name: 'testing testing',
   password: 'test123',
   password2: 'test123',
-  email: 'test@testing.com',
+  email: 'sdlfjalsdjfsafklj@sdlfjalsdjfsafklj.com',
   usernames: {
-    twitter: "hello",
-    youtube: "hello"
+    twitter: 'hello',
+    youtube: 'hello'
   }
 };
 
@@ -39,18 +39,17 @@ const userLogin = {
 };
 
 const userIncorrectLogin = {
-  password: 'tess123',
+  password: faker.internet.password(),
   email: userRegister.email,
 };
 
 
 describe('Authentication routes', () => {
-  var server;
-  var agent;
+  var server, agent;
 
   beforeEach((done) => {
     server = app.listen(5000, (err) => {
-      if (err) done(err);
+      if (err) { done(err); }
       agent = request.agent(server);
       done();
     });
@@ -61,7 +60,7 @@ describe('Authentication routes', () => {
   });
 
   afterAll( async () => {
-    await User.findOneAndDelete({email: userRegister.email})
+    await User.findOneAndDelete({email: userRegister.email});
     mongoose.disconnect();
   });
 

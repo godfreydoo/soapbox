@@ -4,6 +4,8 @@ const axios = require('axios');
 const controllers = require('../../db/controllers');
 const { User } = require('../../db/schema.js');
 const passport = require('passport');
+// Pass ensureAuthenticated as a second parameter in routing to authenticate
+const { ensureAuthenticated } = require('../../config/auth');
 
 router.get('/logout', (req, res) => {
   req.logout();
