@@ -1,9 +1,12 @@
 import React from 'react';
+import Metrics from './Metrics';
 
 const App = props => {
 
   return (
-    <div id="app">React and Webpack are running correctly!</div>
+    <div id="app">
+      <Metrics />
+    </div>
   )
 };
 
