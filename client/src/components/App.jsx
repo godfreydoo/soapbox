@@ -7,7 +7,7 @@ const App = props => {
     <div id="app">
       <Metrics />
     </div>
-  )
+  );
 };
 
 export default App;
