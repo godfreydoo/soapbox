@@ -3,6 +3,7 @@ module.exports = {
     if (req.isAuthenticated) {
       return next();
     }
+    req.flash('errorMsg', 'Please log in to view this page');
     res.redirect('/user/login');
   }
 }
