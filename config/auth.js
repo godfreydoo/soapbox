@@ -5,4 +5,4 @@ module.exports = {
     }
     res.redirect('/user/login');
   }
-}
+};

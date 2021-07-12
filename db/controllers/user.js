@@ -19,4 +19,4 @@ module.exports = {
       console.error('\x1b[31m', 'updateLastLogin in db/controllers/user.js has an issue');
     }
   }
-}
+};
