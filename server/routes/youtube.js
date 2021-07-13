@@ -6,8 +6,8 @@ router.get('/channel-stats', async (req, res) => {
   try {
     console.log(req.body, req.query, req.params);
     const channelInfo = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2Cstatistics&id=${req.query.id}&key=${process.env.GOOGLE_API}`);
-    console.log(channelInfo.data);
-    res.json(channelInfo.data);
+    console.log(channelInfo.data.items[0].snippet);
+    res.json(channelInfo.data.items);
 
   } catch (err) {
     console.log(err);
