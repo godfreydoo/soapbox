@@ -28,7 +28,7 @@ const TwitterCard = function(props) {
         title="THE DOM @the_dommer"
         subheader="1 hr ago"
         avatar={
-          <Avatar src="https://i.imgur.com/mXnMTOe.png"/>
+          <Avatar src="https://i.imgur.com/Z3xhlfa.png"/>
         }
         action={
           <TwitterIcon
