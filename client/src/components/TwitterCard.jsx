@@ -25,10 +25,10 @@ const TwitterCard = function(props) {
   return (
     <Card className={classes.root}>
       <CardHeader
-        title="John Doe @john_Doe404"
+        title="THE DOM @the_dommer"
         subheader="1 hr ago"
         avatar={
-          <Avatar src="https://yt3.ggpht.com/ytc/AKedOLTcIl6kKt3lEPJEySUf_hpHiKDKiFeo9eWPReLysQ=s48-c-k-c0x00ffffff-no-rj"/>
+          <Avatar src="https://i.imgur.com/mXnMTOe.png"/>
         }
         action={
           <TwitterIcon
