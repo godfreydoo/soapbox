@@ -22,7 +22,7 @@ const App = props => {
       channelId: 'test'
     })
       .then(resVal => {
-        setTwitterData(resVal.data);
+        setYouTubeData(resVal.data);
       });
   };
 
@@ -32,7 +32,8 @@ const App = props => {
       <MediaSelect
         getTwitterData={getTwitterData}
         getYouTubeData={getYouTubeData}
-        twitterData={JSON.stringify(twitterData)}/>
+        twitterData={JSON.stringify(twitterData)}
+        youtubeData={JSON.stringify(youtubeData)}/>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export const MediaSelect = function({ getTwitterData, twitterData, getYouTubeData, youtubeData }) {
+export const MediaSelect = function({ getTwitterData, getYouTubeData, twitterData, youtubeData }) {
 
   return (
     <div className="media-select-container">
