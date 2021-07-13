@@ -45,6 +45,7 @@ const App = props => {
         getYoutubeData={getYoutubeData}
         twitterData={JSON.stringify(twitterData)}
         youtubeData={JSON.stringify(youtubeData)}/>
+      <MetricsTab activePostMetrics={PostMetrics} accountMetrics={[{}, {}, {}]}/>
     </div>
   );
 };
