@@ -1,11 +1,19 @@
 import React from 'react';
-import Metrics from './Metrics';
+import MetricsTab from './metrics/MetricsTab';
 
 const App = props => {
+  const twitterPosts = [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {}
+  ];
 
   return (
     <div id="app">
-      <Metrics />
+      <MetricsTab posts={twitterPosts}/>
     </div>
   );
 };
