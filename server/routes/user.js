@@ -7,6 +7,9 @@ const passport = require('passport');
 // Pass ensureAuthenticated as a second parameter in routing to authenticate
 const { ensureAuthenticated } = require('../../config/auth');
 
+require('../../config/passport')(passport);
+
+
 router.get('/logout', (req, res) => {
   req.logout();
   // console.log('\x1b[36m', 'User has been logged out');

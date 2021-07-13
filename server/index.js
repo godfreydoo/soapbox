@@ -1,15 +1,22 @@
-require('dotenv').config({ path: '../.env'});
+require('dotenv').config({ path: '../.env' });
 const express = require('express');
 const path = require('path');
 const db = require('../db');
 const passport = require('passport');
+const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
 const session = require('express-session');
 const port = 3000;
 
+const axios = require('axios');
+
 let app = express();
 
-require('../config/passport')(passport);
+
+app.use(cookieSession({
+  name: 'twitter-auth-session',
+  keys: ['key1', 'key2']
+}));
 
 app.use(express.static(path.resolve(__dirname, './../client/dist')));
 app.use(express.json());
@@ -35,10 +42,11 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/twitter', require('./routes/twitter'));
+app.use('/auth/twitter', require('./routes/twitterAuth'));
+// app.use('/youtube', require('./routes/youtube'));
 app.use('/youtube', require('./routes/youtube'));
 app.use('/user', require('./routes/user'));
 
