@@ -2,8 +2,6 @@ require('dotenv').config({ path: '../.env' });
 const router = require('express').Router();
 const axios = require('axios');
 
-const videoIds = [];
-
 //gets video Ids by channel Id
 router.get('/video', (req, res) => {
   try {

@@ -7,9 +7,9 @@ const { ensureAuthenticated } = require('../../config/auth');
 router.get('/hashtag-data', async (req, res) => {
   const options = {
     method: 'GET',
-    url: `https://api.twitter.com/2/users/${req.body.user_id}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.max_results}`,
+    url: `https://api.twitter.com/2/users/20702956/tweets?tweet.fields=created_at,entities,public_metrics&max_results=20`,
     headers: {
-      'Authorization': `Bearer ${process.env.BEARER_TOKEN}`
+      "Authorization": `Bearer ${process.env.BEARER_TOKEN}`
     }
   };
 
