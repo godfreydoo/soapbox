@@ -1,8 +1,6 @@
 require('dotenv').config({ path: '../.env' });
 const router = require('express').Router();
 const axios = require('axios');
-// Pass ensureAuthenticated as a second parameter in routing to authenticate
-const { ensureAuthenticated } = require('../../config/auth');
 
 router.post('/hashtag-data', async (req, res) => {
   const twitterEndPoint = `https://api.twitter.com/2/users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.maxResults}`;
@@ -24,6 +22,10 @@ router.post('/hashtag-data', async (req, res) => {
     res.status(404).end('There was an error fetching Twitter data:', err);
   }
   res.end();
+});
+
+router.get('/home-timeline', async (req, res) => {
+
 });
 
 var analyzeHashtags = function (data) {
