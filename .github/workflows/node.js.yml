@@ -9,6 +9,8 @@ on:
 
 env:
   MONGO_URI: ${{ secrets.MONGO_URI }}
+  CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
+  CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
 
 jobs:
   build:

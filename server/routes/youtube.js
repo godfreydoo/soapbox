@@ -3,10 +3,11 @@ const router = require('express').Router();
 const axios = require('axios');
 
 //gets video Ids by channel Id
-router.get('/video', (req, res) => {
+router.post('/video', (req, res) => {
+  console.log(req.body);
   try {
-    const videos = axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API}&channelId=${req.query.channelId}&part=id&order=date`).then(data => {
-     
+    const videos = axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API}&channelId=${req.body.channelId}&part=id&order=date`).then(data => {
+
       const mappedVideos = data.data.items.map( video => {
         console.log(video.id.videoId);
         return axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${video.id.videoId}&key=${process.env.GOOGLE_API}`);

@@ -5,6 +5,7 @@ module.exports = {
     try {
       await model.user.register(body);
       // console.log('\x1b[31m', 'User has successfully registered', res.statusCode);
+      req.flash('successMsg', 'You are now registered and can log in');
       res.redirect(200, '/user/login');
     } catch (err) {
       console.error(err);
