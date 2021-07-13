@@ -12,7 +12,6 @@ const axios = require('axios');
 
 let app = express();
 
-// require('../config/passport')(passport);
 
 app.use(cookieSession({
   name: 'twitter-auth-session',
