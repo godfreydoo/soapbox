@@ -1,6 +1,8 @@
 require('dotenv').config({ path: '../.env' });
 const router = require('express').Router();
 const axios = require('axios');
+const Twitter = require('twitter');
+const { ensureTwitterAuthenticated } = require('../../config/auth');
 
 router.post('/hashtag-data', async (req, res) => {
   const twitterEndPoint = `https://api.twitter.com/2/users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.maxResults}`;
@@ -24,8 +26,22 @@ router.post('/hashtag-data', async (req, res) => {
   res.end();
 });
 
-router.get('/home-timeline', async (req, res) => {
+// curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjEzNzU5OTQ0OTc1MzY5MDkzMTItNGllRmhtM0Z1eVVJRUlUVVQySVdDZkkzbk81ckNKIiwidG9rZW5TZWNyZXQiOiJqaVE3UDFmVm9JanNDOW9tdkxaT0s0aEFBUUZCTzlXcVNFU1B3VVptVEx1ZjEiLCJ0d2l0dGVyIjoiZ29kZnJleTU2ODE0MzA2IiwiaWF0IjoxNjI2MTgxNTUwfQ.govuo4iHionF6-oVsaAxA5zRZ0kXNahK5vtMEMJ8FYE" http://localhost:3000/twitter/home-timeline | json_pp
 
+router.get('/home-timeline', ensureTwitterAuthenticated, async (req, res) => {
+  const client = new Twitter({
+    "consumer_key": process.env.CONSUMER_KEY, // eslint-disable-line
+    "consumer_secret": process.env.CONSUMER_SECRET, // eslint-disable-line
+    "access_token_key": req.token, // eslint-disable-line
+    "access_token_secret": req.tokenSecret // eslint-disable-line
+  });
+
+  client.get('statuses/home_timeline', function (err, tweets, response) {
+    if (err) {
+      throw err;
+    }
+    res.status(200).json(tweets);
+  });
 });
 
 var analyzeHashtags = function (data) {
