@@ -2,16 +2,21 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export const MediaSelect = function({ getTwitterData, twitterData }) {
+export const MediaSelect = function({ getTwitterData, twitterData, getYouTubeData, youtubeData }) {
 
   return (
     <div className="media-select-container">
       <div className='button-container'>
-        <button>YouTube</button>
-        <button onClick={() => {
-          getTwitterData();
-        }}>Twitter</button>
+        <button
+          onClick={() => {
+            getYouTubeData();
+          }}>YouTube</button>
+        <button
+          onClick={() => {
+            getTwitterData();
+          }}>Twitter</button>
         <div>{JSON.stringify(twitterData)}</div>
+        <div>{JSON.stringify(youtubeData)}</div>
       </div>
     </div>
   );
@@ -19,5 +24,7 @@ export const MediaSelect = function({ getTwitterData, twitterData }) {
 
 MediaSelect.propTypes = {
   getTwitterData: PropTypes.func,
-  twitterData: PropTypes.string
+  getYouTubeData: PropTypes.func,
+  twitterData: PropTypes.string,
+  youtubeData: PropTypes.string
 };

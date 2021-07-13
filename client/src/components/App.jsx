@@ -3,8 +3,8 @@ import { MediaSelect } from './MediaSelect.jsx';
 import axios from 'axios';
 
 const App = props => {
-  const [youtubeData, setYoutubeData] = useState('');
   const [twitterData, setTwitterData] = useState('');
+  const [youtubeData, setYoutubeData] = useState('');
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
@@ -17,11 +17,21 @@ const App = props => {
       });
   };
 
+  const getYouTubeData = function() {
+    axios.post('/youtube/video', {
+      channelId: 'test'
+    })
+      .then(resVal => {
+        setTwitterData(resVal.data);
+      });
+  };
+
   return (
     <div id="app">
       React and Webpack are running correctly!
       <MediaSelect
         getTwitterData={getTwitterData}
+        getYouTubeData={getYouTubeData}
         twitterData={JSON.stringify(twitterData)}/>
     </div>
   );
