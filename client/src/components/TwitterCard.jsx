@@ -42,8 +42,7 @@ const TwitterCard = function(props) {
         image="https://i.imgur.com/kc9gSnm.png"
       />
       <CardContent>
-        <b>Array Reduce in 100 seconds</b><br/>
-        Learn JavaScript's Array Reduce method in 100 seconds. Take many things and reduce them down to one thing.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </CardContent>
     </Card>
   );
