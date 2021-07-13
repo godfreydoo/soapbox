@@ -17,12 +17,14 @@ router.get('/dashboard', ensureTwitterLogin, (req, res) => {
 
 router.get('/callback', passport.authenticate('twitter', { failureRedirect: '/auth/error' }),
   function (req, res) {
+    res.cookie('twitter-auth-request', req.authInfo);
     res.redirect('../twitter/dashboard');
   });
 
 router.get('/logout', (req, res) => {
   req.session = null;
   req.logout();
+  res.clearCookie('twitter-auth-request');
   res.redirect('/');
 });
 

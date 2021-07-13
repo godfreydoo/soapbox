@@ -10,14 +10,10 @@ const UserSchema = new mongoose.Schema({
     twitter: String,
     youtube: String
   },
-  // twitter_tokens: {
-  //   access_key: String,
-  //   access_secret: String,
-  // }
 });
 
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {
   User
-}
+};

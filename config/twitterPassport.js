@@ -1,25 +1,21 @@
 const passport = require('passport');
 const TwitterStrategy = require('passport-twitter');
-const { User } = require('../db/schema');
+const jwt = require('jsonwebtoken');
 
-module.exports = function (passport) {
+module.exports = function(passport) {
   passport.use(new TwitterStrategy({
     consumerKey: process.env.CONSUMER_KEY,
     consumerSecret: process.env.CONSUMER_SECRET,
     callbackURL: '/auth/twitter/callback',
   },
-  function (token, tokenSecret, profile, cb) {
-    // User.update(
-    //   { usernames: { twitter: `${profile.username}` } },
-    //   {
-    //     $set: {
-    //       "twitter_tokens.access_key": `${token}`,
-    //       "twitter_tokens.access_secret": `${tokenSecret}`,
-    //     }
-    //   })
-    //   .then(() => console.log('done'));
-
-    return cb(null, profile);
+  function(token, tokenSecret, profile, cb) {
+    const authDataToSerialize = {
+      token: token,
+      tokenSecret: tokenSecret,
+      twitter: profile.username
+    };
+    const accessToken = jwt.sign(authDataToSerialize, process.env.ACCESS_TOKEN_SECRET);
+    return cb(null, profile, accessToken);
   }));
 
   passport.serializeUser(function (user, cb) {
