@@ -17,7 +17,7 @@ router.get('/dashboard', ensureTwitterLogin, (req, res) => {
 
 router.get('/callback', passport.authenticate('twitter', { failureRedirect: '/auth/error' }),
   function (req, res) {
-    res.cookie('twitter-auth-request', req.authInfo);
+    res.cookie('twitter-auth-request', req.authInfo, {httpOnly: true});
     res.redirect('../twitter/dashboard');
   });
 
