@@ -1,16 +1,21 @@
 const passport = require('passport');
 const TwitterStrategy = require('passport-twitter');
+const jwt = require('jsonwebtoken');
 
 module.exports = function(passport) {
-  debugger;
   passport.use(new TwitterStrategy({
     consumerKey: process.env.CONSUMER_KEY,
     consumerSecret: process.env.CONSUMER_SECRET,
     callbackURL: '/auth/twitter/callback',
   },
   function(token, tokenSecret, profile, cb) {
-    // console.log(token, tokenSecret, profile);
-    return cb(null, profile);
+    const authDataToSerialize = {
+      token: token,
+      tokenSecret: tokenSecret,
+      twitter: profile.username
+    };
+    const accessToken = jwt.sign(authDataToSerialize, process.env.ACCESS_TOKEN_SECRET);
+    return cb(null, profile, accessToken);
   }));
 
   passport.serializeUser(function(user, cb) {
