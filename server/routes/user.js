@@ -7,19 +7,25 @@ const passport = require('passport');
 // Pass ensureAuthenticated as a second parameter in routing to authenticate
 const { ensureAuthenticated } = require('../../config/auth');
 
+require('../../config/passport')(passport);
+
+
 router.get('/logout', (req, res) => {
   req.logout();
   // console.log('\x1b[36m', 'User has been logged out');
+  req.flash('successMsg', 'You have successfully logged out');
   res.redirect(200, '/users/login');
 });
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
+      req.flash('errorMsg', info);
       return next(err);
     }
     if (!user) {
       // console.log('\x1b[31m', 'User has failed to log in');
+      req.flash('errorMsg', info);
       return res.redirect(403, '/user/login');
     }
     req.logIn(user, function(err) {
@@ -29,6 +35,7 @@ router.post('/login', (req, res, next) => {
       controllers.user.updateLastLogin(req, res, user);
       // redirect to login page like /dashboard or whatever route we decide on
       // console.log('\x1b[36m', 'User has successfully logged in');
+      req.flash('successMsg', 'You are now logged in');
       return res.redirect(200, '/dashboard');
     });
   })(req, res, next);
