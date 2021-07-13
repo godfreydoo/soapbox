@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import YoutubeCard from './YoutubeCard.jsx';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 const ytListStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: '#ffe7e6',
-  },
-  parentDiv: {
-    // width: 1152 px,
   },
 }));
 
@@ -34,13 +32,9 @@ const YoutubeList = function(props) {
   );
 };
 
-
-
 YoutubeList.propTypes = {
-  getTwitterData: PropTypes.func,
-  getYoutubeData: PropTypes.func,
-  twitterData: PropTypes.string,
-  youtubeData: PropTypes.string
+  setActiveCard: PropTypes.func,
+  youtubeData: PropTypes.object,
 };
 
 export default YoutubeList;

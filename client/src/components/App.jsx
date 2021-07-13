@@ -5,6 +5,7 @@ import TwitterCard from './TwitterCard.jsx';
 import Post from './Post.jsx';
 import React, { useState } from 'react';
 import { MediaSelect } from './MediaSelect.jsx';
+import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 //import {BrowserRouter as Router, Switch, Route} from 'react-dom-router';
@@ -69,11 +70,10 @@ const App = props => {
             <Post />
           </Grid>
           <Grid item container sm={12}>
-            <TwitterCard />
+            <MetricsTab activePostMetrics={{ subscribers: 154 }} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/>
           </Grid>
         </Grid>
       </Grid>
-      {/* React and Webpack are running correctly! */}
     </div>
   );
 };
