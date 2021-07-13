@@ -1,9 +1,11 @@
 import YoutubeList from './YoutubeList.jsx';
 import YoutubeCard from './YoutubeCard.jsx';
 import TwitterCard from './TwitterCard.jsx';
+import Post from './Post.jsx';
 import React, { useState } from 'react';
 import { MediaSelect } from './MediaSelect.jsx';
 import axios from 'axios';
+import Grid from '@material-ui/core/Grid';
 //import {BrowserRouter as Router, Switch, Route} from 'react-dom-router';
 
 const App = props => {
@@ -33,12 +35,36 @@ const App = props => {
 
   return (
     <div id="app">
-      React and Webpack are running correctly!
-      <MediaSelect
-        getTwitterData={getTwitterData}
-        getYoutubeData={getYoutubeData}
-        twitterData={JSON.stringify(twitterData)}
-        youtubeData={JSON.stringify(youtubeData)}/>
+      <Grid container spacing={2}>
+        <Grid item lg={12}>
+          Soapbox banner
+        </Grid>
+        <Grid container item lg={2} spacing={2}>
+          <MediaSelect
+            getTwitterData={getTwitterData}
+            getYoutubeData={getYoutubeData}
+            twitterData={JSON.stringify(twitterData)}
+            youtubeData={JSON.stringify(youtubeData)}
+          />
+        </Grid>
+        <Grid container item lg={7} spacing={2}>
+          <YoutubeList />
+        </Grid>
+        <Grid container item
+          spacing={2}
+          lg={3}
+          justifyContent="flex-start"
+          alignItems="flex-start"
+        >
+          <Grid item container sm={12}>
+            <Post />
+          </Grid>
+          <Grid item container sm={12}>
+            Metric Goes Here
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* React and Webpack are running correctly! */}
     </div>
   );
 };

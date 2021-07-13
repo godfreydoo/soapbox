@@ -9,9 +9,6 @@ import Avatar from '@material-ui/core/Avatar';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 
 const cardStyles = makeStyles((theme) => ({
-  root: {
-    width: 360,
-  },
   media: {
     width: 360,
     height: 202.50
