@@ -7,7 +7,7 @@ const App = props => {
 
   return (
     <div id="app">
-      {/* <YoutubeList /> */}
+      <YoutubeList />
       <TwitterCard />
     </div>
 
