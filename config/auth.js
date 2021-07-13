@@ -15,4 +15,4 @@ module.exports = {
       res.redirect('/auth/twitter/callback');
     }
   }
-}
+};
