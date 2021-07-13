@@ -4,11 +4,20 @@ import { MediaSelect } from './MediaSelect.jsx';
 import { Nav } from './Nav.jsx';
 import { Login } from './Login.jsx';
 import { Register } from './Register.jsx';
+import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 
 const App = props => {
   const [twitterData, setTwitterData] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
+
+  const PostMetrics = [
+    {},
+    {},
+    {},
+    {},
+    {}
+  ];
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
@@ -43,9 +52,10 @@ const App = props => {
             getYoutubeData={getYoutubeData}
             twitterData={JSON.stringify(twitterData)}
             youtubeData={JSON.stringify(youtubeData)}/>
+          <MetricsTab activePostMetrics={{ subscribers: 154 }} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/>
         </Switch>
       </div>
-    </Router>
+
   );
 };
 
