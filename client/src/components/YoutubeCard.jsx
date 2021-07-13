@@ -21,9 +21,12 @@ const cardStyles = makeStyles((theme) => ({
 const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const YoutubeCard = function(props) {
+  function hoverFunc() {
+    console.log('ShowMetric')
+  }
   const classes = cardStyles();
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onMouseOver={hoverFunc}>
       <CardHeader
         title="Fireship"
         subheader="5 months ago"
