@@ -9,16 +9,16 @@ module.exports = function(passport) {
       try {
         let user = await User.findOne({ email: email });
         if (!user) {
-          return done(null, false, { message: "Email is not registered" })
-        };
+          return done(null, false, { message: 'Email is not registered' });
+        }
 
         let isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
           return done(null, user);
         } else {
-          return done(null, false, { message: "Password is incorrect" });
+          return done(null, false, { message: 'Password is incorrect' });
         }
-      } catch(err) {
+      } catch (err) {
         console.error(err);
         console.error('\x1b[31m', 'Passport strategy at config/passport.js has an issue');
       }
@@ -35,4 +35,4 @@ module.exports = function(passport) {
       done(err, user);
     });
   });
-}
+};
