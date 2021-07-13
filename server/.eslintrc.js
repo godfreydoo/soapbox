@@ -4,19 +4,14 @@
  *   https://github.com/hackreactor-labs/eslint-config-hackreactor
  */
 
- module.exports = {
+module.exports = {
   env: {
+    'node': true,
     'es6': true
   },
-  parser: '@babel/eslint-parser',
-  parserOptions: {
-    sourceType: 'module',
-    ecmaVersion: 6,
-    ecmaFeatures: {
-      'jsx': true
-    }
+  'parserOptions': {
+    'ecmaVersion': 8
   },
-  ignorePatterns: ['bundle.js'],
   rules: {
     /* Indentation */
     'no-mixed-spaces-and-tabs': 2,

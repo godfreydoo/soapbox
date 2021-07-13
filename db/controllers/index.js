@@ -1,2 +1,3 @@
-exports.products = require('./twitter.js');
-exports.reviews = require('./youtube.js');
+exports.twitter = require('./twitter.js');
+exports.youtube = require('./youtube.js');
+exports.user = require('./user.js');

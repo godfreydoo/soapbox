@@ -4,11 +4,14 @@
  *   https://github.com/hackreactor-labs/eslint-config-hackreactor
  */
 
- module.exports = {
+module.exports = {
+  extends: [
+    'plugin:react-hooks/recommended',
+    'plugin:react/recommended'
+  ],
   env: {
     'es6': true
   },
-  parser: '@babel/eslint-parser',
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: 6,
@@ -46,7 +49,5 @@
     'comma-style': [2, 'last'],
     'quotes': [1, 'single'],
     // 'parser': 'babel-eslint'
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn'
   }
 };
