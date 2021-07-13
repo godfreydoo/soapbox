@@ -10,7 +10,7 @@ const ytListStyles = makeStyles((theme) => ({
     backgroundColor: '#ffe7e6',
   },
   parentDiv: {
-    width: 1152 px,
+    // width: 1152 px,
   },
 }));
 
