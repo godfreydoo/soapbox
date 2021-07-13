@@ -5,28 +5,32 @@ import PropTypes from 'prop-types';
 const MetricsTab = props => {
   const [ activeSection, setActiveSection ] = useState('account');
 
-  useEffect(() => {
-    console.log('activeSection is: ', activeSection);
-  }, [activeSection]);
-
   return activeSection === 'account' ? (
     <div id="metrics-tab">
       <button id="select-account-section" onClick={setActiveSection.bind(null, 'account')}>Account</button>
       <button id="select-post-section" onClick={setActiveSection.bind(null, 'post')}>Post</button>
-      {props.activePostMetrics.map((post, index) => <MetricCard key={index} />)}
+      {Object.keys(props.activePostMetrics).map((postMetricName, index) => <MetricCard
+        key={index}
+        name={postMetricName}
+        metricData={Object.values(props.activePostMetrics)[index]}
+      />)}
     </div>
   ) : (
     <div id="metrics-tab">
       <button id="select-account-section" onClick={setActiveSection.bind(null, 'account')}>Account</button>
       <button id="select-post-section" onClick={setActiveSection.bind(null, 'post')}>Post</button>
-      {props.accountMetrics.map((metric, index) => <MetricCard key={index} metricData={metric} />)}
+      {Object.keys(props.accountMetrics).map((accountMetricName, index) => <MetricCard
+        key={index}
+        name={accountMetricName}
+        metricData={Object.values(props.accountMetrics)[index]}
+      />)}
     </div>
   );
 };
 
 MetricsTab.propTypes = {
-  accountMetrics: PropTypes.array,
-  activePostMetrics: PropTypes.array
+  accountMetrics: PropTypes.object,
+  activePostMetrics: PropTypes.object
 };
 
 export default MetricsTab;
