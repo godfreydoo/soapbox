@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { MediaSelect } from './MediaSelect.jsx';
+import { Nav } from './Nav.jsx';
+import { Login } from './Login.jsx';
+import { Register } from './Register.jsx';
 import axios from 'axios';
-//import {BrowserRouter as Router, Switch, Route} from 'react-dom-router';
 
 const App = props => {
   const [twitterData, setTwitterData] = useState('');
@@ -29,14 +32,21 @@ const App = props => {
   };
 
   return (
-    <div id="app">
-      React and Webpack are running correctly!
-      <MediaSelect
-        getTwitterData={getTwitterData}
-        getYoutubeData={getYoutubeData}
-        twitterData={JSON.stringify(twitterData)}
-        youtubeData={JSON.stringify(youtubeData)}/>
-    </div>
+    <Router>
+      <div id="app">
+        <Nav />
+        <Switch>
+          <Route path='/register' exact component={Register}/>
+          <Route path='/login' exact component={Login}/>
+          <MediaSelect
+            getTwitterData={getTwitterData}
+            getYoutubeData={getYoutubeData}
+            twitterData={JSON.stringify(twitterData)}
+            youtubeData={JSON.stringify(youtubeData)}/>
+
+        </Switch>
+      </div>
+    </Router>
   );
 };
 
