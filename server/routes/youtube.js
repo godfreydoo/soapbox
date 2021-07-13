@@ -6,7 +6,6 @@ const videoIds = [];
 
 //gets video Ids by channel Id
 router.get('/video', (req, res) => {
-//   console.log(req.body, req.params, req.query);
   try {
     const videos = axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API}&channelId=${req.query.channelId}&part=id&order=date`).then(data => {
      
@@ -18,7 +17,6 @@ router.get('/video', (req, res) => {
         .then(stats => {
           const allVideoStats = [];
           stats.forEach(videoStats => { allVideoStats.push(videoStats.data.items); });
-          console.log(allVideoStats);
           res.json(allVideoStats);
         });
     });
@@ -27,17 +25,5 @@ router.get('/video', (req, res) => {
   }
 });
 
-// router.get('/video-stats', async (req, res) => {
-//   try {
-//     videoIds.map( (videoId) => {
-
-//         await videoStats = axios.get(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoId}&key=${process.env.GOOGLE_API}`);
-//     });
-//     res.json(videoStats.data);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
-// { console.log(stats[0].data.items); res.json(stats[0].data.items);
 
 module.exports = router;
