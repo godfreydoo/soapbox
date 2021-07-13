@@ -18,14 +18,13 @@ const cardStyles = makeStyles((theme) => ({
 const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const YoutubeCard = function(props) {
-  console.log(props.yt);
-  const { id, snippet: { channelId, channelTitle, title, description }} = props.yt
+  const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt
   const YTurl = `https://www.youtube.com/embed/${id}`;
   const avatar = 'https://yt3.ggpht.com/ytc/AKedOLR2ex_eFpC5a9xnkQqAYITEjBAYD1VUhTJmC0LN=s88-c-k-c0x00ffffff-no-rj';
 
   const classes = cardStyles();
   return (
-    <Card className={classes.root} onClick={props.setActiveCard}>
+    <Card className={classes.root} onClick={props.setActivePostMetrics(statistics)}>
       <CardHeader
         title={channelTitle}
         // subheader="5 months ago"

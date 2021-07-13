@@ -24,7 +24,7 @@ const YoutubeList = function(props) {
       <Grid container className={classes.root} spacing={2}>
         {youtubeList && youtubeList.map((yt) => (
           <Grid item xs={12} sm={6} md={4} key={yt[0].id}>
-            <YoutubeCard yt={yt[0]} setActiveCard={props.setActiveCard}/>
+            <YoutubeCard yt={yt[0]} setActivePostMetrics={props.setActivePostMetrics}/>
           </Grid>
         ))}
       </Grid>
@@ -33,7 +33,7 @@ const YoutubeList = function(props) {
 };
 
 YoutubeList.propTypes = {
-  setActiveCard: PropTypes.func,
+  setActivePostMetrics: PropTypes.func,
   youtubeData: PropTypes.object,
 };
 

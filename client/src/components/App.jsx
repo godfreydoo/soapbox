@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 const App = props => {
   const [twitterData, setTwitterData] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
-  const [activeCard, setActiveCard] = useState(null);
+  const [activePostMetrics, setActivePostMetrics] = useState(null);
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
@@ -57,7 +57,7 @@ const App = props => {
           />
         </Grid>
         <Grid container item lg={7} spacing={2}>
-          <YoutubeList youtubeData={youtubeData} setActiveCard={setActiveCard}/>
+          <YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>
           {/* <TwitterList twitterData={twitterData}/> */}
         </Grid>
         <Grid container item
