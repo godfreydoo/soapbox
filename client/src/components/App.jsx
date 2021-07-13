@@ -18,12 +18,13 @@ const App = props => {
       });
   };
 
-  const getYouTubeData = function() {
+  const getYoutubeData = function() {
     axios.post('/youtube/video', {
-      channelId: 'test'
+      channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
       .then(resVal => {
-        setYouTubeData(resVal.data);
+        console.log(resVal);
+        setYoutubeData(resVal.data);
       });
   };
 
@@ -32,7 +33,7 @@ const App = props => {
       React and Webpack are running correctly!
       <MediaSelect
         getTwitterData={getTwitterData}
-        getYouTubeData={getYouTubeData}
+        getYoutubeData={getYoutubeData}
         twitterData={JSON.stringify(twitterData)}
         youtubeData={JSON.stringify(youtubeData)}/>
     </div>
