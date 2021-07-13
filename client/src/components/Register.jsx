@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 let errorID = 0;
@@ -12,6 +12,7 @@ export const Register = function() {
   const [twitterUsername, setTwitterUsername] = useState('');
   const [youtubeUsername, setYoutubeUsername] = useState('');
   const [errorMsgs, setErrorMsgs] = useState([]);
+  const [redirect, setRedirect] = useState(false);
 
   const submitForm = function() {
     axios.post('/user/register', {
@@ -25,12 +26,15 @@ export const Register = function() {
         console.log(resVal);
         if (resVal.data !== 'OK. Redirecting to /user/login') {
           setErrorMsgs(resVal.data);
+        } else {
+          setRedirect(true);
         }
       });
   };
 
   return (
     <div className='registration-container'>
+      {redirect ? <Redirect to='/login'/> : ''}
       <h2 className='registration-title'>Register For Soapbox</h2>
       <div className="registration-form">
         <label>Username: </label>
