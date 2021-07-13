@@ -1,35 +1,39 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 export const Login = function() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsgs, setErrorMsgs] = useState([]);
+  const [redirect, setRedirect] = useState(false);
 
   const submitLogin = function() {
     axios.post('/user/login', {
-      name: username,
+      email: email,
       password: password
     })
       .then(resVal => {
-        if (resVal.data) {
-          console.log(resVal.data);
-          //setErrorMsgs(resVal.data);
+        if (resVal.data !== 'OK. Redirecting to /dashboard') {
+          console.log('error');
+        } else {
+          console.log('redirect');
+          setRedirect(true);
         }
       });
   };
 
   return (
     <div className='login-container'>
+      {redirect ? <Redirect to='/dashboard'/> : ''}
       <h2 className='login-title'>Login</h2>
       <div className="login-form">
-        <label>Username: </label>
+        <label>Email: </label>
         <input
-          type="text"
-          id="username"
+          type="email"
+          id="email"
           onChange={(event) => {
-            setUsername(event.target.value);
+            setEmail(event.target.value);
           }}></input>
         <label>Password: </label>
         <input
