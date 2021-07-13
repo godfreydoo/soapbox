@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 export const Nav = function() {
   return (
     <nav className='navigation-container'>
-      <h3>Soapbox</h3>
+      <Link className='nav-link' to='/'>
+        <h3>Soapbox</h3>
+      </Link>
       <ul className='navigation-links'>
         <Link className='nav-link' to='/register'>
           <li>Register</li>

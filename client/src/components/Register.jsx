@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+let errorID = 0;
+
 export const Register = function() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -9,15 +11,22 @@ export const Register = function() {
   const [password2, setPassword2] = useState('');
   const [twitterUsername, setTwitterUsername] = useState('');
   const [youtubeUsername, setYoutubeUsername] = useState('');
+  const [errorMsgs, setErrorMsgs] = useState([]);
 
   const submitForm = function() {
-    axios.post('/register', {
+    axios.post('/user/register', {
       name: username,
       email: email,
       password: password1,
       password2: password2,
       usernames: [twitterUsername, youtubeUsername]
-    });
+    })
+      .then(resVal => {
+        console.log(resVal);
+        if (resVal.data !== 'OK. Redirecting to /user/login') {
+          setErrorMsgs(resVal.data);
+        }
+      });
   };
 
   return (
@@ -67,9 +76,17 @@ export const Register = function() {
             setYoutubeUsername(event.target.value);
           }}></input>
         <button
-          onClick={(event) => {
+          onClick={() => {
             submitForm();
           }}>REGISTER</button>
+      </div>
+      <div className='error-messages-container'>
+        {errorMsgs.map(error => {
+          errorID += 1;
+          return <div
+            className='error-message'
+            key={errorID}>{error.msg}</div>;
+        })}
       </div>
     </div>
   );
