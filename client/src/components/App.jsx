@@ -1,5 +1,6 @@
 import YoutubeList from './YoutubeList.jsx';
 import YoutubeCard from './YoutubeCard.jsx';
+import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
 import Post from './Post.jsx';
 import React, { useState } from 'react';
@@ -11,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 const App = props => {
   const [twitterData, setTwitterData] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
+  const [activeCard, setActiveCard] = useState(null);
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
@@ -20,6 +22,9 @@ const App = props => {
     })
       .then(resVal => {
         setTwitterData(resVal.data);
+      })
+      .catch(err => {
+        console.log('Failed to retrieve twitter data', err);
       });
   };
 
@@ -28,9 +33,12 @@ const App = props => {
       channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
       .then(resVal => {
-        console.log(resVal);
         setYoutubeData(resVal.data);
+      })
+      .catch(err => {
+        console.log('Failed to retrieve youtube data');
       });
+
   };
 
   return (
@@ -48,7 +56,8 @@ const App = props => {
           />
         </Grid>
         <Grid container item lg={7} spacing={2}>
-          <YoutubeList youtubeData/>
+          <YoutubeList youtubeData={youtubeData} setActiveCard={setActiveCard}/>
+          {/* <TwitterList twitterData={twitterData}/> */}
         </Grid>
         <Grid container item
           spacing={2}

@@ -16,7 +16,7 @@ const Post = function() {
           label="Message"
           defaultValue="Type your message here!"
           variant="outlined"
-          multiline="true"
+          multiline={true}
           rows={4}
           style={{width: 300}}
         />
