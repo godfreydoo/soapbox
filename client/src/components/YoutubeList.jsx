@@ -17,6 +17,7 @@ const ytListStyles = makeStyles((theme) => ({
 const YoutubeList = function(props) {
   const [youtubeList, setYoutubeList] = useState(mock);
   const classes = ytListStyles();
+  console.log(props);
   return (
     <div styles={classes.parentDiv}>
       <Grid container className={classes.root} spacing={2}>

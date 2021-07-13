@@ -48,7 +48,7 @@ const App = props => {
           />
         </Grid>
         <Grid container item lg={7} spacing={2}>
-          <YoutubeList />
+          <YoutubeList youtubeData/>
         </Grid>
         <Grid container item
           spacing={2}
@@ -60,7 +60,7 @@ const App = props => {
             <Post />
           </Grid>
           <Grid item container sm={12}>
-            Metric Goes Here
+            <TwitterCard />
           </Grid>
         </Grid>
       </Grid>
