@@ -2,6 +2,18 @@ require('dotenv').config({ path: '../.env' });
 const router = require('express').Router();
 const axios = require('axios');
 
+router.get('/channel-stats', async (req, res) => {
+  try {
+    console.log(req.body, req.query, req.params);
+    const channelInfo = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2Cstatistics&id=${req.query.id}&key=${process.env.GOOGLE_API}`);
+    console.log(channelInfo.data);
+    res.json(channelInfo.data);
+
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //gets video Ids by channel Id
 router.get('/video', (req, res) => {
   try {
