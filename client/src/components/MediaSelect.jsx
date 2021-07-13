@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export const MediaSelect = function({ getTwitterData, getYouTubeData, twitterData, youtubeData }) {
+export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterData, youtubeData }) {
 
   return (
     <div className="media-select-container">
       <div className='button-container'>
         <button
           onClick={() => {
-            getYouTubeData();
+            getYoutubeData();
           }}>YouTube</button>
         <button
           onClick={() => {
@@ -24,7 +24,7 @@ export const MediaSelect = function({ getTwitterData, getYouTubeData, twitterDat
 
 MediaSelect.propTypes = {
   getTwitterData: PropTypes.func,
-  getYouTubeData: PropTypes.func,
+  getYoutubeData: PropTypes.func,
   twitterData: PropTypes.string,
   youtubeData: PropTypes.string
 };
