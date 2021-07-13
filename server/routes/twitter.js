@@ -4,12 +4,15 @@ const axios = require('axios');
 // Pass ensureAuthenticated as a second parameter in routing to authenticate
 const { ensureAuthenticated } = require('../../config/auth');
 
-router.get('/hashtag-data', async (req, res) => {
+router.post('/hashtag-data', async (req, res) => {
+  const twitterEndPoint = `https://api.twitter.com/2/users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.maxResults}`;
+  const bearerToken = `Bearer ${process.env.BEARER_TOKEN}`;
+
   const options = {
     method: 'GET',
-    url: `https://api.twitter.com/2/users/${req.body.user_id}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.max_results}`,
+    url: twitterEndPoint,
     headers: {
-      "Authorization": `Bearer ${process.env.BEARER_TOKEN}` // eslint-disable-line
+      Authorization: bearerToken
     }
   };
 
@@ -20,6 +23,7 @@ router.get('/hashtag-data', async (req, res) => {
   } catch (err) {
     res.status(404).end('There was an error fetching Twitter data:', err);
   }
+  res.end();
 });
 
 var analyzeHashtags = function (data) {
