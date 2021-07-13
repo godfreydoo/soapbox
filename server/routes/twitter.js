@@ -26,7 +26,7 @@ router.post('/hashtag-data', async (req, res) => {
   res.end();
 });
 
-// curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjEzNzU5OTQ0OTc1MzY5MDkzMTItNGllRmhtM0Z1eVVJRUlUVVQySVdDZkkzbk81ckNKIiwidG9rZW5TZWNyZXQiOiJqaVE3UDFmVm9JanNDOW9tdkxaT0s0aEFBUUZCTzlXcVNFU1B3VVptVEx1ZjEiLCJ0d2l0dGVyIjoiZ29kZnJleTU2ODE0MzA2IiwiaWF0IjoxNjI2MTgxNTUwfQ.govuo4iHionF6-oVsaAxA5zRZ0kXNahK5vtMEMJ8FYE" http://localhost:3000/twitter/home-timeline | json_pp
+
 
 router.get('/home-timeline', ensureTwitterAuthenticated, async (req, res) => {
   const client = new Twitter({
