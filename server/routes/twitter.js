@@ -5,21 +5,20 @@ const axios = require('axios');
 router.get('/hashtag-data', async (req, res) => {
   const options = {
     method: 'GET',
-    url: `https://api.twitter.com/2/users/20702956/tweets?tweet.fields=created_at,entities,public_metrics&max_results=50`,
+    url: `https://api.twitter.com/2/users/${req.body.user_id}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.max_results}`,
     headers: {
-      'Authorization': `Bearer ${process.env.BEARER_TOKEN}`
+      "Authorization": `Bearer ${process.env.BEARER_TOKEN}`
     }
-  }
+  };
 
   try {
     const results = await axios(options);
 
-    res.status(200).end(JSON.stringify(analyzeHashtags(results.data.data)))
-  } catch {
-
-    (err) => res.status(404).end('There was an error fetching Twitter data:', err)
+    res.status(200).end(JSON.stringify(analyzeHashtags(results.data.data)));
+  } catch (err) {
+    res.status(404).end('There was an error fetching Twitter data:', err);
   }
-})
+});
 
 var analyzeHashtags = function (data) {
   var analytics = {};
@@ -42,6 +41,6 @@ var analyzeHashtags = function (data) {
   }
 
   return analytics;
-}
+};
 
 module.exports = router;
