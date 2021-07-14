@@ -14,6 +14,7 @@ const App = props => {
   const [twitterData, setTwitterData] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
   const [activePostMetrics, setActivePostMetrics] = useState(null);
+  const [currentSocialMedia, setCurrentSocialMedia] = useState(null);
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
@@ -23,9 +24,10 @@ const App = props => {
     })
       .then(resVal => {
         setTwitterData(resVal.data);
+        setCurrentSocialMedia('twitter');
       })
       .catch(err => {
-        console.log('Failed to retrieve twitter data', err);
+        console.log('Failed to retrieve twitter data');
       });
   };
 
@@ -35,6 +37,7 @@ const App = props => {
     })
       .then(resVal => {
         setYoutubeData(resVal.data);
+        setCurrentSocialMedia('youtube');
       })
       .catch(err => {
         console.log('Failed to retrieve youtube data');
@@ -57,8 +60,10 @@ const App = props => {
           />
         </Grid>
         <Grid container item lg={7} spacing={2}>
-          <YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>
-          {/* <TwitterList twitterData={twitterData}/> */}
+          {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
+            : currentSocialMedia === 'twitter' ? (<TwitterList twitterData={twitterData} setActivePostMetrics={setActivePostMetrics}/>)
+              : null
+          }
         </Grid>
         <Grid container item
           spacing={2}
