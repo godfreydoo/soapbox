@@ -8,14 +8,14 @@ module.exports = {
       password: body.password,
       email: body.email,
       usernames: body.usernames
-    })
+    });
 
     try {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(newUser.password, salt);
       newUser.password = hash;
       await newUser.save();
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       console.error('\x1b[31m', 'register in db/models/user.js has an issue');
     }
@@ -28,4 +28,4 @@ module.exports = {
       console.error('\x1b[31m', 'updateLastLogin in db/controllers/user.js has an issue');
     }
   }
-}
+};

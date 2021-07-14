@@ -10,8 +10,9 @@ module.exports = {
   },
 
   ensureTwitterLogin: function (req, res, next) {
-    // debugger;
-    if (req.user) {
+    // console.log(req);
+    // console.log(req.headers.cookie);
+    if (req.headers.cookie) {
       next();
     } else {
       res.redirect('/auth/twitter/callback');
