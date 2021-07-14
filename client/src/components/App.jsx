@@ -13,12 +13,14 @@ import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { reqq } from '../../../server/routes/reqq.js';
+import mockTwitter2 from './mockTwitter.js';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
-  const [twitterPosts, setTwitterPosts] = useState('');
+  const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
   const [youtubeData, setYoutubeData] = useState('');
   const [activePostMetrics, setActivePostMetrics] = useState(null);
+  const [currentSocialMedia, setCurrentSocialMedia] = useState(null);
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
@@ -40,9 +42,11 @@ const App = props => {
     axios(config)
       .then(resVal => {
         setTwitterPosts(resVal.data);
+        setCurrentSocialMedia('twitter');
       })
       .catch(err => {
         console.log('Failed to retrieve twitter data', err);
+        setCurrentSocialMedia('twitter');
       });
   };
 
@@ -52,6 +56,7 @@ const App = props => {
     })
       .then(resVal => {
         setYoutubeData(resVal.data);
+        setCurrentSocialMedia('youtube');
       })
       .catch(err => {
         console.log('Failed to retrieve youtube data');
@@ -78,8 +83,11 @@ const App = props => {
             </Switch>
           </Grid>
           <Grid container item lg={7} spacing={2}>
-            <YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>
-            {/* <TwitterList twitterData={twitterData}/> */}
+            {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
+              : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics}/>)
+              // : currentSocialMedia === 'twitter' ? (<TwitterList setActivePostMetrics={setActivePostMetrics}/>)
+                : null
+            }
           </Grid>
           <Grid container item
             spacing={2}
@@ -87,11 +95,14 @@ const App = props => {
             justifyContent="flex-start"
             alignItems="flex-start"
           >
-            <Grid item container sm={12}>
+            <Grid item container sm={12}
+              direction="column"
+              justifyContent="center"
+              alignItems="flex-start">
               <Post />
             </Grid>
             <Grid item container sm={12}>
-              {/* <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/> */}
+              {activePostMetrics && <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/>}
             </Grid>
           </Grid>
         </Grid>

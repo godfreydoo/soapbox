@@ -22,13 +22,16 @@ const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const TwitterCard = function(props) {
   const classes = cardStyles();
+  const { text: message, user: {profile_image_url: avatar, name, location, screen_name}} = props.tweet;
+  console.log(props.tweet);
   return (
-    <Card className={classes.root}>
+    <>
+    {avatar && (<Card className={classes.root}>
       <CardHeader
-        title="THE DOM @the_dommer"
-        subheader="1 hr ago"
+        title={name}
+        subheader={`@${screen_name}`}
         avatar={
-          <Avatar src="https://i.imgur.com/Z3xhlfa.png"/>
+          <Avatar src={avatar}/>
         }
         action={
           <TwitterIcon
@@ -37,14 +40,15 @@ const TwitterCard = function(props) {
           />
         }
       />
-      <CardMedia
+      {/* <CardMedia
         className={classes.media}
         image="https://i.imgur.com/kc9gSnm.png"
-      />
+      /> */}
       <CardContent>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        {message}
       </CardContent>
-    </Card>
+    </Card>)}
+    </>
   );
 };
 
