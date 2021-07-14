@@ -33,9 +33,9 @@ const Post = function(props) {
         .then(() => {
           setTweet(initialState);
         })
-        .then(() => {
-          setTimeout(props.getTwitterData2(), 3000);
-        })
+        // .then(() => {
+        //   setTimeout(props.getTwitterData2(), 3000);
+        // })
         .catch(err => {
           console.log(err);
         });

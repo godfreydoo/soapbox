@@ -4,9 +4,9 @@ const axios = require('axios');
 
 router.get('/channel-stats', async (req, res) => {
   try {
-    console.log(req.body, req.query, req.params);
+    // console.log(req.body, req.query, req.params);
     const channelInfo = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2Cstatistics&id=${req.query.id}&key=${process.env.GOOGLE_API}`);
-    console.log(channelInfo.data.items);
+    // console.log(channelInfo.data.items);
     res.json(channelInfo.data);
 
   } catch (err) {
@@ -22,7 +22,7 @@ router.post('/video', (req, res) => {
     const videos = axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API}&channelId=${req.body.channelId}&part=id&order=date`).then(data => {
 
       const mappedVideos = data.data.items.map( video => {
-        console.log(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${video.id.videoId}&key=${process.env.GOOGLE_API}`);
+        // console.log(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${video.id.videoId}&key=${process.env.GOOGLE_API}`);
         return axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${video.id.videoId}&key=${process.env.GOOGLE_API}`);
       });
       Promise.all(mappedVideos)
