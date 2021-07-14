@@ -2,28 +2,28 @@ require('dotenv').config({ path: '../../config/.env' });
 const router = require('express').Router();
 const axios = require('axios');
 const passport = require('passport');
-require('../../config/youtubePassport')(passport);
-// GET /auth/google
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in Google authentication will involve
-//   redirecting the user to google.com.  After authorization, Google
-//   will redirect the user back to this application at /auth/google/callback
-router.get('/',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login,\
-                                             https://www.googleapis.com/auth/youtube,\
-                                             https://www.googleapis.com/auth/youtube.force-ssl,\
-                                             https://www.googleapis.com/auth/youtube.upload,\
-                                             https://www.googleapis.com/auth/youtube.readonly'] }));
+const { ensureYoutubeAuthenticated } = require('../../config/auth');
+require('../../config/googlePassport')(passport);
 
-// GET /auth/google/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
-router.get('/auth/youtube/callback', 
+router.get('/',
+  passport.authenticate('google', { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/youtube.upload"] }));
+
+
+router.get('/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/');
+    res.cookie('google-auth-request', req.authInfo);
+    res.redirect('../google/test');
   });
 
+router.get('/logout', (req, res) => {
+  req.session = null;
+  req.logout();
+  res.clearCookie('google-auth-request');
+  res.redirect('/');
+});
+
+router.get('/test', ensureYoutubeAuthenticated, (req, res) => {
+  res.send('Hello Tester');
+});
 module.exports = router;

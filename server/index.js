@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'));
 app.use('/twitter', require('./routes/twitter'));
 app.use('/auth/twitter', require('./routes/twitterAuth'));
-// app.use('/youtube', require('./routes/youtube'));
+app.use('/auth/google', require('./routes/youtubeAuth'));
 app.use('/youtube', require('./routes/youtube'));
 app.use('/user', require('./routes/user'));
 

@@ -31,6 +31,7 @@ const App = props => {
   return (
     <div id="app">
       React and Webpack are running correctly!
+      <a href="/auth/google">Sign In with Google</a>
       <MediaSelect
         getTwitterData={getTwitterData}
         getYoutubeData={getYoutubeData}
