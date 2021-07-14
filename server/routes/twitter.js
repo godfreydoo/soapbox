@@ -47,6 +47,23 @@ router.get('/home-timeline', ensureTwitterAuthenticated, async (req, res) => {
   });
 });
 
+router.post('/user', ensureTwitterAuthenticated, async (req, res) => {
+  console.log('hello?');
+  const client = new Twitter2({
+    consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line
+    consumer_secret: process.env.CONSUMER_SECRET, // eslint-disable-line
+    access_token_key: req.token, // eslint-disable-line
+    access_token_secret: req.tokenSecret, // eslint-disable-line
+  });
+
+  client.get(`users/show.json?id=${req.body.userId}`, function (err, user, response) {
+    if (err) {
+      throw err;
+    }
+    res.status(200).json(user);
+  });
+});
+
 router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
   const client = new Twitter2({
     consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line

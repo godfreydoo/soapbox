@@ -20,7 +20,6 @@ module.exports = {
   },
 
   ensureGoogleAuthenticated: function (req, res, next) {
-    debugger;
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
