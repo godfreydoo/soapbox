@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 const jwt = require('jsonwebtoken');
-const { reqq } = require('../server/routes/reqq.js');
+const { reqCache } = require('../server/routes/reqq.js');
 
 module.exports = {
   ensureAuthenticated: function (req, res, next) {
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   ensureTwitterLogin: function (req, res, next) {
-    if (reqq.req.user.username) {
+    if (reqCache.username) {
       next();
     } else {
       res.redirect('/auth/twitter/callback');

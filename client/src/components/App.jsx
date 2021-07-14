@@ -26,7 +26,7 @@ const App = props => {
       method: 'get',
       url: '/twitter/home-timeline',
       headers: {
-        'Authorization': `Bearer ${document.cookie.split('=')[1]}`
+        'Authorization': `Bearer ${document.cookie.split('=')[3]}`
       }
     };
     axios.post('/twitter/hashtag-data', {
@@ -38,6 +38,7 @@ const App = props => {
       });
     axios(config)
       .then(resVal => {
+        console.log(resVal.data);
         setTwitterPosts(resVal.data);
       })
       .catch(err => {
