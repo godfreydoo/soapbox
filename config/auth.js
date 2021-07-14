@@ -1,4 +1,6 @@
+/* eslint-disable camelcase */
 const jwt = require('jsonwebtoken');
+const { reqCache } = require('../server/routes/reqq.js');
 
 module.exports = {
   ensureAuthenticated: function (req, res, next) {
@@ -10,16 +12,33 @@ module.exports = {
   },
 
   ensureTwitterLogin: function (req, res, next) {
-    // debugger;
-    if (req.user) {
+    if (reqCache.username) {
       next();
     } else {
       res.redirect('/auth/twitter/callback');
     }
   },
 
+  ensureGoogleAuthenticated: function (req, res, next) {
+    debugger;
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+      return res.sendStatus(401);
+    }
+    jwt.verify(token, process.env.GOOGLE_CLIENT_SECRET, (err, authDataToSerialize) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      req.user = authDataToSerialize.twitter;
+      req.tokenSecret = authDataToSerialize.tokenSecret;
+      req.token = authDataToSerialize.token;
+      next();
+    });
+  },
+
+
   ensureTwitterAuthenticated: function (req, res, next) {
-    //console.log(req.headers);
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
