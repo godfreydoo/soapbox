@@ -12,6 +12,7 @@ import { Register } from './Register.jsx';
 import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
+import { reqq } from '../../../server/routes/reqq.js';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
@@ -21,7 +22,14 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-    console.log(document.cookie);
+    console.log(reqq);
+    let config = {
+      method: 'get',
+      url: '/twitter/home-timeline',
+      headers: {
+        'Authorization': `Bearer ${document.cookie.split('=')[1]}`
+      }
+    };
     axios.post('/twitter/hashtag-data', {
       userId: '20702956',
       maxResults: '50'
@@ -29,10 +37,9 @@ const App = props => {
       .then(resVal => {
         setTwitterMetrics(resVal.data);
       });
-    axios.get('/twitter/home-timeline')
+    axios(config)
       .then(resVal => {
-        // setTwitterPosts(resval.data);
-        // setTwitterData(resVal.data);
+        setTwitterPosts(resVal.data);
       })
       .catch(err => {
         console.log('Failed to retrieve twitter data', err);

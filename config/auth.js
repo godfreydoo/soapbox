@@ -1,6 +1,10 @@
 /* eslint-disable camelcase */
 const jwt = require('jsonwebtoken');
+<<<<<<< HEAD
 const { userCache } = require('../server/routes/userCache.js');
+=======
+const { reqq } = require('../server/routes/reqq.js');
+>>>>>>> main
 
 module.exports = {
   ensureAuthenticated: function (req, res, next) {
@@ -12,8 +16,12 @@ module.exports = {
   },
 
   ensureTwitterLogin: function (req, res, next) {
+<<<<<<< HEAD
     // debugger;
     if (userCache.req.user.username) {
+=======
+    if (reqq.req.user.username) {
+>>>>>>> main
       next();
     } else {
       res.redirect('/auth/twitter/callback');
@@ -40,7 +48,10 @@ module.exports = {
 
 
   ensureTwitterAuthenticated: function (req, res, next) {
+<<<<<<< HEAD
     debugger;
+=======
+>>>>>>> main
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
