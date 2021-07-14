@@ -58,14 +58,15 @@ router.post('/register', async (req, res) => {
       errors.push({msg: 'Password should be at least 6 characters'});
     }
 
-    if (errors.length > 1) {
+    if (errors.length > 0) {
       res.send(errors);
     } else {
       let user = await User.findOne({ email: email });
       if (user) {
         errors.push({msg: 'Email is already registered'});
         // console.log('\x1b[31m', 'Email is already registered')
-        res.status(403).send(errors);
+        res.status(403);
+        res.send(errors);
       } else {
         controllers.user.register(req, res, { name, email, password, usernames});
       }
