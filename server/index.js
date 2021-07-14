@@ -6,6 +6,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const port = 3000;
 
 // Start cron jobs
@@ -22,6 +23,7 @@ app.use(cookieSession({
 }));
 
 app.use(express.static(path.resolve(__dirname, './../client/dist')));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

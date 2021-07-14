@@ -10,7 +10,7 @@ const logStream = fs.createWriteStream(path.join(__dirname, 'cron.log'));
 const now = new Date();
 
 const consoleEveryMinute = new CronJob('* * * * *', function () {
-  logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')}\n`);
+  logStream.write(`${new Date()} -- this is just a test to make sure cron job is working \n`);
 }, null, true, 'America/Los_Angeles');
 
 const executeJob = async function (document) {
@@ -35,7 +35,7 @@ const executeJob = async function (document) {
       if (key === 'youtube') {
         let config = {
           method: 'post',
-          url: 'youtube/video',
+          url: '/youtube/video',
           header: {
             Authorization: `Bearer ${document.youtubeToken}`
           },
@@ -64,7 +64,8 @@ const checkJobs = new CronJob('* * * * *', async function () {
   try {
     let response = await models.getSchedule();
     if (response.length > 0) {
-      const remainingJobsToRun = response.filter(document => document.completed === false && document.sendAt < now).map( async (value, index) => {
+
+      const remainingJobsToRun = response.filter(document => document.completed === false && document.sendAt < new Date()).map( async (value, index) => {
         // console.log(value.sendAt < now);
         // console.log(value.sendAt);
         await executeJob(value);

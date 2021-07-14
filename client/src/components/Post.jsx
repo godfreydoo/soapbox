@@ -21,11 +21,10 @@ const Post = function() {
       method: 'post',
       url: '/twitter/tweet',
       header: {
-        Authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       },
-      data: tweet
+      data: {status: tweet}
     };
-    console.log(config);
     axios(config)
       .then(() => {
         console.log('Tweet has posted');
