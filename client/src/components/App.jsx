@@ -15,15 +15,14 @@ import Grid from '@material-ui/core/Grid';
 import { reqq } from '../../../server/routes/reqq.js';
 
 const App = props => {
-  const [currSocialMedia, setCurrSocialMedia] = useState('');
   const [twitterMetrics, setTwitterMetrics] = useState('');
   const [twitterPosts, setTwitterPosts] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
+  const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
   const [activePostMetrics, setActivePostMetrics] = useState(null);
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-    setCurrSocialMedia('twitter');
     console.log(document.cookie);
     console.log(reqq);
     let config = {
@@ -50,17 +49,23 @@ const App = props => {
   };
 
   const getYoutubeData = function() {
-    setCurrSocialMedia('youtube');
     axios.post('/youtube/video', {
       channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
       .then(resVal => {
         setYoutubeData(resVal.data);
+        setActivePostMetrics(null);
+        axios.get(`/youtube/channel-stats?id=${'UCYZclLEqVsyPKP9HW87tPag'}`)
+          .then(response => {
+            setActiveAccountMetrics(response.data.items[0].statistics);
+          })
+          .catch(err => {
+            console.log('Failed to retrieve account metrics data');
+          });
       })
       .catch(err => {
         console.log('Failed to retrieve youtube data');
       });
-
   };
 
   return (
@@ -95,7 +100,7 @@ const App = props => {
               <Post />
             </Grid>
             <Grid item container sm={12}>
-              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={currSocialMedia === 'twitter' ? twitterMetrics : {subscribers: 5439322, videos: 4}}/>
+              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
             </Grid>
           </Grid>
         </Grid>

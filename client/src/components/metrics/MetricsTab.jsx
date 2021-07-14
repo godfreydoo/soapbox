@@ -5,7 +5,13 @@ import PropTypes from 'prop-types';
 const MetricsTab = props => {
   const [ activeSection, setActiveSection ] = useState('account');
 
-  return activeSection === 'account' ? (
+  return activeSection === 'account' ? (props.accountMetrics === null ? (
+    <div id="metrics-tab">
+      <button id="select-account-section" onClick={setActiveSection.bind(null, 'account')}>Account</button>
+      <button id="select-post-section" onClick={setActiveSection.bind(null, 'post')}>Post</button>
+      Select a social media to display account metrics for.
+    </div>
+  ) : (
     <div id="metrics-tab">
       <button id="select-account-section" onClick={setActiveSection.bind(null, 'account')}>Account</button>
       <button id="select-post-section" onClick={setActiveSection.bind(null, 'post')}>Post</button>
@@ -15,7 +21,7 @@ const MetricsTab = props => {
         metricData={Object.values(props.accountMetrics)[index]}
       />)}
     </div>
-  ) : (props.activePostMetrics !== null ? (
+  )) : (props.activePostMetrics !== null ? (
     <div id="metrics-tab">
       <button id="select-account-section" onClick={setActiveSection.bind(null, 'account')}>Account</button>
       <button id="select-post-section" onClick={setActiveSection.bind(null, 'post')}>Post</button>
