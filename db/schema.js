@@ -9,11 +9,11 @@ const UserSchema = new mongoose.Schema({
   usernames: {
     twitter: String,
     youtube: String
-  }
-})
+  },
+});
 
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {
   User
-}
+};

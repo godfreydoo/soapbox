@@ -32,15 +32,20 @@
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "cookie-session": "^1.4.0",
+    "date-and-time": "^1.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.2",
     "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "twitter-api-v2": "^1.1.1",
+    "twitter-v2": "^1.1.0",
+    "youtube-api": "^3.0.1"
   },
   "jest": {
     "setupFiles": [
