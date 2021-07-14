@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import TwitterCard from './TwitterCard.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 
-const mock = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, {id: 9}, {id: 10}, ];
+const mock = [{id: 1}, {id: 2}, {id: 3}];
 
-const ytListStyles = makeStyles((theme) => ({
+const twitListStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: '#ffe7e6',
-  },
-  parentDiv: {
-    // width: 1152 px,
   },
 }));
 
 const TwitterList = function(props) {
   const [twitterList, setTwitterList] = useState(mock);
-  const classes = ytListStyles();
-  console.log(props);
+  const classes = twitListStyles();
+
+  // useEffect(()=>{
+  //   console.log('this is props', props);
+  //   setTwitterList(props.twitterData);
+  // }, [props.twitterData]);
+
   return (
     <div styles={classes.parentDiv}>
       <Grid container className={classes.root} spacing={2}>
