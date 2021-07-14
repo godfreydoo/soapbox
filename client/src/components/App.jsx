@@ -23,10 +23,8 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-<<<<<<< HEAD
     setCurrSocialMedia('twitter');
     console.log(document.cookie);
-=======
     console.log(reqq);
     let config = {
       method: 'get',
@@ -35,7 +33,6 @@ const App = props => {
         'Authorization': `Bearer ${document.cookie.split('=')[1]}`
       }
     };
->>>>>>> dbe6044ebf6afad0b9a8186fb2b009ca0a5ecee5
     axios.post('/twitter/hashtag-data', {
       userId: '20702956',
       maxResults: '50'
@@ -53,12 +50,8 @@ const App = props => {
   };
 
   const getYoutubeData = function() {
-<<<<<<< HEAD
     setCurrSocialMedia('youtube');
-    axios.post('/youtube/video', {
-=======
     axios.get('/youtube/video', {
->>>>>>> dbe6044ebf6afad0b9a8186fb2b009ca0a5ecee5
       channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
       .then(resVal => {
@@ -102,11 +95,7 @@ const App = props => {
               <Post />
             </Grid>
             <Grid item container sm={12}>
-<<<<<<< HEAD
               <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={currSocialMedia === 'twitter' ? twitterMetrics : {subscribers: 5439322, videos: 4}}/>
-=======
-              {/* <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/> */}
->>>>>>> dbe6044ebf6afad0b9a8186fb2b009ca0a5ecee5
             </Grid>
           </Grid>
         </Grid>
