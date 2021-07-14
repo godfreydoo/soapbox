@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser');
 const port = 3000;
 
 // Start cron jobs
-const { checkJobs, consoleEveryMinute, deleteJobs} = require('./cron/jobs.js');
 
 const axios = require('axios');
 
@@ -59,6 +58,7 @@ app.use('/*', require('./routes/index'));
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {
+    const { checkJobs, consoleEveryMinute, deleteJobs} = require('./cron/jobs.js');
     console.log(`Listening on port ${port}`);
   });
 }
