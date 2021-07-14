@@ -40,6 +40,7 @@ const App = props => {
       });
     axios(config)
       .then(resVal => {
+        console.log('got twitter tweets')
         setTwitterPosts(resVal.data);
         setCurrentSocialMedia('twitter');
       })
