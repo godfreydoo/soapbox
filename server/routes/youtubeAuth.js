@@ -36,7 +36,6 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
-  console.log(Auth);
   Auth.getToken((err, token) => {
     if (err) {
       console.log(err, 400);

@@ -27,3 +27,54 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+/**************/
+/* CSS Styles */
+/**************/
+
+.navigation-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 10vh;
+  background: rgb(73, 79, 82);
+  color: white;
+}
+
+.navigation-links {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 30%;
+  list-style: none;
+}
+
+.nav-link {
+  color: white;
+}
+
+.registration-container {
+  margin-left: 20px;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+  line-height: 30px;
+}
+
+.login-container {
+  margin-left: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+  line-height: 30px;
+}
+
+.error-message{
+  color: red;
+}
