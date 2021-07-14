@@ -1,8 +1,9 @@
 require('dotenv').config({ path: '../../config/.env' });
 const router = require('express').Router();
 const axios = require('axios');
+const fs = require('fs');
 const passport = require('passport');
-const { ensureYoutubeAuthenticated } = require('../../config/auth');
+const { ensureGoogleAuthenticated } = require('../../config/auth');
 require('../../config/googlePassport')(passport);
 
 router.get('/',
@@ -23,7 +24,11 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/test', ensureYoutubeAuthenticated, (req, res) => {
+router.get('/test', ensureGoogleAuthenticated, (req, res) => {
   res.send('Hello Tester');
+});
+
+router.post('/upload', (req, res) => {
+    const videoUpload = axiox.post(`https://www.googleapis.com/upload/youtube/v3/videos`);
 });
 module.exports = router;

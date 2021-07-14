@@ -18,7 +18,7 @@ module.exports = {
     }
   },
 
-  ensureYoutubeAuthenticated: function (req, res, next) {
+  ensureGoogleAuthenticated: function (req, res, next) {
     debugger;
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
