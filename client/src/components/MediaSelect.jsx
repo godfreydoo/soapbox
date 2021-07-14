@@ -1,25 +1,50 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import YouTubeIcon from '@material-ui/icons/YouTube';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+const cardStyles = makeStyles((theme) => ({
+  youtube: {
+    backgroundColor: '#c4302b',
+  },
+  twitter: {
+    backgroundColor: '#00ACEE',
+  },
+}));
+
 export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterData, youtubeData }) {
+  const classes = cardStyles();
 
   return (
     <div className="media-select-container">
       <div className='button-container'>
-        <button
-          onClick={() => {
-            getYoutubeData();
-          }}>YouTube</button>
-        <button
-          onClick={() => {
-            getTwitterData();
-          }}>Twitter</button>
-        {/* <div>{JSON.stringify(twitterData)}</div>
-        <div>{JSON.stringify(youtubeData)}</div> */}
+        <ButtonGroup
+          orientation="vertical">
+          <Button className={classes.youtube}
+            onClick={() => {
+              getYoutubeData();
+            }}
+            endIcon={<YouTubeIcon />}
+            variant="contained"
+            color="primary"
+          >
+            Youtube
+          </Button>
+          <Button className={classes.twitter}
+            onClick={() => {
+              getTwitterData();
+            }}
+            endIcon={<TwitterIcon />}
+            variant="contained"
+            color="primary"
+          >
+            Twitter
+          </Button>
+        </ButtonGroup>
       </div>
     </div>
   );

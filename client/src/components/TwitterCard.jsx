@@ -7,45 +7,51 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import PropTypes from 'prop-types';
 
 const cardStyles = makeStyles((theme) => ({
   root: {
+    borderRadius: 15,
     width: 360,
   },
   media: {
-    width: 360,
-    height: 300
   },
 }));
 
-const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
-
 const TwitterCard = function(props) {
   const classes = cardStyles();
+  const { text: message, user: {profile_image_url: avatar, name, location, screen_name: screenname}} = props.tweet;
+  // console.log(props.tweet);
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        title="THE DOM @the_dommer"
-        subheader="1 hr ago"
-        avatar={
-          <Avatar src="https://i.imgur.com/Z3xhlfa.png"/>
-        }
-        action={
-          <TwitterIcon
-            fontSize="large"
-            style={{color: '00ACEE'}}
-          />
-        }
-      />
-      <CardMedia
+    <>
+      {avatar && (<Card className={classes.root}>
+        <CardHeader
+          title={name}
+          subheader={`@${screenname}`}
+          avatar={
+            <Avatar src={avatar}/>
+          }
+          action={
+            <TwitterIcon
+              fontSize="large"
+              style={{color: '00ACEE'}}
+            />
+          }
+        />
+        {/* <CardMedia
         className={classes.media}
         image="https://i.imgur.com/kc9gSnm.png"
-      />
-      <CardContent>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </CardContent>
-    </Card>
+      /> */}
+        <CardContent>
+          {message}
+        </CardContent>
+      </Card>)}
+    </>
   );
+};
+
+TwitterCard.propTypes = {
+  tweet: PropTypes.object,
 };
 
 export default TwitterCard;

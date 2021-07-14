@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const jwt = require('jsonwebtoken');
 const { reqCache } = require('../server/routes/reqq.js');
+const cookieParser = require('cookie-parser');
 
 module.exports = {
   ensureAuthenticated: function (req, res, next) {
@@ -38,8 +39,9 @@ module.exports = {
 
 
   ensureTwitterAuthenticated: function (req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    // const authHeader = req.headers['authorization'];
+    // const token = authHeader && authHeader.split(' ')[1];
+    const token = req.cookies['twitter-auth-request'];
     if (token == null) {
       return res.sendStatus(401);
     }

@@ -1,5 +1,4 @@
 node_modules/
 .env
-.config.js
-client/dist/bundle.js
-example.env
+client/dist/bundle.js*
+cron.log
