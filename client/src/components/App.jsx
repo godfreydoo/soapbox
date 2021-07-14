@@ -14,6 +14,7 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 
 const App = props => {
+  const [currSocialMedia, setCurrSocialMedia] = useState('');
   const [twitterMetrics, setTwitterMetrics] = useState('');
   const [twitterPosts, setTwitterPosts] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
@@ -21,6 +22,7 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
+    setCurrSocialMedia('twitter');
     console.log(document.cookie);
     axios.post('/twitter/hashtag-data', {
       userId: '20702956',
@@ -40,6 +42,7 @@ const App = props => {
   };
 
   const getYoutubeData = function() {
+    setCurrSocialMedia('youtube');
     axios.post('/youtube/video', {
       channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
@@ -84,7 +87,7 @@ const App = props => {
               <Post />
             </Grid>
             <Grid item container sm={12}>
-              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/>
+              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={currSocialMedia === 'twitter' ? twitterMetrics : {subscribers: 5439322, videos: 4}}/>
             </Grid>
           </Grid>
         </Grid>
