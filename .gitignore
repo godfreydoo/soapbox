@@ -1,5 +1,16 @@
 node_modules/
 .env
 .config.js
+<<<<<<< HEAD
 client/dist/bundle.js
 example.env
+=======
+<<<<<<< HEAD
+client/dist/bundle.js*
+example.env
+=======
+client/dist/bundle.js
+example.env
+package-lock.json
+>>>>>>> bf5b0fa8e05307e47f3ab82e64bac401de3f8f6f
+>>>>>>> main
