@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import TwitterCard from './TwitterCard.jsx';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 
 const twitterListStyles = makeStyles((theme) => ({
@@ -32,6 +33,10 @@ const TwitterList = function(props) {
       </Grid>
     </div>
   );
+};
+
+TwitterList.propTypes = {
+  twitterPosts: PropTypes.object
 };
 
 export default TwitterList;
