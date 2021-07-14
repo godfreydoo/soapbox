@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import PropTypes from 'prop-types';
 
 const cardStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,7 @@ const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const YoutubeCard = function(props) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt
+  const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt;
   const YTurl = `https://www.youtube.com/embed/${id}`;
   const avatar = 'https://yt3.ggpht.com/ytc/AKedOLR2ex_eFpC5a9xnkQqAYITEjBAYD1VUhTJmC0LN=s88-c-k-c0x00ffffff-no-rj';
 
@@ -63,6 +64,11 @@ const YoutubeCard = function(props) {
       </CardActions>
     </Card>
   );
+};
+
+YoutubeCard.propTypes = {
+  yt: PropTypes.object,
+  setActivePostMetrics: PropTypes.func
 };
 
 export default YoutubeCard;
