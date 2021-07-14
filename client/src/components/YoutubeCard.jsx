@@ -24,7 +24,7 @@ const YoutubeCard = function(props) {
 
   const classes = cardStyles();
   return (
-    <Card className={classes.root} onClick={props.setActivePostMetrics(statistics)}>
+    <Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}>
       <CardHeader
         title={channelTitle}
         // subheader="5 months ago"
