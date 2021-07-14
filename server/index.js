@@ -8,6 +8,9 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const port = 3000;
 
+// Start cron jobs
+const { checkJobs, consoleEveryMinute, deleteJobs} = require('./cron/jobs.js');
+
 const axios = require('axios');
 
 let app = express();
@@ -48,6 +51,7 @@ app.use('/auth/twitter', require('./routes/twitterAuth'));
 app.use('/auth/google', require('./routes/youtubeAuth'));
 app.use('/youtube', require('./routes/youtube'));
 app.use('/user', require('./routes/user'));
+app.use('/jobs', require('./routes/jobs'));
 app.use('/*', require('./routes/index'));
 
 
