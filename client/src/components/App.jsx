@@ -12,7 +12,7 @@ import { Register } from './Register.jsx';
 import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
-import { reqq } from '../../../server/routes/reqq.js';
+import Cookies from 'js-cookie';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
@@ -22,11 +22,12 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
+    var token = Cookies.get('twitter-auth-request');
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
       headers: {
-        'Authorization': `Bearer ${document.cookie.split('=')[3]}`
+        'Authorization': `Bearer ${token}`
       }
     };
     axios.post('/twitter/hashtag-data', {
