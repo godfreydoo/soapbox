@@ -14,6 +14,7 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { reqq } from '../../../server/routes/reqq.js';
 import mockTwitter2 from './mockTwitter.js';
+import Cookies from 'js-cookie';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
@@ -24,11 +25,13 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
+    console.log(reqq);
+    var token = Cookies.get('twitter-auth-request');
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
       headers: {
-        'Authorization': `Bearer ${document.cookie.split('=')[1]}`
+        'Authorization': `Bearer ${token}`
       }
     };
     axios.post('/twitter/hashtag-data', {
@@ -40,7 +43,6 @@ const App = props => {
       });
     axios(config)
       .then(resVal => {
-        console.log('got twitter tweets')
         setTwitterPosts(resVal.data);
         setCurrentSocialMedia('twitter');
       })

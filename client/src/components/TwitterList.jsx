@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const twitterListStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#75ACEE',
+    // backgroundColor: '#75ACEE',
   },
   parentDiv: {
     // width: 1152 px,
@@ -36,7 +36,7 @@ const TwitterList = function(props) {
 };
 
 TwitterList.propTypes = {
-  twitterPosts: PropTypes.object
+  twitterPosts: PropTypes.array
 };
 
 export default TwitterList;
