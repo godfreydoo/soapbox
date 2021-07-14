@@ -70,7 +70,7 @@ const App = props => {
             <Post />
           </Grid>
           <Grid item container sm={12}>
-            <MetricsTab activePostMetrics={{ subscribers: 154 }} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/>
+            <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/>
           </Grid>
         </Grid>
       </Grid>
