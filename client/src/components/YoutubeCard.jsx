@@ -21,10 +21,14 @@ const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const YoutubeCard = function(props) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt;
+  const { id, snippet: { channelId, channelTitle, title, description, publishedAt }, statistics} = props.yt;
   const YTurl = `https://www.youtube.com/embed/${id}`;
   const avatar = 'https://yt3.ggpht.com/ytc/AKedOLR2ex_eFpC5a9xnkQqAYITEjBAYD1VUhTJmC0LN=s88-c-k-c0x00ffffff-no-rj';
   const classes = cardStyles();
+  console.log(publishedAt);
+  var date = new Date(publishedAt);
+  var milliseconds = date.getTime();
+  console.log(milliseconds)
 
   const handleExpandClick = function() {
     setIsExpanded(!isExpanded);

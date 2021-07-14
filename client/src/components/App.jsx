@@ -71,10 +71,8 @@ const App = props => {
           justifyContent="flex-start"
           alignItems="flex-start"
         >
-          <Grid item container sm={12}>
+          <Grid item container lg={12}>
             <Post />
-          </Grid>
-          <Grid item container sm={12}>
             <MetricsTab activePostMetrics={{ subscribers: 154 }} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/>
           </Grid>
         </Grid>
