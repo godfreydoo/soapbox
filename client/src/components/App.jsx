@@ -59,9 +59,9 @@ const App = props => {
   return (
     <Router>
       <div id="app">
+        <Nav />
         <Grid container spacing={2}>
           <Grid item lg={12}>
-            <Nav />
           </Grid>
           <Grid container item lg={2} spacing={2}>
             <Switch>
