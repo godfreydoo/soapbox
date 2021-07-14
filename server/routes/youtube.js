@@ -5,6 +5,7 @@ const axios = require('axios');
 //gets video Ids by channel Id
 router.post('/video', (req, res) => {
   try {
+    console.log(req.body);
     const videos = axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API}&channelId=${req.body.channelId}&part=id&order=date`).then(data => {
 
       const mappedVideos = data.data.items.map( video => {
