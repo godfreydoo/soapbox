@@ -62,16 +62,19 @@ const updateJob = async function () {
 
 const checkJobs = new CronJob('* * * * *', async function () {
   try {
-    let response = await models.getSchedule();
+    const now = new Date();
+    let response = await models.getSchedule({completed: false, sendAt: {$lte: ISODate(`${now}`)}});
     if (response.length > 0) {
-
-      const remainingJobsToRun = response.filter(document => document.completed === false && document.sendAt < new Date()).map( async (value, index) => {
+      const remainingJobsToRun = response.map( async (value, index) => {
         // console.log(value.sendAt < now);
         // console.log(value.sendAt);
         await executeJob(value);
       });
       const promisesToResolve = await Promise.allSettled(remainingJobsToRun);
-      logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- ${promisesToResolve || 0} jobs ran\n`);
+
+      let response = await Jobs.updateMany({completed: false, sendAt: {$lte: ISODate(`${now}`)}}, {$set: { completed: true }});
+
+      logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- ${promisesToResolve || 0} jobs ran and ${response} jobs updated\n`);
     } else {
       logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- no scheduled jobs\n`);
     }
@@ -97,5 +100,3 @@ module.exports = {
   checkJobs,
   deleteJobs
 };
-
-
