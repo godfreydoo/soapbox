@@ -3,7 +3,7 @@ import YoutubeCard from './YoutubeCard.jsx';
 import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
 import Post from './Post.jsx';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { MediaSelect } from './MediaSelect.jsx';
 import { Nav } from './Nav.jsx';
@@ -107,7 +107,7 @@ const App = props => {
             justifyContent="flex-start"
             alignItems="flex-start">
             <Grid item container sm={12}>
-              <Post />
+              <Post getTwitterData2={getTwitterData}/>
             </Grid>
             <Grid item container sm={12}>
               <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>

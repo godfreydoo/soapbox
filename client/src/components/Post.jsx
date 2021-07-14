@@ -6,10 +6,11 @@ import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const initialState = '';
 
-const Post = function() {
+const Post = function(props) {
 
   const [tweet, setTweet] = useState('');
 
@@ -18,23 +19,29 @@ const Post = function() {
   };
 
   const postTweet = function () {
-    var token = Cookies.get('twitter-auth-request');
-    let config = {
-      method: 'post',
-      url: '/twitter/tweet',
-      header: {
-        'authorization': `Bearer ${token}`
-      },
-      data: {status: tweet}
-    };
-    axios(config)
-      .then(() => {
-        console.log('Tweet has posted');
-        setTweet(initialState);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (tweet !== '') {
+      var token = Cookies.get('twitter-auth-request');
+      let config = {
+        method: 'post',
+        url: '/twitter/tweet',
+        header: {
+          'authorization': `Bearer ${token}`
+        },
+        data: {status: tweet}
+      };
+      axios(config)
+        .then(() => {
+          setTweet(initialState);
+        })
+        .then(() => {
+          setTimeout(props.getTwitterData2(), 3000);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      alert('Tweet cannot be empty');
+    }
   };
 
   return (
@@ -65,6 +72,10 @@ const Post = function() {
     </>
 
   );
+};
+
+Post.propTypes = {
+  getTwitterData2: PropTypes.func
 };
 
 export default Post;
