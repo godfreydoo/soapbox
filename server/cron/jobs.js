@@ -27,7 +27,6 @@ const executeJob = async function (document) {
       };
       try {
         let data = await axios(config);
-        console.log('tweet has posted', data);
       } catch (err) {
         console.error(err);
       }
@@ -43,7 +42,6 @@ const executeJob = async function (document) {
         };
         try {
           let data = await axios(config);
-          console.log('video has posted', data);
         } catch (err) {
           console.error(err);
         }

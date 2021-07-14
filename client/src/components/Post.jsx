@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
@@ -7,38 +7,55 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import Schedule from './Schedule.jsx';
 
-const initialState = '';
+const initialState = {
+  sendAt: '',
+  twitterPayload: {
+    status: '',
+  },
+  twitterToken: ''
+};
 
 const Post = function(props) {
+  const [tweet, setTweet] = useState({
+    sendAt: '',
+    twitterPayload: {
+      status: '',
+    },
+    twitterToken: Cookies.get('twitter-auth-request')
+  });
+  console.log(tweet);
 
-  const [tweet, setTweet] = useState('');
+  const handleDateTimeOnChange = (e) => {
+    setTweet(prevDetails => { return { ...prevDetails, sendAt: new Date() }; });
+  };
 
-  const handleOnChange = (e) => {
-    setTweet(e.target.value);
+  const handleStatusOnChange = (e) => {
+    setTweet(prevDetails => { return { ...prevDetails, twitterPayload: { status: e.target.value } }; });
   };
 
   const postTweet = function () {
+    var immediatePost = {
+      method: 'post',
+      url: '/twitter/tweet',
+      header: {
+        'authorization': `Bearer ${Cookies.get('twitter-auth-request')}`
+      },
+      data: {status: tweet.twitterPayload.status}
+    };
+    var scheduledPost = {
+      method: 'post',
+      url: '/jobs/schedule',
+      data: tweet
+    };
+
     if (tweet !== '') {
-      var token = Cookies.get('twitter-auth-request');
-      let config = {
-        method: 'post',
-        url: '/twitter/tweet',
-        header: {
-          'authorization': `Bearer ${token}`
-        },
-        data: {status: tweet}
-      };
-      axios(config)
-        .then(() => {
-          setTweet(initialState);
-        })
-        // .then(() => {
-        //   setTimeout(props.getTwitterData2(), 3000);
-        // })
-        .catch(err => {
-          console.log(err);
-        });
+      if (tweet.sendAt === '') {
+        axios(immediatePost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
+      } else {
+        axios(scheduledPost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
+      }
     } else {
       alert('Tweet cannot be empty');
     }
@@ -55,8 +72,8 @@ const Post = function(props) {
           multiline={true}
           rows={4}
           style={{width: 300}}
-          value={tweet}
-          onChange={handleOnChange}
+          value={tweet.twitterPayload.status}
+          onChange={handleStatusOnChange}
         />
       </div>
       <div>
@@ -68,6 +85,7 @@ const Post = function(props) {
         >
           Send
         </Button>
+        <Schedule handleDateTimeOnChange={handleDateTimeOnChange}/>
       </div>
     </>
 
