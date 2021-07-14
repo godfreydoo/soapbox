@@ -21,7 +21,7 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-    console.log(document.cookie);
+    console.log('cookie: ', document.cookie);
     axios.post('/twitter/hashtag-data', {
       userId: '20702956',
       maxResults: '50'
