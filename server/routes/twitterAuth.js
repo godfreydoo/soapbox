@@ -31,6 +31,7 @@ router.get('/logout', (req, res) => {
   reqCache.id = '';
   req.session = null;
   req.logout();
+  res.clearCookie('application-auth');
   res.clearCookie('twitter-auth-request');
   res.clearCookie('username');
   res.clearCookie('id');

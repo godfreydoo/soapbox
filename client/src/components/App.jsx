@@ -17,6 +17,13 @@ import { reqq } from '../../../server/routes/reqq.js';
 import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
 
+const getAppAuthCookie = function() {
+  if (Cookies.get('application-auth')) {
+    return true;
+  }
+  return false;
+};
+
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
   const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
@@ -24,7 +31,7 @@ const App = props => {
   const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
   const [activePostMetrics, setActivePostMetrics] = useState(null);
   const [currentSocialMedia, setCurrentSocialMedia] = useState(null);
-  const [applicationAuth, setApplicationAuth] = useState(false);
+  const [applicationAuth, setApplicationAuth] = useState(getAppAuthCookie());
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
