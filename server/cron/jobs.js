@@ -13,11 +13,42 @@ const consoleEveryMinute = new CronJob('* * * * *', function () {
   logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')}\n`);
 }, null, true, 'America/Los_Angeles');
 
-const executeJob = async function () {
-  try {
-
-  } catch (err) {
-    console.error(err);
+const executeJob = async function (document) {
+  var socialMediaPlatform = document.payload;
+  for (var key in socialMediaPlatform) {
+    if (key === 'twitter') {
+      let config = {
+        method: 'post',
+        url: '/twitter/tweet',
+        header: {
+          Authorization: `Bearer ${document.twitterToken}`
+        },
+        data: document.payload.twitter
+      };
+      try {
+        let data = await axios(config);
+        console.log('tweet has posted', data);
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      if (key === 'youtube') {
+        let config = {
+          method: 'post',
+          url: 'youtube/video',
+          header: {
+            Authorization: `Bearer ${document.youtubeToken}`
+          },
+          data: document.payload.youtube
+        };
+        try {
+          let data = await axios(config);
+          console.log('video has posted', data);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
   }
 };
 
@@ -33,11 +64,13 @@ const checkJobs = new CronJob('* * * * *', async function () {
   try {
     let response = await models.getSchedule();
     if (response.length > 0) {
-
-      response.filter(document => document.completed === false).forEach((value, index) => {
-        // console.log(value);
+      const remainingJobsToRun = response.filter(document => document.completed === false && document.sendAt < now).map( async (value, index) => {
+        // console.log(value.sendAt < now);
+        // console.log(value.sendAt);
+        await executeJob(value);
       });
-
+      const promisesToResolve = await Promise.allSettled(remainingJobsToRun);
+      logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- ${promisesToResolve || 0} jobs ran\n`);
     } else {
       logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- no scheduled jobs\n`);
     }
@@ -51,7 +84,7 @@ const checkJobs = new CronJob('* * * * *', async function () {
 const deleteJobs = new CronJob('0 10 * * *', async function () {
   try {
     let response = await Jobs.deleteMany({completed: true});
-    logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- ${response} deleted completed jobs`);
+    logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- deleted ${response} completed jobs`);
   } catch (err) {
     console.error(err);
   }

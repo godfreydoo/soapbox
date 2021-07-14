@@ -4,7 +4,8 @@ module.exports = {
   schedule: async function (method, headers, body, query, params) {
     const task = new Jobs({
       sendAt: body.sendAt || undefined,
-      payload: body.payload
+      payload: body.payload,
+      token: body.token
     });
 
     try {

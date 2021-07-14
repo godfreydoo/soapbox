@@ -16,6 +16,8 @@ const JobsSchema = new mongoose.Schema({
   sendAt: { type: Date },
   completed: { type: Boolean, default: false },
   payload: mongoose.Schema.Types.Mixed,
+  youtubeToken: { type: String},
+  twitterToken: { type: String},
   usernames: {
     twitter: String,
     youtube: String

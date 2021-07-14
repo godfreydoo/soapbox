@@ -47,7 +47,7 @@ const App = props => {
   };
 
   const getYoutubeData = function() {
-    axios.get('/youtube/video', {
+    axios.post('/youtube/video', {
       channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
       .then(resVal => {
