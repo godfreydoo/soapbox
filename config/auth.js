@@ -13,7 +13,7 @@ module.exports = {
 
   ensureTwitterLogin: function (req, res, next) {
     // debugger;
-    console.log(userCache)
+    console.log(userCache);
     if (userCache.req.user.username) {
       next();
     } else {
