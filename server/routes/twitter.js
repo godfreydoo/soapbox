@@ -7,7 +7,6 @@ const date = require('date-and-time');
 const { ensureTwitterAuthenticated } = require('../../config/auth');
 
 router.post('/hashtag-data', async (req, res) => {
-  console.log(req.body);
   const twitterEndPoint = `https://api.twitter.com/2/users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.maxResults}`;
   const bearerToken = `Bearer ${process.env.BEARER_TOKEN}`;
 
@@ -26,6 +25,7 @@ router.post('/hashtag-data', async (req, res) => {
 
     res.status(200).json(aggregateData);
   } catch (err) {
+    console.log(err);
     res.status(404).end('There was an error fetching Twitter data:', err);
   }
   res.end();
@@ -48,15 +48,15 @@ router.get('/home-timeline', ensureTwitterAuthenticated, async (req, res) => {
 });
 
 router.post('/user', ensureTwitterAuthenticated, async (req, res) => {
-  console.log('hello?');
-  const client = new Twitter2({
+
+  const client = new Twitter({
     consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line
     consumer_secret: process.env.CONSUMER_SECRET, // eslint-disable-line
     access_token_key: req.token, // eslint-disable-line
     access_token_secret: req.tokenSecret, // eslint-disable-line
   });
 
-  client.get(`users/show.json?id=${req.body.userId}`, function (err, user, response) {
+  client.get('users/show', { id: `${req.body.userId}` }, function (err, user, response) {
     if (err) {
       throw err;
     }
@@ -104,6 +104,10 @@ var analyzeMetrics = function (entityType, data) {
   var analytics = {};
 
   var identifier = entityType === 'urls' ? 'display_url' : 'tag';
+
+  if (!data) {
+    return 'You have no tweets posted';
+  }
 
   for (var i = 0; i < data.length; i++) {
     var entityArr = data[i].entities ? data[i].entities[entityType] || [] : [];
