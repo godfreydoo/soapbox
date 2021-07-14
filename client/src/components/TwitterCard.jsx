@@ -21,7 +21,7 @@ const cardStyles = makeStyles((theme) => ({
 const TwitterCard = function(props) {
   const classes = cardStyles();
   const { text: message, user: {profile_image_url: avatar, name, location, screen_name: screenname}} = props.tweet;
-  console.log(props.tweet);
+  // console.log(props.tweet);
   return (
     <>
       {avatar && (<Card className={classes.root}>

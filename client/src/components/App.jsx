@@ -3,7 +3,7 @@ import YoutubeCard from './YoutubeCard.jsx';
 import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
 import Post from './Post.jsx';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { MediaSelect } from './MediaSelect.jsx';
 import { Nav } from './Nav.jsx';
@@ -26,7 +26,7 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-    console.log(reqq);
+
     var token = Cookies.get('twitter-auth-request');
     // console.log(document.cookie);
     // console.log(reqq);
@@ -42,7 +42,6 @@ const App = props => {
       maxResults: '50'
     })
       .then(resVal => {
-        setTwitterData(resVal.data);
         setCurrentSocialMedia('twitter');
         setTwitterMetrics(resVal.data);
       });
@@ -98,7 +97,7 @@ const App = props => {
           </Grid>
           <Grid container item lg={7} spacing={2}>
             {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
-              : currentSocialMedia === 'twitter' ? (<TwitterList twitterData={twitterData} setActivePostMetrics={setActivePostMetrics}/>)
+              : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics}/>)
                 : null
             }
           </Grid>
@@ -108,10 +107,10 @@ const App = props => {
             justifyContent="flex-start"
             alignItems="flex-start">
             <Grid item container sm={12}>
-              <Post />
+              <Post getTwitterData2={getTwitterData}/>
             </Grid>
             <Grid item container sm={12}>
-            <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
+              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
             </Grid>
           </Grid>
         </Grid>

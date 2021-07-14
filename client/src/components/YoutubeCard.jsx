@@ -34,14 +34,6 @@ const YoutubeCard = function(props) {
   };
 
   const classes = cardStyles();
-  console.log(publishedAt);
-  var date = new Date(publishedAt);
-  var milliseconds = date.getTime();
-  console.log(milliseconds)
-
-  const handleExpandClick = function() {
-    setIsExpanded(!isExpanded);
-  };
 
   return (
     <Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}>
