@@ -7,17 +7,23 @@ import { Register } from './Register.jsx';
 import axios from 'axios';
 
 const App = props => {
-  const [twitterData, setTwitterData] = useState('');
+  const [twitterMetrics, setTwitterMetrics] = useState('');
+  const [twitterPosts, setTwitterPosts] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
+    console.log(document.cookie);
     axios.post('/twitter/hashtag-data', {
       userId: '20702956',
       maxResults: '50'
     })
       .then(resVal => {
-        setTwitterData(resVal.data);
+        setTwitterMetrics(resVal.data);
+      });
+    axios.get('/twitter/home-timeline')
+      .then(resVal => {
+        setTwitterPosts(resval.data);
       });
   };
 
@@ -41,7 +47,7 @@ const App = props => {
           <MediaSelect
             getTwitterData={getTwitterData}
             getYoutubeData={getYoutubeData}
-            twitterData={JSON.stringify(twitterData)}
+            twitterMetrics={JSON.stringify(twitterMetrics)}
             youtubeData={JSON.stringify(youtubeData)}/>
         </Switch>
       </div>
