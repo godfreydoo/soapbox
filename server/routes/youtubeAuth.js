@@ -1,13 +1,24 @@
+/* eslint-disable camelcase */
 require('dotenv').config({ path: '../../config/.env' });
 const router = require('express').Router();
 const axios = require('axios');
 const fs = require('fs');
 const passport = require('passport');
+const { OAuth2Strategy } = require('passport-google-oauth');
+const Youtube = require('youtube-api');
 const { ensureGoogleAuthenticated } = require('../../config/auth');
 require('../../config/googlePassport')(passport);
 
+let Auth = Youtube.authenticate({
+  type: 'oauth',
+  client_id: process.env.GOOGLE_CLIENT_ID,
+  client_secret: process.env.GOOGLE_CLIENT_SECRET,
+  redirect_url: process.env.GOOGLE_URI
+});
+
+
 router.get('/',
-  passport.authenticate('google', { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/youtube.upload"] }));
+  passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload', 'https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/yt-analytics.readonly'] }));
 
 
 router.get('/callback', 
@@ -24,11 +35,48 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
+  console.log(Auth);
+  Auth.getToken((err, token) => {
+    if (err) {
+      console.log(err, 400);
+      return Logger.log(err);
+    }
+    Auth.setCredentials(token);
+    try {
+      console.log(req.params);
+    
+      const report = axios.get('https://youtubeanalytics.googleapis.com/v2/reports');
+      res.cookie('google-auth-request', req.authInfo);
+      res.send(report.data);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+});
+
+router.post('/upload', (req, res) => {
+  const videoUpload = axiox.post('https://www.googleapis.com/upload/youtube/v3/videos');
+  //data that will be needed for upload
+//   {
+//     "snippet": {
+//       "title": "",
+//       "description": "",
+//       "publishedAt": ""
+//     },
+//     "status": {
+//       "embeddable": false,
+//       "uploadStatus": "uploaded",
+//       "license": "youtube"
+//     },
+//     "player": {
+//       "embedHeight": 0
+//     }
+//   }
+});
+
 router.get('/test', ensureGoogleAuthenticated, (req, res) => {
   res.send('Hello Tester');
 });
 
-router.post('/upload', (req, res) => {
-    const videoUpload = axiox.post(`https://www.googleapis.com/upload/youtube/v3/videos`);
-});
 module.exports = router;
