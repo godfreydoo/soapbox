@@ -13,10 +13,12 @@ import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { reqq } from '../../../server/routes/reqq.js';
+import mockTwitter2 from './mockTwitter.js';
+import Cookies from 'js-cookie';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
-  const [twitterPosts, setTwitterPosts] = useState('');
+  const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
   const [youtubeData, setYoutubeData] = useState('');
   const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
   const [activePostMetrics, setActivePostMetrics] = useState(null);
@@ -24,13 +26,15 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-    console.log(document.cookie);
     console.log(reqq);
+    var token = Cookies.get('twitter-auth-request');
+    // console.log(document.cookie);
+    // console.log(reqq);
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
       headers: {
-        'Authorization': `Bearer ${document.cookie.split('=')[3]}`
+        'Authorization': `Bearer ${token}`
       }
     };
     axios.post('/twitter/hashtag-data', {
@@ -44,10 +48,11 @@ const App = props => {
       });
     axios(config)
       .then(resVal => {
-        console.log(resVal.data);
         setTwitterPosts(resVal.data);
+        setCurrentSocialMedia('twitter');
       })
       .catch(err => {
+        setCurrentSocialMedia('twitter');
         console.log('Failed to retrieve twitter data');
       });
   };

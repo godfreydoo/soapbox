@@ -2,35 +2,37 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import TwitterCard from './TwitterCard.jsx';
 import { makeStyles } from '@material-ui/core/styles';
-
-const mock = [{id: 1}, {id: 2}, {id: 3}];
+import PropTypes from 'prop-types';
 
 const twitListStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#ffe7e6',
+    // backgroundColor: '#75ACEE',
   },
 }));
 
 const TwitterList = function(props) {
-  const [twitterList, setTwitterList] = useState(mock);
-  const classes = twitListStyles();
+  const [twitterList, setTwitterList] = useState(null);
+  const classes = twitterListStyles();
 
-  // useEffect(()=>{
-  //   console.log('this is props', props);
-  //   setTwitterList(props.twitterData);
-  // }, [props.twitterData]);
+  useEffect(()=>{
+    setTwitterList(props.twitterPosts);
+  }, [props.twitterPosts]);
 
   return (
     <div styles={classes.parentDiv}>
       <Grid container className={classes.root} spacing={2}>
-        {twitterList && twitterList.map((yt) => (
-          <Grid item xs={12} sm={6} md={4} key={yt.id}>
-            <TwitterCard yt={yt}/>
+        {twitterList && twitterList.map((tweet) => (
+          <Grid item xs={12} sm={6} md={4} key={tweet.id}>
+            <TwitterCard tweet={tweet}/>
           </Grid>
         ))}
       </Grid>
     </div>
   );
+};
+
+TwitterList.propTypes = {
+  twitterPosts: PropTypes.array
 };
 
 export default TwitterList;
