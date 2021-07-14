@@ -18,11 +18,11 @@ module.exports = function(passport) {
     return cb(null, profile, accessToken);
   }));
 
-  passport.serializeUser(function(user, cb) {
+  passport.serializeUser(function (user, cb) {
     cb(null, user);
   });
 
-  passport.deserializeUser(function(obj, cb) {
+  passport.deserializeUser(function (obj, cb) {
     cb(null, obj);
   });
 
