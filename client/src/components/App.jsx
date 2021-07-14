@@ -55,9 +55,9 @@ const App = props => {
   return (
     <Router>
       <div id="app">
+        <Nav />
         <Grid container spacing={2}>
           <Grid item lg={12}>
-            <Nav />
           </Grid>
           <Grid container item lg={2} spacing={2}>
             <Switch>
@@ -84,7 +84,7 @@ const App = props => {
               <Post />
             </Grid>
             <Grid item container sm={12}>
-              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/>
+              {/* <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/> */}
             </Grid>
           </Grid>
         </Grid>
