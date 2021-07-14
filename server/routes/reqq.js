@@ -1,5 +1,6 @@
-let reqq = {
-  req: ''
+let reqCache = {
+  username: '',
+  id: ''
 };
 
-module.exports.reqq = reqq;
+module.exports.reqCache = reqCache;
