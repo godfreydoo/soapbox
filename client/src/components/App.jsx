@@ -22,12 +22,11 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-    console.log(reqq);
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
       headers: {
-        'Authorization': `Bearer ${document.cookie.split('=')[1]}`
+        'Authorization': `Bearer ${document.cookie.split('=')[3]}`
       }
     };
     axios.post('/twitter/hashtag-data', {
@@ -39,6 +38,7 @@ const App = props => {
       });
     axios(config)
       .then(resVal => {
+        console.log(resVal.data);
         setTwitterPosts(resVal.data);
       })
       .catch(err => {
