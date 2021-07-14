@@ -9,9 +9,9 @@ const date = require('date-and-time');
 const logStream = fs.createWriteStream(path.join(__dirname, 'cron.log'));
 const now = new Date();
 
-const consoleEveryMinute = new CronJob('* * * * *', function () {
-  logStream.write(`${new Date()} -- this is just a test to make sure cron job is working \n`);
-}, null, true, 'America/Los_Angeles');
+// const consoleEveryMinute = new CronJob('* * * * *', function () {
+//   logStream.write(`${new Date()} -- this is just a test to make sure cron job is working \n`);
+// }, null, true, 'America/Los_Angeles');
 
 const executeJob = async function (document) {
   var socialMediaPlatform = document.payload;
@@ -54,27 +54,24 @@ const executeJob = async function (document) {
 
 const updateJob = async function () {
   try {
-
+    let response = await Jobs.updateMany({ completed: false, sendAt: {$lte: now } }, { $set: { completed: true } });
+    return response;
   } catch (err) {
     console.error(err);
   }
 };
 
 const checkJobs = new CronJob('* * * * *', async function () {
+  var now = new Date();
   try {
-    const now = new Date();
-    let response = await models.getSchedule({completed: false, sendAt: {$lte: ISODate(`${now}`)}});
+    let response = await Jobs.find({ completed: false, sendAt: {$lte: now } });
     if (response.length > 0) {
       const remainingJobsToRun = response.map( async (value, index) => {
-        // console.log(value.sendAt < now);
-        // console.log(value.sendAt);
         await executeJob(value);
       });
       const promisesToResolve = await Promise.allSettled(remainingJobsToRun);
-
-      let response = await Jobs.updateMany({completed: false, sendAt: {$lte: ISODate(`${now}`)}}, {$set: { completed: true }});
-
-      logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- ${promisesToResolve || 0} jobs ran and ${response} jobs updated\n`);
+      const jobsUpdated = updateJob();
+      logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- ${promisesToResolve || 0} jobs ran and ${jobsUpdated} jobs updated\n`);
     } else {
       logStream.write(`${date.format(now, 'YYYY/MM/DD HH:mm:ss')} -- no scheduled jobs\n`);
     }
@@ -96,7 +93,6 @@ const deleteJobs = new CronJob('0 10 * * *', async function () {
 
 
 module.exports = {
-  consoleEveryMinute,
   checkJobs,
   deleteJobs
 };
