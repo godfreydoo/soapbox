@@ -14,18 +14,25 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 
 const App = props => {
-  const [twitterData, setTwitterData] = useState('');
+  const [twitterMetrics, setTwitterMetrics] = useState('');
+  const [twitterPosts, setTwitterPosts] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
   const [activePostMetrics, setActivePostMetrics] = useState(null);
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
+    console.log(document.cookie);
     axios.post('/twitter/hashtag-data', {
       userId: '20702956',
       maxResults: '50'
     })
       .then(resVal => {
-        setTwitterData(resVal.data);
+        setTwitterMetrics(resVal.data);
+      });
+    axios.get('/twitter/home-timeline')
+      .then(resVal => {
+        // setTwitterPosts(resval.data);
+        // setTwitterData(resVal.data);
       })
       .catch(err => {
         console.log('Failed to retrieve twitter data', err);
