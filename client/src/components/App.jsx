@@ -106,7 +106,7 @@ const App = props => {
               <Post />
             </Grid>
             <Grid item container sm={12}>
-            <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
+              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
             </Grid>
           </Grid>
         </Grid>

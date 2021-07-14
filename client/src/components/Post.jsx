@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
+const initialState = '';
+
 const Post = function() {
 
   const [tweet, setTweet] = useState('');
@@ -28,6 +30,7 @@ const Post = function() {
     axios(config)
       .then(() => {
         console.log('Tweet has posted');
+        setTweet(initialState);
       })
       .catch(err => {
         console.log(err);
