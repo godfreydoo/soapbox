@@ -22,7 +22,6 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-    console.log(reqq);
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
@@ -47,7 +46,7 @@ const App = props => {
   };
 
   const getYoutubeData = function() {
-    axios.get('/youtube/video', {
+    axios.post('/youtube/video', {
       channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
       .then(resVal => {
