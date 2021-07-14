@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-export const Login = function() {
+export const Login = function({ setApplicationAuth }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsgs, setErrorMsgs] = useState([]);
@@ -17,8 +18,8 @@ export const Login = function() {
         if (resVal.data !== 'OK. Redirecting to /dashboard') {
           console.log('error');
         } else {
-          console.log('redirect');
           setRedirect(true);
+          setApplicationAuth(true);
         }
       });
   };
@@ -57,4 +58,8 @@ export const Login = function() {
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  setApplicationAuth: PropTypes.func
 };
