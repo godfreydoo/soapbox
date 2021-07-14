@@ -22,26 +22,29 @@ export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterDat
   return (
     <div className="media-select-container">
       <div className='button-container'>
-        <Button className={classes.youtube}
-          onClick={() => {
-            getYoutubeData();
-          }}
-          endIcon={<YouTubeIcon />}
-          variant="contained"
-          color="primary"
-        >
-          Youtube
-        </Button>
-        <Button className={classes.twitter}
-          onClick={() => {
-            getTwitterData();
-          }}
-          endIcon={<TwitterIcon />}
-          variant="contained"
-          color="primary"
-        >
-          Twitter
-        </Button>
+        <ButtonGroup
+          orientation="vertical">
+          <Button className={classes.youtube}
+            onClick={() => {
+              getYoutubeData();
+            }}
+            endIcon={<YouTubeIcon />}
+            variant="contained"
+            color="primary"
+          >
+            Youtube
+          </Button>
+          <Button className={classes.twitter}
+            onClick={() => {
+              getTwitterData();
+            }}
+            endIcon={<TwitterIcon />}
+            variant="contained"
+            color="primary"
+          >
+            Twitter
+          </Button>
+        </ButtonGroup>
       </div>
     </div>
   );
