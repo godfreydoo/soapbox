@@ -21,7 +21,7 @@ router.get('/',
   passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload', 'https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/yt-analytics.readonly'] }));
 
 
-router.get('/callback', 
+router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     res.cookie('google-auth-request', req.authInfo);
@@ -43,8 +43,8 @@ router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
     }
     Auth.setCredentials(token);
     try {
-      console.log(req.params);
-    
+      // console.log(req.params);
+
       const report = axios.get('https://youtubeanalytics.googleapis.com/v2/reports');
       res.cookie('google-auth-request', req.authInfo);
       res.send(report.data);

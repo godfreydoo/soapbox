@@ -17,7 +17,7 @@ router.get('/channel-stats', async (req, res) => {
 //gets video Ids by channel Id
 router.post('/video', (req, res) => {
   try {
-    console.log(req.body, req.query, req.params);
+    // console.log(req.body, req.query, req.params);
 
     const videos = axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API}&channelId=${req.body.channelId}&part=id&order=date`).then(data => {
 
@@ -29,7 +29,7 @@ router.post('/video', (req, res) => {
         .then(stats => {
           const allVideoStats = [];
           stats.forEach(videoStats => { allVideoStats.push(videoStats.data.items); });
-          console.log(allVideoStats);
+          // console.log(allVideoStats);
           res.json(allVideoStats);
         });
     });
