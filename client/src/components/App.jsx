@@ -42,6 +42,8 @@ const App = props => {
       maxResults: '50'
     })
       .then(resVal => {
+        setTwitterData(resVal.data);
+        setCurrentSocialMedia('twitter');
         setTwitterMetrics(resVal.data);
       });
     axios(config)
@@ -50,8 +52,8 @@ const App = props => {
         setCurrentSocialMedia('twitter');
       })
       .catch(err => {
-        console.log('Failed to retrieve twitter data', err);
         setCurrentSocialMedia('twitter');
+        console.log('Failed to retrieve twitter data');
       });
   };
 
@@ -96,8 +98,7 @@ const App = props => {
           </Grid>
           <Grid container item lg={7} spacing={2}>
             {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
-              : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics}/>)
-              // : currentSocialMedia === 'twitter' ? (<TwitterList setActivePostMetrics={setActivePostMetrics}/>)
+              : currentSocialMedia === 'twitter' ? (<TwitterList twitterData={twitterData} setActivePostMetrics={setActivePostMetrics}/>)
                 : null
             }
           </Grid>
@@ -105,16 +106,12 @@ const App = props => {
             spacing={2}
             lg={3}
             justifyContent="flex-start"
-            alignItems="flex-start"
-          >
-            <Grid item container sm={12}
-              direction="column"
-              justifyContent="center"
-              alignItems="flex-start">
+            alignItems="flex-start">
+            <Grid item container sm={12}>
               <Post />
             </Grid>
             <Grid item container sm={12}>
-              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
+            <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
             </Grid>
           </Grid>
         </Grid>

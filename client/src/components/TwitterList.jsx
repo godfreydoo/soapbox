@@ -4,13 +4,9 @@ import TwitterCard from './TwitterCard.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
-
-const twitterListStyles = makeStyles((theme) => ({
+const twitListStyles = makeStyles((theme) => ({
   root: {
     // backgroundColor: '#75ACEE',
-  },
-  parentDiv: {
-    // width: 1152 px,
   },
 }));
 
