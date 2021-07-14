@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { reqq } = require('../server/routes/reqq.js');
 
 module.exports = {
   ensureAuthenticated: function (req, res, next) {
@@ -10,8 +11,7 @@ module.exports = {
   },
 
   ensureTwitterLogin: function (req, res, next) {
-    // debugger;
-    if (req.user) {
+    if (reqq.req.user.username) {
       next();
     } else {
       res.redirect('/auth/twitter/callback');
@@ -19,7 +19,6 @@ module.exports = {
   },
 
   ensureTwitterAuthenticated: function (req, res, next) {
-    console.log(req.headers);
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
