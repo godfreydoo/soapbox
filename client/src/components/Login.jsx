@@ -71,7 +71,7 @@ export const Login = function({ setApplicationAuth }) {
               type="password"
               required
               id="outlined-required"
-              label="password"
+              label="Password"
               variant="outlined"
               onChange={(event) => {
                 setPassword(event.target.value);
