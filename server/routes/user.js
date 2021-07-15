@@ -36,6 +36,7 @@ router.post('/login', (req, res, next) => {
       // redirect to login page like /dashboard or whatever route we decide on
       // console.log('\x1b[36m', 'User has successfully logged in');
       req.flash('successMsg', 'You are now logged in');
+      res.cookie('application-auth', true);
       return res.redirect(200, '/dashboard');
     });
   })(req, res, next);
