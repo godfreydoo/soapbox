@@ -19,6 +19,7 @@ import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
 import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
 import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
+import TwitterAnalytics from './TwitterAnalytics.jsx';
 
 import '../styles/style.css';
 import '../styles/analytics.css';
@@ -167,6 +168,9 @@ const App = props => {
             alignItems="flex-start">
             <Grid item container sm={12}>
               {twitterAuth ? <Compose getTwitterData2={getTwitterData}/> : null}
+            </Grid>
+            <Grid item container sm={12}>
+              {twitterAuth ? <TwitterAnalytics selected={currentSocialMedia} /> : null}
             </Grid>
             <Grid item container sm={12}>
               {twitterAuth ? <MetricsTab
