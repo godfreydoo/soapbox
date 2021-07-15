@@ -1,24 +1,13 @@
-/* eslint-disable camelcase */
 require('dotenv').config({ path: '../../config/.env' });
 const router = require('express').Router();
 const axios = require('axios');
 const fs = require('fs');
 const passport = require('passport');
-const { OAuth2Strategy } = require('passport-google-oauth');
-const Youtube = require('youtube-api');
 const { ensureGoogleAuthenticated } = require('../../config/auth');
 require('../../config/googlePassport')(passport);
 
-let Auth = Youtube.authenticate({
-  type: 'oauth',
-  client_id: process.env.GOOGLE_CLIENT_ID,
-  client_secret: process.env.GOOGLE_CLIENT_SECRET,
-  redirect_url: process.env.GOOGLE_URI
-});
-
-
 router.get('/',
-  passport.authenticate('google', { scope: ['profile', 'https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload', 'https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/yt-analytics.readonly'] }));
+  passport.authenticate('google', { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/youtube.upload"] }));
 
 
 router.get('/callback', 
@@ -35,6 +24,7 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+<<<<<<< HEAD
 router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
   
   try {
@@ -70,8 +60,13 @@ router.post('/upload', (req, res) => {
 //   }
 });
 
+=======
+>>>>>>> parent of bab1743... Still attempting Auth
 router.get('/test', ensureGoogleAuthenticated, (req, res) => {
   res.send('Hello Tester');
 });
 
+router.post('/upload', (req, res) => {
+    const videoUpload = axiox.post(`https://www.googleapis.com/upload/youtube/v3/videos`);
+});
 module.exports = router;
