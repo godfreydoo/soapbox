@@ -58,13 +58,13 @@ const TwitterCard = function(props) {
           {message}
         </CardContent>
         <CardActions>
-          <IconButton aria-label="retweet" onClick={handleRetweet}>
+          <IconButton aria-label="reply" onClick={handleRetweet}>
             <ChatBubbleOutlineIcon />
           </IconButton>
           <IconButton aria-label="retweet" onClick={handleRetweet}>
             <RepeatIcon className={classes.retweet}/>
           </IconButton>
-          <IconButton aria-label="share" onClick={handleLike}>
+          <IconButton aria-label="like" onClick={handleLike}>
             <FavoriteBorderIcon />
           </IconButton>
           <IconButton aria-label="share" onClick={handleLike}>
