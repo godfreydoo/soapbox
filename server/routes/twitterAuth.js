@@ -23,7 +23,7 @@ router.get('/callback', passport.authenticate('twitter', { failureRedirect: '/au
     res.cookie('twitter-auth-request', req.authInfo);
     res.cookie('username', req.user.username);
     res.cookie('id', req.user.id);
-    res.redirect('../twitter/dashboard');
+    res.redirect('/dashboard');
   });
 
 router.get('/logout', (req, res) => {
