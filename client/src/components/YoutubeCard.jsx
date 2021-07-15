@@ -24,17 +24,8 @@ const cardStyles = makeStyles((theme) => ({
 const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const YoutubeCard = function(props) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt;
-=======
-  const [isExpanded, setIsExpanded] = useState(false);
-  const { id, snippet: { channelId, channelTitle, title, description, publishedAt }, statistics} = props.yt;
->>>>>>> 29ad95e14cd5eddda4f48bd58e6e3a83e5cc38da
-=======
   const [isExpanded, setIsExpanded] = useState(false);
   const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt;
->>>>>>> devin
   const YTurl = `https://www.youtube.com/embed/${id}`;
   const avatar = 'https://yt3.ggpht.com/ytc/AKedOLR2ex_eFpC5a9xnkQqAYITEjBAYD1VUhTJmC0LN=s88-c-k-c0x00ffffff-no-rj';
 

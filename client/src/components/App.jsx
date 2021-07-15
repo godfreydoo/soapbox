@@ -96,22 +96,10 @@ const App = props => {
             </Switch>
           </Grid>
           <Grid container item lg={7} spacing={2}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <button id="google-auth"><a href="/auth/google">Sign In with Google</a></button>
-            <YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>
-            {/* <TwitterList twitterData={twitterData}/> */}
-=======
-=======
->>>>>>> devin
             {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
               : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics}/>)
                 : null
             }
-<<<<<<< HEAD
->>>>>>> 29ad95e14cd5eddda4f48bd58e6e3a83e5cc38da
-=======
->>>>>>> devin
           </Grid>
           <Grid container item
             spacing={2}
