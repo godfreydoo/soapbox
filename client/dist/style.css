@@ -78,3 +78,8 @@ img {
 .error-message{
   color: red;
 }
+
+.twitter-account-container {
+  margin: 20px;
+  font-size: 17px;
+}

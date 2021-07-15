@@ -16,7 +16,7 @@ const cardStyles = makeStyles((theme) => ({
   },
 }));
 
-export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterData, youtubeData }) {
+export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterData, getYoutubeData }) {
   const classes = cardStyles();
 
   return (
@@ -36,7 +36,11 @@ export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterDat
           </Button>
           <Button className={classes.twitter}
             onClick={() => {
-              getTwitterData();
+              if (!twitterAuth) {
+                window.location.replace('/auth/twitter/callback');
+              } else {
+                getTwitterData();
+              }
             }}
             endIcon={<TwitterIcon />}
             variant="contained"
@@ -46,13 +50,16 @@ export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterDat
           </Button>
         </ButtonGroup>
       </div>
+      <div className='twitter-account-container'>
+        {twitterUsername ? `${twitterUsername}'s Feed` : null}
+      </div>
     </div>
   );
 };
 
 MediaSelect.propTypes = {
+  twitterAuth: PropTypes.bool,
+  twitterUsername: PropTypes.string,
   getTwitterData: PropTypes.func,
-  getYoutubeData: PropTypes.func,
-  twitterData: PropTypes.string,
-  youtubeData: PropTypes.string
+  getYoutubeData: PropTypes.func
 };
