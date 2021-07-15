@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import RepeatIcon from '@material-ui/icons/Repeat';
+import ShareIcon from '@material-ui/icons/Share';
 
 const cardStyles = makeStyles((theme) => ({
   root: {
@@ -59,8 +61,14 @@ const TwitterCard = function(props) {
           <IconButton aria-label="retweet" onClick={handleRetweet}>
             <ChatBubbleOutlineIcon />
           </IconButton>
+          <IconButton aria-label="retweet" onClick={handleRetweet}>
+            <RepeatIcon className={classes.retweet}/>
+          </IconButton>
           <IconButton aria-label="share" onClick={handleLike}>
             <FavoriteBorderIcon />
+          </IconButton>
+          <IconButton aria-label="share" onClick={handleLike}>
+            <ShareIcon />
           </IconButton>
         </CardActions>
       </Card>)}
