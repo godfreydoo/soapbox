@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import TwitterCard from './TwitterCard.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import Example from './TwitterBarChart.jsx';
+import TwitterBarChart from './TwitterBarChart';
 
 const twitterListStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +28,6 @@ const TwitterList = function(props) {
           </Grid>
         ))}
       </Grid>
-      <Example />
     </div>
   );
 };

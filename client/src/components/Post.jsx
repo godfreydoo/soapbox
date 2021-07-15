@@ -11,6 +11,7 @@ import Schedule from './Schedule.jsx';
 import Grid from '@material-ui/core/Grid';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import TwitterAnalytics from './TwitterAnalytics.jsx';
 
 const initialState = {
   sendAt: '',
@@ -28,7 +29,7 @@ const cardStyles = makeStyles((theme) => ({
   },
 }));
 
-const Post = function(props) {
+const Post = function (props) {
   const [tweet, setTweet] = useState({
     sendAt: '',
     payload: '',
@@ -52,7 +53,7 @@ const Post = function(props) {
       header: {
         'authorization': `Bearer ${Cookies.get('twitter-auth-request')}`
       },
-      data: {status: tweet.payload}
+      data: { status: tweet.payload }
     };
     var scheduledPost = {
       method: 'post',
@@ -69,6 +70,10 @@ const Post = function(props) {
       alert('Tweet cannot be empty');
     }
   };
+
+  const analytics = props.selected && props.selected === 'twitter' ? (<div style={{ width: '100%' }}>
+    <TwitterAnalytics />
+  </div>) : null;
 
   return (
     <Grid item container direction="column" lg={12} spacing={4} >
@@ -93,7 +98,7 @@ const Post = function(props) {
             variant="contained"
             color="primary"
             onClick={postTweet}>
-          Send
+            Send
           </Button>
           <Button
             className={classes.post}
@@ -101,18 +106,21 @@ const Post = function(props) {
             variant="contained"
             color="primary"
             onClick={addMedia}>
-          Photo/Video
+            Photo/Video
           </Button>
         </ButtonGroup>
-        <Schedule setTweet={setTweet} date={tweet.sendAt}/>
+        <Schedule setTweet={setTweet} date={tweet.sendAt} />
+      </Grid>
+      <Grid item container lg={12} justifyContent="center">
+        {analytics}
       </Grid>
     </Grid>
-
   );
 };
 
 Post.propTypes = {
-  getTwitterData2: PropTypes.func
+  getTwitterData2: PropTypes.func,
+  selected: PropTypes.string,
 };
 
 export default Post;
