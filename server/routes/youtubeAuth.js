@@ -44,13 +44,15 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/ytreports', ensureGoogleAuthenticated, async (req, res) => {
-  console.log('REQCOOKIES', req.cookies['google-auth-request']);
-  debugger;
+  console.log('REQCOOKIES', process.env.GOOGLE_BEARER);
+  // debugger;
+  const ytAnalyticsEndPoint = 'https://youtubeanalytics.googleapis.com/v2/reports?endDate=2021-05-01&ids=channel%3D%3DMINE&metrics=views%2Ccomments%2Clikes%2Cdislikes%2CestimatedMinutesWatched%2CaverageViewDuration&startDate=2017-01-01';
+  const bearerToken = `Bearer ${req.cookies['google-auth-request']}`;
   var config = {
-    method: 'get',
-    url: 'https://youtubeanalytics.googleapis.com/v2/reports?endDate=2021-05-01&ids=channel%3D%3DMINE&metrics=views%2Ccomments%2Clikes%2Cdislikes%2CestimatedMinutesWatched%2CaverageViewDuration&startDate=2017-01-01',
+    method: 'GET',
+    url: ytAnalyticsEndPoint,
     headers: { 
-      Authorization: `Bearer ya29.a0ARrdaM9Io8G5aS7M6YjccDrkFPwjOKvaQ8Gx4VgP7a1iT_jHKjoj7tR9o6fqEvLkabmDOfQS5ziW3Rr9BxjkbhPjKCh_A5XYd-KjtLmVP4Vgne3BMHd9ioi9b_MiS9eQpQ9CSKp28-qQS34hK5VndJAmqc3fQw`
+      Authorization: `Bearer ${process.env.GOOGLE_BEARER}`
     }
   };
   
