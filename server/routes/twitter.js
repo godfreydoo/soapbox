@@ -25,7 +25,6 @@ router.post('/hashtag-data', async (req, res) => {
 
     res.status(200).json(aggregateData);
   } catch (err) {
-    console.log(err);
     res.status(404).end('There was an error fetching Twitter data:', err);
   }
   res.end();
