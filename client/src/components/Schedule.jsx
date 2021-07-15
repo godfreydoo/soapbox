@@ -1,5 +1,5 @@
 import 'date-fns';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -11,7 +11,16 @@ import PropTypes from 'prop-types';
 import { alpha } from '@material-ui/core/styles';
 
 const Schedule = (props) => {
+
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  useEffect(() => {
+    props.setTweet(prevDetails => { return { ...prevDetails, sendAt: new Date() }; });
+  }, [selectedDate]); // eslint-disable-line
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -22,7 +31,7 @@ const Schedule = (props) => {
           label="Date picker dialog"
           format="MM/dd/yyyy"
           value={selectedDate}
-          onChange={props.handleDateTimeOnChange}
+          onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
@@ -32,7 +41,7 @@ const Schedule = (props) => {
           id="time-picker"
           label="Time picker"
           value={selectedDate}
-          onChange={props.handleDateTimeOnChange}
+          onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change time',
           }}
@@ -43,7 +52,8 @@ const Schedule = (props) => {
 };
 
 Schedule.propTypes = {
-  handleDateTimeOnChange: PropTypes.func
+  setTweet: PropTypes.func,
+  sendAt: PropTypes.string
 };
 
 export default Schedule;

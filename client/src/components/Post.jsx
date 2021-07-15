@@ -11,28 +11,19 @@ import Schedule from './Schedule.jsx';
 
 const initialState = {
   sendAt: '',
-  twitterPayload: {
-    status: '',
-  },
+  twitterPayload: '',
   twitterToken: ''
 };
 
 const Post = function(props) {
   const [tweet, setTweet] = useState({
     sendAt: '',
-    twitterPayload: {
-      status: '',
-    },
+    twitterPayload: '',
     twitterToken: Cookies.get('twitter-auth-request')
   });
-  console.log(tweet);
-
-  const handleDateTimeOnChange = (e) => {
-    setTweet(prevDetails => { return { ...prevDetails, sendAt: new Date() }; });
-  };
 
   const handleStatusOnChange = (e) => {
-    setTweet(prevDetails => { return { ...prevDetails, twitterPayload: { status: e.target.value } }; });
+    setTweet(prevDetails => { return { ...prevDetails, twitterPayload: e.target.value }; });
   };
 
   const postTweet = function () {
@@ -42,14 +33,13 @@ const Post = function(props) {
       header: {
         'authorization': `Bearer ${Cookies.get('twitter-auth-request')}`
       },
-      data: {status: tweet.twitterPayload.status}
+      data: {status: tweet.twitterPayload}
     };
     var scheduledPost = {
       method: 'post',
       url: '/jobs/schedule',
       data: tweet
     };
-
     if (tweet !== '') {
       if (tweet.sendAt === '') {
         axios(immediatePost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
@@ -72,7 +62,7 @@ const Post = function(props) {
           multiline={true}
           rows={4}
           style={{width: 300}}
-          value={tweet.twitterPayload.status}
+          value={tweet.twitterPayload}
           onChange={handleStatusOnChange}
         />
       </div>
@@ -85,7 +75,7 @@ const Post = function(props) {
         >
           Send
         </Button>
-        <Schedule handleDateTimeOnChange={handleDateTimeOnChange}/>
+        <Schedule setTweet={setTweet} date={tweet.sendAt}/>
       </div>
     </>
 

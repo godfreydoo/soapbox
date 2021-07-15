@@ -5,7 +5,6 @@ module.exports = {
   schedule: async function (req, res) {
     try {
       await model.jobs.schedule(req.method, req.headers, req.body, req.query, req.params);
-      res.status(200);
     } catch (err) {
       console.error(err);
       res.status(418); // I'm a teapot
