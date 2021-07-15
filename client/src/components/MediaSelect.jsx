@@ -16,7 +16,7 @@ const cardStyles = makeStyles((theme) => ({
     'margin-bottom': '20px',
     'border-radius': '100px',
     'width': '100px',
-  }, 
+  },
   twitter: {
     'backgroundColor': '#00ACEE',
     'margin-bottom': '20px',
@@ -39,7 +39,7 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
   return (
     <div className="media-select-container">
       <div className={classes.btncontainer}>
-        <MiniDrawer>
+        {/* <MiniDrawer> */}
           <Button className={classes.youtube}
             onClick={() => {
               getYoutubeData();
@@ -62,8 +62,8 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
             color="primary" >
             Twitter
           </Button>
-        </MiniDrawer>
-      
+        {/* </MiniDrawer> */}
+
       </div>
       <div className='twitter-account-container'>
         {twitterUsername ? `${twitterUsername}'s Feed` : null}

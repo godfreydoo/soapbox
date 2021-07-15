@@ -4,13 +4,14 @@ const DIST_DIR = path.join(__dirname, './dist');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  devtool: 'source-map',
   mode: 'development',
   entry: path.resolve(__dirname, './src/index.jsx'),
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node-modules/,
+        exclude: path.resolve(__dirname, 'node_modules/'),
         use: [{
           loader: 'babel-loader',
           options: {
@@ -45,7 +46,7 @@ module.exports = {
     clean: true
   },
   optimization: {
-    minimize: true,
+    minimize: false,
     runtimeChunk: 'single',
     splitChunks: {
       cacheGroups: {
@@ -62,6 +63,5 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${SRC_DIR}/index.html`,
     }),
-  ],
-  devtool: false
+  ]
 };

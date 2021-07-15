@@ -3,6 +3,7 @@ import YoutubeCard from './YoutubeCard.jsx';
 import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
 import Post from './Post.jsx';
+import Compose from './Compose.jsx';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { MediaSelect } from './MediaSelect.jsx';
@@ -18,6 +19,7 @@ import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
 import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
 import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
+import TwitterAnalytics from './TwitterAnalytics.jsx';
 
 import '../styles/style.css';
 import '../styles/analytics.css';
@@ -165,7 +167,10 @@ const App = props => {
             justifyContent="flex-start"
             alignItems="flex-start">
             <Grid item container sm={12}>
-              {twitterAuth ? <Post selected={currentSocialMedia} getTwitterData2={getTwitterData} /> : null}
+              {twitterAuth ? <Compose getTwitterData2={getTwitterData}/> : null}
+            </Grid>
+            <Grid item container sm={12}>
+              {twitterAuth ? <TwitterAnalytics selected={currentSocialMedia} /> : null}
             </Grid>
             <Grid item container sm={12}>
               {twitterAuth ? <MetricsTab
