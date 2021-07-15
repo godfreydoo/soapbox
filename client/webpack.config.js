@@ -40,11 +40,6 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-<<<<<<< HEAD
-    filename: 'bundle.js'
-  }
-};
-=======
     filename: 'bundle.[contenthash].js',
     assetModuleFilename: 'images/[hash][ext][query]',
     clean: true
@@ -70,4 +65,3 @@ module.exports = {
   ],
   devtool: false
 };
->>>>>>> main

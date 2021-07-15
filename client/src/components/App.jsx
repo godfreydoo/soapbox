@@ -22,6 +22,7 @@ import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCooki
 import '../styles/style.css';
 import '../styles/analytics.css';
 import '../styles/login.css';
+import '../styles/register.css';
 import '../styles/metrics.css';
 import '../styles/modal.css';
 import '../styles/tiles.css';
