@@ -3,8 +3,39 @@ const router = require('express').Router();
 const axios = require('axios');
 const fs = require('fs');
 const passport = require('passport');
+const { google } = require('googleapis'); 
+const { youtube} = google.youtube('v3');
 const { ensureGoogleAuthenticated } = require('../../config/auth');
 require('../../config/googlePassport')(passport);
+
+var authClient = new google.auth.JWT(
+  'Service account client email address',
+  'youtube.pem',
+  null,
+  ['https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtube.upload'],
+  null
+);
+
+authClient.authorize(function(err, tokens) {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  youtube.videos.insert({auth: authClient, part: 'snippet,status,contentDetails'}, function(err, resp) {
+    console.log(resp);
+    console.log(err);
+  });
+});
+
+
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_URI
+);
+google.options({
+  auth: oauth2Client
+});
 
 router.get('/',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload'] }));
