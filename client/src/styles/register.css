@@ -1,19 +1,19 @@
-.login-container {
+.register-container {
   flex-wrap: nowrap!important;
   width: 550px !important;
   margin-left: 24%;
   margin-top: 25px;
 }
 
-.login-form-container {
-  margin-top: 10px;
-}
-
-.login-email-field {
+.register-username-field {
   width: 25ch
 }
 
-.login-password-field {
+.register-email-field {
+  width: 25ch
+}
+
+.register-password-field {
   width: 25ch
 }
 
@@ -22,12 +22,16 @@
   width: 252px;
 }
 
-.login-clipart {
-  max-width: 150%;
-  margin-left: 32px;
+.register-clipart {
+  max-width: 157%;
+  margin-left: 13px;
 }
 
-.login-form-title{
+.register-clipart-container {
+  margin-top: 27px !important;
+}
+
+.register-form-title{
   font-size: 31px;
   margin-bottom: 15px;
   color: #4a4b51;

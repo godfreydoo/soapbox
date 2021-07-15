@@ -6,16 +6,17 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import clipart from './assets/Daco_6019216.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '20ch',
     },
   },
   button: {
-    width: '30ch',
+    width: '252px',
   }
 }));
 
@@ -42,88 +43,78 @@ export const Login = function({ setApplicationAuth }) {
   };
 
   return (
-    <>
+    <div className='login-full'>
       <br />
       <br />
       {redirect ? <Redirect to='/dashboard'/> : ''}
-      <Grid container direction="column" justifyContent="center">
-        <Grid item>
-          <TextField
-            required
-            id="email"
-            label="Email"
-            placeholder="johnDoe@email.com"
-            variant="outlined"
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}/>
+      <Grid className ="login-container" container direction="row" justifyContent="center">
+        <Grid className="login-form-container" container direction="column" justifyContent="center">
+          <Grid item spacing={3} justifyContent="center">
+            <h4 className="login-form-title">Login</h4>
+          </Grid>
+          <Grid item spacing={2}>
+            <TextField
+              className="login-email-field"
+              required
+              id="email"
+              label="Email"
+              placeholder="johnDoe@email.com"
+              variant="outlined"
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}/>
+          </Grid>
+          <br />
+          <Grid item spacing={2}>
+            <TextField
+              className="login-password-field"
+              type="password"
+              required
+              id="outlined-required"
+              label="Password"
+              variant="outlined"
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}/>
+          </Grid>
+          <br />
+          <Grid item spacing={2} justifyContent="center">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={submitLogin}>
+              Login
+            </Button>
+          </Grid>
+          <br />
+          <Grid item spacing={2} justifyContent="center">
+            <Link to='/register'>
+              <Button
+                className="register-button"
+                variant="contained"
+                color="primary">
+                Register
+              </Button>
+            </Link>
+          </Grid>
+          <br />
+          <Grid item spacing={2} justifyContent="center">
+            <div className='error-messages-container'>
+              {errorMsgs.map(error => {
+                errorID += 1;
+                return <div
+                  className='error-message'
+                  key={errorID}>{error.msg}</div>;
+              })}
+            </div>
+          </Grid>
         </Grid>
-        <br />
-        <Grid item>
-          <TextField
-            type="password"
-            required
-            id="outlined-required"
-            label="password"
-            variant="outlined"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}/>
+        <Grid item spacing={3} justifyContent="center">
+          <img src={clipart} className="login-clipart" alt="Soapbox clipart bird megaphone"/>
         </Grid>
-        <br />
-        <Grid item>
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            onClick={submitLogin}>
-            Login
-          </Button>
-        </Grid>
-
       </Grid>
-      <div className='error-messages-container'>
-        {errorMsgs.map(error => {
-          errorID += 1;
-          return <div
-            className='error-message'
-            key={errorID}>{error.msg}</div>;
-        })}
-      </div>
-
-      {/* <div className='login-container'>
-        {redirect ? <Redirect to='/dashboard'/> : ''}
-        <h2 className='login-title'>Login</h2>
-        <div className="login-form">
-          <label>Email: </label>
-          <input
-            type="email"
-            id="email"
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}></input>
-          <label>Password: </label>
-          <input
-            type="password"
-            id="password"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}></input>
-          <button
-            onClick={() => {
-              submitLogin();
-            }}>Login</button>
-        </div>
-        <div className='error-messages-container'>
-          {errorMsgs.map(error => {
-            errorID += 1;
-            return <div
-              className='error-message'
-              key={errorID}>{error.msg}</div>;
-          })}
-        </div>
-      </div> */}
-    </>
+    </div>
   );
 };
 

@@ -69,10 +69,6 @@ img {
   line-height: 30px;
 }
 
-.login-container {
-  margin-left: 20px;
-}
-
 .login-form {
   display: flex;
   flex-direction: column;
