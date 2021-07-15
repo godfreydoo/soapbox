@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const ytListStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#ffe7e6',
+    // backgroundColor: '#ffe7e6',
   },
 }));
 
@@ -34,7 +34,7 @@ const YoutubeList = function(props) {
 
 YoutubeList.propTypes = {
   setActivePostMetrics: PropTypes.func,
-  youtubeData: PropTypes.object,
+  youtubeData: PropTypes.string | PropTypes.object,
 };
 
 export default YoutubeList;

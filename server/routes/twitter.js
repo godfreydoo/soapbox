@@ -76,7 +76,7 @@ router.post('/tweet', ensureTwitterAuthenticated, async (req, res) => {
 
   client.post('statuses/update', { status: `${req.body.status}` }, function (error, tweet, response) {
     if (error) { throw error; }
-    console.log(tweet);
+    console.log(`Tweet has been created at ${tweet.created_at}. Tweet id ${tweet.id} and desc: ${tweet.text}`);
   });
 
   res.end();
