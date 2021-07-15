@@ -16,8 +16,8 @@ const executeTwitterJob = async function (document) {
   let config = {
     method: 'post',
     url: 'http://localhost:3000/twitter/tweet',
-    header: {
-      'authorization': `Bearer ${document.twitterToken}`
+    headers: {
+      Authorization: `Bearer ${document.twitterToken}`
     },
     data: { status: document.twitterPayload}
   };

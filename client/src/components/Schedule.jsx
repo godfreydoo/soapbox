@@ -15,7 +15,7 @@ const Schedule = (props) => {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   useEffect(() => {
-    props.setTweet(prevDetails => { return { ...prevDetails, sendAt: new Date() }; });
+    props.setTweet(prevDetails => { return { ...prevDetails, sendAt: selectedDate }; });
   }, [selectedDate]); // eslint-disable-line
 
   const handleDateChange = (date) => {
