@@ -8,6 +8,9 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import PropTypes from 'prop-types';
+import IconButton from '@material-ui/core/IconButton';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const cardStyles = makeStyles((theme) => ({
   root: {
@@ -16,12 +19,23 @@ const cardStyles = makeStyles((theme) => ({
   },
   media: {
   },
+  retweet: {
+    transform: 'scaleX(1)',
+  }
 }));
 
 const TwitterCard = function(props) {
   const classes = cardStyles();
   const { text: message, user: {profile_image_url: avatar, name, location, screen_name: screenname}} = props.tweet;
-  // console.log(props.tweet);
+
+  const handleRetweet = function () {
+    console.log('This is retweet');
+  };
+
+  const handleLike = function () {
+    console.log('This is like');
+  };
+
   return (
     <>
       {avatar && (<Card className={classes.root}>
@@ -38,13 +52,17 @@ const TwitterCard = function(props) {
             />
           }
         />
-        {/* <CardMedia
-        className={classes.media}
-        image="https://i.imgur.com/kc9gSnm.png"
-      /> */}
         <CardContent>
           {message}
         </CardContent>
+        <CardActions>
+          <IconButton aria-label="retweet" onClick={handleRetweet}>
+            <ChatBubbleOutlineIcon />
+          </IconButton>
+          <IconButton aria-label="share" onClick={handleLike}>
+            <FavoriteBorderIcon />
+          </IconButton>
+        </CardActions>
       </Card>)}
     </>
   );
