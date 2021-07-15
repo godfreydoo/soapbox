@@ -13,6 +13,7 @@ import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { reqq } from '../../../server/routes/reqq.js';
+import Cookie from 'js-cookie';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
@@ -22,11 +23,12 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
+    var token = Cookie.get('twitter-auth-request');
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
       headers: {
-        'Authorization': `Bearer ${document.cookie.split('=')[3]}`
+        'Authorization': `Bearer ${token}`
       }
     };
     axios.post('/twitter/hashtag-data', {
@@ -78,6 +80,7 @@ const App = props => {
             </Switch>
           </Grid>
           <Grid container item lg={7} spacing={2}>
+            <button id="google-auth"><a href="/auth/google">Sign In with Google</a></button>
             <YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>
             {/* <TwitterList twitterData={twitterData}/> */}
           </Grid>

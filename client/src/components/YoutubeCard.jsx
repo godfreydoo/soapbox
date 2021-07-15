@@ -18,7 +18,7 @@ const cardStyles = makeStyles((theme) => ({
 const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const YoutubeCard = function(props) {
-  const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt
+  const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt;
   const YTurl = `https://www.youtube.com/embed/${id}`;
   const avatar = 'https://yt3.ggpht.com/ytc/AKedOLR2ex_eFpC5a9xnkQqAYITEjBAYD1VUhTJmC0LN=s88-c-k-c0x00ffffff-no-rj';
 

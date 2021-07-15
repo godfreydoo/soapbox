@@ -25,7 +25,7 @@ router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     res.cookie('google-auth-request', req.authInfo);
-    res.redirect('../google/test');
+    res.redirect('/');
   });
 
 router.get('/logout', (req, res) => {
@@ -36,26 +36,22 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
-  Auth.getToken((err, token) => {
-    if (err) {
-      console.log(err, 400);
-      return Logger.log(err);
-    }
-    Auth.setCredentials(token);
-    try {
-      console.log(req.params);
+  
+  try {
+    console.log(req.params);
     
-      const report = axios.get('https://youtubeanalytics.googleapis.com/v2/reports');
-      res.cookie('google-auth-request', req.authInfo);
-      res.send(report.data);
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    const report = axios.get('https://youtubeanalytics.googleapis.com/v2/reports');
+    res.cookie('google-auth-request', req.authInfo);
+    res.send(report.data);
+  } catch (err) {
+    console.log(err);
+  }
+  
 });
 
 router.post('/upload', (req, res) => {
-  const videoUpload = axiox.post('https://www.googleapis.com/upload/youtube/v3/videos');
+  console.log('INSIDE UPLOAD');
+  const videoUpload = axiox.post('https://www.googleapis.com/upload/youtube/v3/videos/insert');
   //data that will be needed for upload
 //   {
 //     "snippet": {
