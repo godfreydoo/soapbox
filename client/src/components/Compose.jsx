@@ -13,19 +13,14 @@ export default function Compose() {
   };
 
   const body = (
-    <>
-      <h2>Compose your social media posts</h2>
-      <Button role="button" onClick={handleOpenAndClose}> X </Button>
-      <Post />
-    </>
+    <Post />
   );
 
   return (
     <div>
-      <Button endIcon={<CreateIcon />} variant="contained" color="primary" onClick={handleOpenAndClose}>
-      </Button>
+      <Button endIcon={<CreateIcon />} variant="contained" color="primary" onClick={handleOpenAndClose}></Button>
       {showModal
-        ? <Modal component={body} />
+        ? <Modal body={body} header="Compose your social media posts" handleOpenAndClose={handleOpenAndClose}/>
         : null}
     </div>
   );

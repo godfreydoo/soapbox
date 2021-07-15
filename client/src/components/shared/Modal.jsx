@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,7 +36,11 @@ export default function ComposeModal(props) {
       }}>
       <Fade in={true}>
         <div className={classes.paper}>
-          {props.component}
+          <div className="modal-header">
+            <h2>{props.header}</h2>
+            <Button endIcon={<CloseIcon />} role="button" onClick={props.handleOpenAndClose}></Button>
+          </div>
+          {props.body}
         </div>
       </Fade>
     </Modal>
@@ -43,5 +48,7 @@ export default function ComposeModal(props) {
 }
 
 ComposeModal.propTypes = {
-  component: PropTypes.object,
+  body: PropTypes.elementType,
+  header: PropTypes.string,
+  handleOpenAndClose: PropTypes.func
 };
