@@ -144,10 +144,8 @@ const App = props => {
             lg={3}
             justifyContent="flex-start"
             alignItems="flex-start">
-            <Grid item container sm={12}>
+            <Grid container item lg={12} direction="column">
               <Post getTwitterData2={getTwitterData}/>
-            </Grid>
-            <Grid item container sm={12}>
               <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
             </Grid>
           </Grid>
