@@ -13,11 +13,12 @@ const UserSchema = new mongoose.Schema({
 });
 
 const JobsSchema = new mongoose.Schema({
-  sendAt: { type: Date },
   completed: { type: Boolean, default: false },
-  payload: mongoose.Schema.Types.Mixed,
-  youtubeToken: { type: String},
+  sendAt: { type: Date },
+  twitterPayload: mongoose.Schema.Types.Mixed,
   twitterToken: { type: String},
+  youtubePayload: mongoose.Schema.Types.Mixed,
+  youtubeToken: { type: String},
   usernames: {
     twitter: String,
     youtube: String

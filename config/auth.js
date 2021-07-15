@@ -42,7 +42,13 @@ module.exports = {
   ensureTwitterAuthenticated: function (req, res, next) {
     // const authHeader = req.headers['authorization'];
     // const token = authHeader && authHeader.split(' ')[1];
-    const token = req.cookies['twitter-auth-request'];
+    let token;
+    if (req.cookies['twitter-auth-request']) {
+      token = req.cookies['twitter-auth-request'];
+    } else {
+      token = req.headers.authorization.split(' ')[1];
+    }
+    debugger;
     if (token == null) {
       return res.sendStatus(401);
     }
