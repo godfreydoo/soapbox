@@ -9,23 +9,23 @@ module.exports = function(passport) {
     callbackURL: '/auth/google/callback'
   },
       
-  function(token, tokenSecret, profile, cb) {
+  function(token, refreshToken, profile, cb) {
+    console.log('TOKEN', token);
     const authDataToSerialize = {
       token: token,
-      tokenSecret: tokenSecret,
       youtube: profile.username
     };
     const accessToken = jwt.sign(authDataToSerialize, process.env.GOOGLE_CLIENT_SECRET);
-    return cb(null, profile, accessToken);
+    return cb(null, profile, token);
   }));
       
   passport.serializeUser(function(user, callback) {
     console.log('serializing user.');
-    callback(null, user.id);
+    callback(null, user);
   });
       
   passport.deserializeUser(function(user, callback) {
     console.log('deserialize user.');
-    callback(null, user.id);
+    callback(null, user);
   });
 };
