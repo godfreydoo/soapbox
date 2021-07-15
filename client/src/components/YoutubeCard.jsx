@@ -10,10 +10,19 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
+import IconButton from '@material-ui/core/IconButton';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import ShareIcon from '@material-ui/icons/Share';
 
 const cardStyles = makeStyles((theme) => ({
   root: {
-    borderRadius: 15
+    borderRadius: 15,
+    transition: '.8s',
+    '&:hover': {
+      boxShadow: '0 5px 5px 2px #c4302b',
+      transform: 'scale(1.05)'
+    }
   },
   media: {
     width: 360,
@@ -36,6 +45,7 @@ const YoutubeCard = function(props) {
   const classes = cardStyles();
 
   return (
+    // <Card className={classes.root}>
     <Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}>
       <CardHeader
         title={channelTitle}
@@ -56,13 +66,25 @@ const YoutubeCard = function(props) {
         component='iframe'
         src={YTurl}
       />
+      <CardActions>
+        <IconButton aria-label="like">
+          <ThumbUpIcon />
+        </IconButton>
+        <IconButton aria-label="dislike">
+          <ThumbDownAltIcon />
+        </IconButton>
+        <IconButton aria-label="share">
+          <ShareIcon />
+        </IconButton>
+      </CardActions>
       <CardContent>
         <b>{title}</b><br/>
-        {isExpanded && description}
       </CardContent>
       <CardActions>
-        {!isExpanded ? <ExpandMoreIcon onClick={handleExpandClick}></ExpandMoreIcon> : <ExpandLessIcon onClick={handleExpandClick}></ExpandLessIcon>}
+        {!isExpanded ? <IconButton><ExpandMoreIcon onClick={handleExpandClick}></ExpandMoreIcon></IconButton>
+          : <IconButton><ExpandLessIcon onClick={handleExpandClick}></ExpandLessIcon></IconButton>}
       </CardActions>
+      {isExpanded && <CardContent>{description}</CardContent>}
     </Card>
   );
 };

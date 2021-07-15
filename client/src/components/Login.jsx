@@ -47,7 +47,7 @@ export const Login = function({ setApplicationAuth }) {
       <br />
       {redirect ? <Redirect to='/dashboard'/> : ''}
       <Grid container direction="column" justifyContent="center">
-        <Grid item spacing={2}>
+        <Grid item>
           <TextField
             required
             id="email"
@@ -59,7 +59,7 @@ export const Login = function({ setApplicationAuth }) {
             }}/>
         </Grid>
         <br />
-        <Grid item spacing={2}>
+        <Grid item>
           <TextField
             type="password"
             required
@@ -70,7 +70,8 @@ export const Login = function({ setApplicationAuth }) {
               setPassword(event.target.value);
             }}/>
         </Grid>
-        <Grid item spacing={2} justifyContent="center">
+        <br />
+        <Grid item>
           <Button
             className={classes.button}
             variant="contained"
