@@ -7,7 +7,7 @@ import TwitterBarChart from './TwitterBarChart';
 
 const twitterListStyles = makeStyles((theme) => ({
   root: {
-    // backgroundColor: '#75ACEE',
+    backgroundColor: '#75ACEE',
   },
 }));
 
