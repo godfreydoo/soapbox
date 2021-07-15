@@ -4,9 +4,10 @@ import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
 import Post from './Post.jsx';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { MediaSelect } from './MediaSelect.jsx';
-import { Nav } from './Nav.jsx';
+import { NavLoggedIn } from './NavLoggedIn.jsx';
+import { NavLoggedOut } from './NavLoggedOut.jsx';
 import { Login } from './Login.jsx';
 import { Register } from './Register.jsx';
 import MetricsTab from './metrics/MetricsTab';
@@ -16,6 +17,13 @@ import { reqq } from '../../../server/routes/reqq.js';
 import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
 
+const getAppAuthCookie = function() {
+  if (Cookies.get('application-auth')) {
+    return true;
+  }
+  return false;
+};
+
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
   const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
@@ -23,6 +31,7 @@ const App = props => {
   const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
   const [activePostMetrics, setActivePostMetrics] = useState(null);
   const [currentSocialMedia, setCurrentSocialMedia] = useState(null);
+  const [applicationAuth, setApplicationAuth] = useState(getAppAuthCookie());
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
@@ -77,17 +86,46 @@ const App = props => {
       });
   };
 
+  const getCurrentPath = function() {
+    return window.location.pathname;
+  };
+
+  const unauthorizedPaths = function() {
+    if (getCurrentPath() !== '/login' || getCurrentPath() !== '/register') {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  if (!applicationAuth) {
+    return (
+      <Router>
+        {unauthorizedPaths() ? <Redirect to='/login'/> : null}
+        <div id="app">
+          <NavLoggedOut />
+          <Route path='/register'>
+            <Register />
+          </Route>
+          <Route path='/login'>
+            <Login setApplicationAuth={setApplicationAuth}/>
+          </Route>
+        </div>
+      </Router>
+    );
+  }
+
   return (
     <Router>
       <div id="app">
-        <Nav />
+        <NavLoggedIn
+          setApplicationAuth={setApplicationAuth}
+          applicationAuth={applicationAuth}/>
         <Grid container spacing={2}>
           <Grid item lg={12}>
           </Grid>
           <Grid container item lg={2} spacing={2}>
             <Switch>
-              <Route path='/register' exact component={Register}/>
-              <Route path='/login' exact component={Login}/>
               <MediaSelect
                 getTwitterData={getTwitterData}
                 getYoutubeData={getYoutubeData}
