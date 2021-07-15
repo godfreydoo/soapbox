@@ -16,13 +16,8 @@ import Grid from '@material-ui/core/Grid';
 import { reqq } from '../../../server/routes/reqq.js';
 import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
-
-const getAppAuthCookie = function() {
-  if (Cookies.get('application-auth')) {
-    return true;
-  }
-  return false;
-};
+import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
+import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
@@ -32,13 +27,14 @@ const App = props => {
   const [activePostMetrics, setActivePostMetrics] = useState(null);
   const [currentSocialMedia, setCurrentSocialMedia] = useState(null);
   const [applicationAuth, setApplicationAuth] = useState(getAppAuthCookie());
+  const [twitterAuth, setTwitterAuth] = useState(getTwitterAuthCookie());
+  const [firstTwitterPrint, setFirstTwitterPrint] = useState(false);
+  const [twitterUsername, setTwitterUsername] = useState(getTwitterUsername());
+  const [youtubeAuth, setYoutubeAuth] = useState(getYoutubeAuthCookie());
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-
     var token = Cookies.get('twitter-auth-request');
-    // console.log(document.cookie);
-    // console.log(reqq);
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
@@ -46,6 +42,7 @@ const App = props => {
         'Authorization': `Bearer ${token}`
       }
     };
+
     axios.post('/twitter/hashtag-data', {
       userId: '20702956',
       maxResults: '50'
@@ -54,6 +51,7 @@ const App = props => {
         setCurrentSocialMedia('twitter');
         setTwitterMetrics(resVal.data);
       });
+
     axios(config)
       .then(resVal => {
         setTwitterPosts(resVal.data);
@@ -63,6 +61,10 @@ const App = props => {
         setCurrentSocialMedia('twitter');
         console.log('Failed to retrieve twitter data');
       });
+
+    if (!firstTwitterPrint) {
+      setFirstTwitterPrint(true);
+    }
   };
 
   const getYoutubeData = function() {
@@ -98,6 +100,15 @@ const App = props => {
     }
   };
 
+  useEffect(() => {
+    if (!firstTwitterPrint && twitterAuth) {
+      getTwitterData();
+    }
+    if (!twitterUsername) {
+      getTwitterUsername();
+    }
+  });
+
   if (!applicationAuth) {
     return (
       <Router>
@@ -127,10 +138,10 @@ const App = props => {
           <Grid container item lg={2} spacing={2}>
             <Switch>
               <MediaSelect
+                twitterAuth={twitterAuth}
+                twitterUsername={twitterUsername}
                 getTwitterData={getTwitterData}
-                getYoutubeData={getYoutubeData}
-                twitterMetrics={JSON.stringify(twitterMetrics)}
-                youtubeData={JSON.stringify(youtubeData)}/>
+                getYoutubeData={getYoutubeData}/>
             </Switch>
           </Grid>
           <Grid container item lg={7} spacing={2}>
@@ -144,9 +155,13 @@ const App = props => {
             lg={3}
             justifyContent="flex-start"
             alignItems="flex-start">
-            <Grid container item lg={12} direction="column">
-              <Post getTwitterData2={getTwitterData}/>
-              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
+            <Grid item container sm={12}>
+              {twitterAuth ? <Post getTwitterData2={getTwitterData}/> : null}
+            </Grid>
+            <Grid item container sm={12}>
+              {twitterAuth ? <MetricsTab
+                activePostMetrics={activePostMetrics}
+                accountMetrics={activeAccountMetrics}/> : null}
             </Grid>
           </Grid>
         </Grid>
