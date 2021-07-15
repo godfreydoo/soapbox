@@ -10,15 +10,10 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 
 const cardStyles = makeStyles((theme) => ({
   root: {
-    width: 360,
   },
   media: {
-    width: 360,
-    height: 300
   },
 }));
-
-const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const TwitterCard = function(props) {
   const classes = cardStyles();
