@@ -42,7 +42,7 @@ const App = props => {
   const [youtubeAuth, setYoutubeAuth] = useState(getYoutubeAuthCookie());
 
   //currently uses hardcoded user info - will need to update to session/cookie info
-  const getTwitterData = function() {
+  const getTwitterData = function () {
     var token = Cookies.get('twitter-auth-request');
     let config = {
       method: 'get',
@@ -76,7 +76,7 @@ const App = props => {
     }
   };
 
-  const getYoutubeData = function() {
+  const getYoutubeData = function () {
     axios.post('/youtube/video', {
       channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
@@ -97,11 +97,11 @@ const App = props => {
       });
   };
 
-  const getCurrentPath = function() {
+  const getCurrentPath = function () {
     return window.location.pathname;
   };
 
-  const unauthorizedPaths = function() {
+  const unauthorizedPaths = function () {
     if (getCurrentPath() !== '/login' || getCurrentPath() !== '/register') {
       return true;
     } else {
@@ -121,14 +121,14 @@ const App = props => {
   if (!applicationAuth) {
     return (
       <Router>
-        {unauthorizedPaths() ? <Redirect to='/login'/> : null}
+        {unauthorizedPaths() ? <Redirect to='/login' /> : null}
         <div id="app">
           <NavLoggedOut />
           <Route path='/register'>
             <Register />
           </Route>
           <Route path='/login'>
-            <Login setApplicationAuth={setApplicationAuth}/>
+            <Login setApplicationAuth={setApplicationAuth} />
           </Route>
         </div>
       </Router>
@@ -140,7 +140,7 @@ const App = props => {
       <div id="app">
         <NavLoggedIn
           setApplicationAuth={setApplicationAuth}
-          applicationAuth={applicationAuth}/>
+          applicationAuth={applicationAuth} />
         <Grid container spacing={2}>
           <Grid item lg={12}>
           </Grid>
@@ -150,12 +150,12 @@ const App = props => {
                 twitterAuth={twitterAuth}
                 twitterUsername={twitterUsername}
                 getTwitterData={getTwitterData}
-                getYoutubeData={getYoutubeData}/>
+                getYoutubeData={getYoutubeData} />
             </Switch>
           </Grid>
           <Grid container item lg={7} spacing={2}>
-            {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
-              : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics}/>)
+            {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics} />)
+              : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics} />)
                 : null
             }
           </Grid>
@@ -170,7 +170,7 @@ const App = props => {
             <Grid item container sm={12}>
               {twitterAuth ? <MetricsTab
                 activePostMetrics={activePostMetrics}
-                accountMetrics={activeAccountMetrics}/> : null}
+                accountMetrics={activeAccountMetrics} /> : null}
             </Grid>
           </Grid>
         </Grid>
