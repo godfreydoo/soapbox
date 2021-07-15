@@ -19,11 +19,17 @@ const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
   const [twitterPosts, setTwitterPosts] = useState('');
   const [youtubeData, setYoutubeData] = useState('');
+  const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
   const [activePostMetrics, setActivePostMetrics] = useState(null);
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
+<<<<<<< HEAD
     var token = Cookie.get('twitter-auth-request');
+=======
+    console.log(document.cookie);
+    console.log(reqq);
+>>>>>>> bf5b0fa8e05307e47f3ab82e64bac401de3f8f6f
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
@@ -54,11 +60,18 @@ const App = props => {
     })
       .then(resVal => {
         setYoutubeData(resVal.data);
+        setActivePostMetrics(null);
+        axios.get(`/youtube/channel-stats?id=${'UCYZclLEqVsyPKP9HW87tPag'}`)
+          .then(response => {
+            setActiveAccountMetrics(response.data.items[0].statistics);
+          })
+          .catch(err => {
+            console.log('Failed to retrieve account metrics data');
+          });
       })
       .catch(err => {
         console.log('Failed to retrieve youtube data');
       });
-
   };
 
   return (
@@ -94,7 +107,7 @@ const App = props => {
               <Post />
             </Grid>
             <Grid item container sm={12}>
-              {/* <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={{ likes: 14, dislikes: 20, views: 300}}/> */}
+              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
             </Grid>
           </Grid>
         </Grid>
