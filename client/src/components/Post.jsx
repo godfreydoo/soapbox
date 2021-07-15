@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
@@ -7,11 +7,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import Schedule from './Schedule.jsx';
 import Grid from '@material-ui/core/Grid';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-const initialState = '';
+const initialState = {
+  sendAt: '',
+  twitterPayload: '',
+  twitterToken: ''
+};
+
 const cardStyles = makeStyles((theme) => ({
   post: {
     backgroundColor: '#c4302b',
@@ -22,11 +28,15 @@ const cardStyles = makeStyles((theme) => ({
 }));
 
 const Post = function(props) {
-  const [tweet, setTweet] = useState('');
+  const [tweet, setTweet] = useState({
+    sendAt: '',
+    twitterPayload: '',
+    twitterToken: Cookies.get('twitter-auth-request')
+  });
   const classes = cardStyles();
 
-  const handleOnChange = (e) => {
-    setTweet(e.target.value);
+  const handleStatusOnChange = (e) => {
+    setTweet(prevDetails => { return { ...prevDetails, twitterPayload: e.target.value }; });
   };
 
   const addMedia = function () {
@@ -34,26 +44,25 @@ const Post = function(props) {
   };
 
   const postTweet = function () {
+    var immediatePost = {
+      method: 'post',
+      url: '/twitter/tweet',
+      header: {
+        'authorization': `Bearer ${Cookies.get('twitter-auth-request')}`
+      },
+      data: {status: tweet.twitterPayload}
+    };
+    var scheduledPost = {
+      method: 'post',
+      url: '/jobs/schedule',
+      data: tweet
+    };
     if (tweet !== '') {
-      var token = Cookies.get('twitter-auth-request');
-      let config = {
-        method: 'post',
-        url: '/twitter/tweet',
-        header: {
-          'authorization': `Bearer ${token}`
-        },
-        data: {status: tweet}
-      };
-      axios(config)
-        .then(() => {
-          setTweet(initialState);
-        })
-        // .then(() => {
-        //   setTimeout(props.getTwitterData2(), 3000);
-        // })
-        .catch(err => {
-          console.log(err);
-        });
+      if (tweet.sendAt < new Date()) {
+        axios(immediatePost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
+      } else {
+        axios(scheduledPost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
+      }
     } else {
       alert('Tweet cannot be empty');
     }
@@ -69,8 +78,8 @@ const Post = function(props) {
           variant="outlined"
           multiline={true}
           rows={4}
-          value={tweet}
-          onChange={handleOnChange}
+          value={tweet.twitterPayload}
+          onChange={handleStatusOnChange}
           fullWidth={true}
         />
       </Grid>
@@ -93,6 +102,7 @@ const Post = function(props) {
           Photo/Video
           </Button>
         </ButtonGroup>
+        <Schedule setTweet={setTweet} date={tweet.sendAt}/>
       </Grid>
     </Grid>
 
