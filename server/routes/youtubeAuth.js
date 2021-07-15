@@ -24,7 +24,6 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-<<<<<<< HEAD
 router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
   
   try {
@@ -60,8 +59,6 @@ router.post('/upload', (req, res) => {
 //   }
 });
 
-=======
->>>>>>> parent of bab1743... Still attempting Auth
 router.get('/test', ensureGoogleAuthenticated, (req, res) => {
   res.send('Hello Tester');
 });

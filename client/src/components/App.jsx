@@ -24,12 +24,8 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-<<<<<<< HEAD
-    var token = Cookie.get('twitter-auth-request');
-=======
     console.log(document.cookie);
     console.log(reqq);
->>>>>>> bf5b0fa8e05307e47f3ab82e64bac401de3f8f6f
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
