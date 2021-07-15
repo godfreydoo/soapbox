@@ -30,8 +30,7 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
             }}
             endIcon={<YouTubeIcon />}
             variant="contained"
-            color="primary"
-          >
+            color="primary" >
             Youtube
           </Button>
           <Button className={classes.twitter}
@@ -44,8 +43,7 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
             }}
             endIcon={<TwitterIcon />}
             variant="contained"
-            color="primary"
-          >
+            color="primary" >
             Twitter
           </Button>
         </ButtonGroup>
