@@ -3,7 +3,7 @@ import YoutubeCard from './YoutubeCard.jsx';
 import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
 import Post from './Post.jsx';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { MediaSelect } from './MediaSelect.jsx';
 import { Nav } from './Nav.jsx';
@@ -13,11 +13,12 @@ import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { reqq } from '../../../server/routes/reqq.js';
-import Cookie from 'js-cookie';
+import mockTwitter2 from './mockTwitter.js';
+import Cookies from 'js-cookie';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
-  const [twitterPosts, setTwitterPosts] = useState('');
+  const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
   const [youtubeData, setYoutubeData] = useState('');
   const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
   const [activePostMetrics, setActivePostMetrics] = useState(null);
@@ -25,12 +26,10 @@ const App = props => {
 
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function() {
-<<<<<<< HEAD
-    var token = Cookie.get('twitter-auth-request');
-=======
-    console.log(document.cookie);
-    console.log(reqq);
->>>>>>> bf5b0fa8e05307e47f3ab82e64bac401de3f8f6f
+
+    var token = Cookies.get('twitter-auth-request');
+    // console.log(document.cookie);
+    // console.log(reqq);
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
@@ -43,16 +42,16 @@ const App = props => {
       maxResults: '50'
     })
       .then(resVal => {
-        setTwitterData(resVal.data);
         setCurrentSocialMedia('twitter');
         setTwitterMetrics(resVal.data);
       });
     axios(config)
       .then(resVal => {
-        console.log(resVal.data);
         setTwitterPosts(resVal.data);
+        setCurrentSocialMedia('twitter');
       })
       .catch(err => {
+        setCurrentSocialMedia('twitter');
         console.log('Failed to retrieve twitter data');
       });
   };
@@ -98,15 +97,21 @@ const App = props => {
           </Grid>
           <Grid container item lg={7} spacing={2}>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <button id="google-auth"><a href="/auth/google">Sign In with Google</a></button>
             <YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>
             {/* <TwitterList twitterData={twitterData}/> */}
 =======
+=======
+>>>>>>> devin
             {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
-              : currentSocialMedia === 'twitter' ? (<TwitterList twitterData={twitterData} setActivePostMetrics={setActivePostMetrics}/>)
+              : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics}/>)
                 : null
             }
+<<<<<<< HEAD
 >>>>>>> 29ad95e14cd5eddda4f48bd58e6e3a83e5cc38da
+=======
+>>>>>>> devin
           </Grid>
           <Grid container item
             spacing={2}
@@ -114,10 +119,10 @@ const App = props => {
             justifyContent="flex-start"
             alignItems="flex-start">
             <Grid item container sm={12}>
-              <Post />
+              <Post getTwitterData2={getTwitterData}/>
             </Grid>
             <Grid item container sm={12}>
-            <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
+              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
             </Grid>
           </Grid>
         </Grid>
