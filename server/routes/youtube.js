@@ -19,7 +19,7 @@ router.post('/video', (req, res) => {
   try {
     // console.log(req.body, req.query, req.params);
 
-    const videos = axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.GOOGLE_API}&channelId=${req.body.channelId}&part=id&order=date`).then(data => {
+    const videos = axios.get(`https://www.googleapis.com/youtube/v3/search?&maxResults=20&key=${process.env.GOOGLE_API}&channelId=${req.body.channelId}&part=id&order=date`).then(data => {
 
       const mappedVideos = data.data.items.map( video => {
         // console.log(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${video.id.videoId}&key=${process.env.GOOGLE_API}`);
@@ -30,6 +30,7 @@ router.post('/video', (req, res) => {
           const allVideoStats = [];
           stats.forEach(videoStats => { allVideoStats.push(videoStats.data.items); });
           // console.log(allVideoStats);
+          allVideoStats.pop();
           res.json(allVideoStats);
         });
     });
