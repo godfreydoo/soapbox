@@ -6,6 +6,7 @@
   "scripts": {
     "funny": "ECHO \"wort wort wort\"",
     "server": "nodemon -r dotenv/config server/index.js",
+    "start": "node -r dotenv/config server/index.js",
     "test": "jest --maxWorkers=50%",
     "test2": "echo 'All tests passed'"
   },
