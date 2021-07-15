@@ -19,6 +19,14 @@ import Cookies from 'js-cookie';
 import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
 import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
 
+import '../styles/style.css';
+import '../styles/analytics.css';
+import '../styles/login.css';
+import '../styles/metrics.css';
+import '../styles/modal.css';
+import '../styles/tiles.css';
+
+
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
   const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
