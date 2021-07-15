@@ -7,7 +7,6 @@ const { ensureAuthenticated } = require('../../config/auth');
 router.post('/schedule', async (req, res) => {
   try {
     await controllers.jobs.schedule(req, res);
-    res.status(200);
   } catch (err) {
     console.error(err);
   }

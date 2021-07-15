@@ -19,7 +19,7 @@ const executeTwitterJob = async function (document) {
     headers: {
       Authorization: `Bearer ${document.twitterToken}`
     },
-    data: { status: document.twitterPayload}
+    data: { status: document.twitterPayload }
   };
   try {
     let data = await axios(config);
@@ -30,8 +30,8 @@ const executeTwitterJob = async function (document) {
 
 const updateJob = async function () {
   try {
-    let response = await Jobs.updateMany({ completed: false, sendAt: {$lte: new Date() } }, { $set: { completed: true } });
-    return response;
+    let res = await Jobs.updateMany({ completed: false, sendAt: {$lte: new Date() } }, { $set: { completed: true } });
+    return res.nModified;
   } catch (err) {
     console.error(err);
   }
@@ -46,9 +46,7 @@ const checkJobs = new CronJob('* * * * *', async function () {
       });
       const promisesToResolve = await Promise.allSettled(remainingJobsToRun);
       const jobsUpdated = updateJob();
-      logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- jobs ran and updated\n`);
-    } else {
-      logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- no scheduled jobs\n`);
+      logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- jobs ran and jobs updated\n`);
     }
   } catch (err) {
     console.error(err);
@@ -59,8 +57,8 @@ const checkJobs = new CronJob('* * * * *', async function () {
 // every 30 minutes will delete completed jobs
 const deleteJobs = new CronJob('*/30 * * * *', async function () {
   try {
-    let response = await Jobs.deleteMany({completed: true});
-    logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- deleted ${response} completed jobs`);
+    let res = await Jobs.deleteMany({completed: true});
+    logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- deleted ${res.deletedCount} completed jobs\n`);
   } catch (err) {
     console.error(err);
   }

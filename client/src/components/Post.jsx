@@ -25,7 +25,6 @@ const Post = function(props) {
   const handleStatusOnChange = (e) => {
     setTweet(prevDetails => { return { ...prevDetails, twitterPayload: e.target.value }; });
   };
-
   const postTweet = function () {
     var immediatePost = {
       method: 'post',
@@ -41,7 +40,7 @@ const Post = function(props) {
       data: tweet
     };
     if (tweet !== '') {
-      if (tweet.sendAt === '') {
+      if (tweet.sendAt < new Date()) {
         axios(immediatePost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
       } else {
         axios(scheduledPost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });

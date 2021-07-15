@@ -34,8 +34,7 @@ const Schedule = (props) => {
           onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
-          }}
-        />
+          }}/>
         <KeyboardTimePicker
           margin="normal"
           id="time-picker"
@@ -44,8 +43,7 @@ const Schedule = (props) => {
           onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change time',
-          }}
-        />
+          }}/>
       </Grid>
     </MuiPickersUtilsProvider>
   );
