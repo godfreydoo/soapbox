@@ -155,7 +155,6 @@ const App = props => {
             lg={3}
             justifyContent="flex-start"
             alignItems="flex-start">
-<<<<<<< HEAD
             <Grid item container sm={12}>
               {twitterAuth ? <Post getTwitterData2={getTwitterData}/> : null}
             </Grid>
@@ -163,11 +162,6 @@ const App = props => {
               {twitterAuth ? <MetricsTab
                 activePostMetrics={activePostMetrics}
                 accountMetrics={activeAccountMetrics}/> : null}
-=======
-            <Grid container item lg={12} direction="column">
-              <Post getTwitterData2={getTwitterData}/>
-              <MetricsTab activePostMetrics={activePostMetrics} accountMetrics={activeAccountMetrics}/>
->>>>>>> main
             </Grid>
           </Grid>
         </Grid>
