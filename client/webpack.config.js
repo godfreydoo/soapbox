@@ -4,13 +4,14 @@ const DIST_DIR = path.join(__dirname, './dist');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  devtool: false,
   mode: 'development',
   entry: path.resolve(__dirname, './src/index.jsx'),
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node-modules/,
+        exclude: path.resolve(__dirname, 'node_modules/'),
         use: [{
           loader: 'babel-loader',
           options: {
@@ -62,6 +63,5 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${SRC_DIR}/index.html`,
     }),
-  ],
-  devtool: false
+  ]
 };
