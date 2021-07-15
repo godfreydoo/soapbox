@@ -56,8 +56,8 @@ const checkJobs = new CronJob('* * * * *', async function () {
 }, null, true, 'America/Los_Angeles');
 
 
-// every day at 10am will delete schedule jobs
-const deleteJobs = new CronJob('0 10 * * *', async function () {
+// every 30 minutes will delete completed jobs
+const deleteJobs = new CronJob('*/30 * * * *', async function () {
   try {
     let response = await Jobs.deleteMany({completed: true});
     logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- deleted ${response} completed jobs`);
