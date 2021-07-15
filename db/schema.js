@@ -12,23 +12,28 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-const JobsSchema = new mongoose.Schema({
+const TwitterJobsSchema = new mongoose.Schema({
   completed: { type: Boolean, default: false },
-  sendAt: { type: Date },
-  twitterPayload: mongoose.Schema.Types.Mixed,
-  twitterToken: { type: String},
-  youtubePayload: mongoose.Schema.Types.Mixed,
-  youtubeToken: { type: String},
-  usernames: {
-    twitter: String,
-    youtube: String
-  }
+  sendAt: { type: Date, default: Date.now },
+  payload: mongoose.Schema.Types.Mixed,
+  token: { type: String },
+  username: { type: String }
+});
+
+const YouTubeJobsSchema = new mongoose.Schema({
+  completed: { type: Boolean, default: false },
+  sendAt: { type: Date, default: Date.now },
+  payload: mongoose.Schema.Types.Mixed,
+  token: { type: String },
+  username: { type: String }
 });
 
 const User = mongoose.model('User', UserSchema);
-const Jobs = mongoose.model('Jobs', JobsSchema);
+const TwitterJobs = mongoose.model('TwitterJobs', TwitterJobsSchema);
+const YouTubeJobs = mongoose.model('YouTubeJobs', YouTubeJobsSchema);
 
 module.exports = {
   User,
-  Jobs
+  TwitterJobs,
+  YouTubeJobs
 };

@@ -14,8 +14,9 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 const initialState = {
   sendAt: '',
-  twitterPayload: '',
-  twitterToken: ''
+  payload: '',
+  token: '',
+  username: '',
 };
 
 const cardStyles = makeStyles((theme) => ({
@@ -30,13 +31,14 @@ const cardStyles = makeStyles((theme) => ({
 const Post = function(props) {
   const [tweet, setTweet] = useState({
     sendAt: '',
-    twitterPayload: '',
-    twitterToken: Cookies.get('twitter-auth-request')
+    payload: '',
+    token: Cookies.get('twitter-auth-request'),
+    username: Cookies.get('username')
   });
   const classes = cardStyles();
 
   const handleStatusOnChange = (e) => {
-    setTweet(prevDetails => { return { ...prevDetails, twitterPayload: e.target.value }; });
+    setTweet(prevDetails => { return { ...prevDetails, payload: e.target.value }; });
   };
 
   const addMedia = function () {
@@ -50,14 +52,14 @@ const Post = function(props) {
       header: {
         'authorization': `Bearer ${Cookies.get('twitter-auth-request')}`
       },
-      data: {status: tweet.twitterPayload}
+      data: {status: tweet.payload}
     };
     var scheduledPost = {
       method: 'post',
       url: '/jobs/schedule',
       data: tweet
     };
-    if (tweet !== '') {
+    if (tweet.payload !== '') {
       if (tweet.sendAt < new Date()) {
         axios(immediatePost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
       } else {
@@ -78,7 +80,7 @@ const Post = function(props) {
           variant="outlined"
           multiline={true}
           rows={4}
-          value={tweet.twitterPayload}
+          value={tweet.payload}
           onChange={handleStatusOnChange}
           fullWidth={true}
         />
