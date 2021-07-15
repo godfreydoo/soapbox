@@ -4,7 +4,7 @@ const DIST_DIR = path.join(__dirname, './dist');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: false,
+  devtool: 'source-map',
   mode: 'development',
   entry: path.resolve(__dirname, './src/index.jsx'),
   module: {
@@ -46,7 +46,7 @@ module.exports = {
     clean: true
   },
   optimization: {
-    minimize: true,
+    minimize: false,
     runtimeChunk: 'single',
     splitChunks: {
       cacheGroups: {
