@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Post from '../Post.jsx';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
