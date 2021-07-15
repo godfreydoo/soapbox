@@ -13,12 +13,8 @@ import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import { reqq } from '../../../server/routes/reqq.js';
-<<<<<<< HEAD
-import Cookie from 'js-cookie';
-=======
 import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
->>>>>>> 4942126f28b75bbf71e2c00df96838e3c2fc3ac1
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
@@ -100,16 +96,10 @@ const App = props => {
             </Switch>
           </Grid>
           <Grid container item lg={7} spacing={2}>
-<<<<<<< HEAD
-            <button id="google-auth"><a href="/auth/google">Sign In with Google</a></button>
-            <YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>
-            {/* <TwitterList twitterData={twitterData}/> */}
-=======
             {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
               : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics}/>)
                 : null
             }
->>>>>>> 4942126f28b75bbf71e2c00df96838e3c2fc3ac1
           </Grid>
           <Grid container item
             spacing={2}

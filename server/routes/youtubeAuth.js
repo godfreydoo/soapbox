@@ -7,7 +7,7 @@ const { ensureGoogleAuthenticated } = require('../../config/auth');
 require('../../config/googlePassport')(passport);
 
 router.get('/',
-  passport.authenticate('google', { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/youtube.upload"] }));
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload'] }));
 
 
 router.get('/callback',
@@ -25,19 +25,6 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
-<<<<<<< HEAD
-  
-  try {
-    console.log(req.params);
-    
-    const report = axios.get('https://youtubeanalytics.googleapis.com/v2/reports');
-    res.cookie('google-auth-request', req.authInfo);
-    res.send(report.data);
-  } catch (err) {
-    console.log(err);
-  }
-  
-=======
   Auth.getToken((err, token) => {
     if (err) {
       console.log(err, 400);
@@ -54,7 +41,6 @@ router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
       console.log(err);
     }
   });
->>>>>>> 4942126f28b75bbf71e2c00df96838e3c2fc3ac1
 });
 
 router.post('/upload', (req, res) => {
@@ -83,6 +69,6 @@ router.get('/test', ensureGoogleAuthenticated, (req, res) => {
 });
 
 router.post('/upload', (req, res) => {
-    const videoUpload = axiox.post(`https://www.googleapis.com/upload/youtube/v3/videos`);
+  const videoUpload = axiox.post('https://www.googleapis.com/upload/youtube/v3/videos');
 });
 module.exports = router;

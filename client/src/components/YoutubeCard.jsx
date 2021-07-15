@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-/* eslint-disable react/prop-types */
-import React from 'react';
-=======
 import React, { useState } from 'react';
->>>>>>> 4942126f28b75bbf71e2c00df96838e3c2fc3ac1
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -29,10 +24,7 @@ const cardStyles = makeStyles((theme) => ({
 const YTurl = 'https://www.youtube.com/embed/tVCYa_bnITg';
 
 const YoutubeCard = function(props) {
-<<<<<<< HEAD
-=======
   const [isExpanded, setIsExpanded] = useState(false);
->>>>>>> 4942126f28b75bbf71e2c00df96838e3c2fc3ac1
   const { id, snippet: { channelId, channelTitle, title, description }, statistics} = props.yt;
   const YTurl = `https://www.youtube.com/embed/${id}`;
   const avatar = 'https://yt3.ggpht.com/ytc/AKedOLR2ex_eFpC5a9xnkQqAYITEjBAYD1VUhTJmC0LN=s88-c-k-c0x00ffffff-no-rj';
