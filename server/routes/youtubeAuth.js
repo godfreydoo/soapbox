@@ -4,48 +4,36 @@ const axios = require('axios');
 const fs = require('fs');
 const passport = require('passport');
 const { google } = require('googleapis'); 
-const { youtube} = google.youtube('v3');
+const { youtube } = google.youtube('v3');
 const { ensureGoogleAuthenticated } = require('../../config/auth');
 require('../../config/googlePassport')(passport);
 
-var authClient = new google.auth.JWT(
-  'Service account client email address',
-  'youtube.pem',
-  null,
-  ['https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtube.upload'],
-  null
-);
 
-authClient.authorize(function(err, tokens) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  youtube.videos.insert({auth: authClient, part: 'snippet,status,contentDetails'}, function(err, resp) {
-    console.log(resp);
-    console.log(err);
-  });
-});
 
 
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_URI
+  'http://localhost:3000/dashboard'
 );
 google.options({
   auth: oauth2Client
 });
+
+const scopes = [
+  'https://www.googleapis.com/auth/plus.login',
+  'https://www.googleapis.com/auth/youtube.upload'
+];
 
 router.get('/',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload'] }));
 
 
 router.get('/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/login', scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload', 'https://www.googleapis.com/auth/yt-analytics.readonly', 'https://www.googleapis.com/auth/yt-analytics-monetary.readonly', 'https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtubepartner' ] }),
   function(req, res) {
     res.cookie('google-auth-request', req.authInfo);
-    res.redirect('/');
+    res.redirect('/auth/google/ytreports');
   });
 
 router.get('/logout', (req, res) => {
@@ -55,23 +43,28 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/ytreports', ensureGoogleAuthenticated, (req, res) => {
-  Auth.getToken((err, token) => {
-    if (err) {
-      console.log(err, 400);
-      return Logger.log(err);
+router.get('/ytreports', ensureGoogleAuthenticated, async (req, res) => {
+  console.log('REQCOOKIES', req.cookies['google-auth-request']);
+  debugger;
+  var config = {
+    method: 'get',
+    url: 'https://youtubeanalytics.googleapis.com/v2/reports?endDate=2021-05-01&ids=channel%3D%3DMINE&metrics=views%2Ccomments%2Clikes%2Cdislikes%2CestimatedMinutesWatched%2CaverageViewDuration&startDate=2017-01-01',
+    headers: { 
+      Authorization: `Bearer ya29.a0ARrdaM9Io8G5aS7M6YjccDrkFPwjOKvaQ8Gx4VgP7a1iT_jHKjoj7tR9o6fqEvLkabmDOfQS5ziW3Rr9BxjkbhPjKCh_A5XYd-KjtLmVP4Vgne3BMHd9ioi9b_MiS9eQpQ9CSKp28-qQS34hK5VndJAmqc3fQw`
     }
-    Auth.setCredentials(token);
-    try {
-      // console.log(req.params);
+  };
+  
+  try {
+    
 
-      const report = axios.get('https://youtubeanalytics.googleapis.com/v2/reports');
-      res.cookie('google-auth-request', req.authInfo);
-      res.send(report.data);
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    const report = await axios(config);
+    debugger;
+    // res.cookie('google-auth-request', req.authInfo);
+    res.json(report.data);
+  } catch (err) {
+    console.log(err);
+  }
+
 });
 
 router.post('/upload', (req, res) => {
@@ -96,6 +89,7 @@ router.post('/upload', (req, res) => {
 });
 
 router.get('/test', ensureGoogleAuthenticated, (req, res) => {
+  google.auth;
   res.send('Hello Tester');
 });
 

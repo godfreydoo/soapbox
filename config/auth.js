@@ -21,20 +21,21 @@ module.exports = {
   },
 
   ensureGoogleAuthenticated: function (req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    debugger;
+    const token = req.cookies['google-auth-request'];
+    // const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
       return res.sendStatus(401);
     }
-    jwt.verify(token, process.env.GOOGLE_CLIENT_SECRET, (err, authDataToSerialize) => {
-      if (err) {
-        return res.sendStatus(403);
-      }
-      req.user = authDataToSerialize.twitter;
-      req.tokenSecret = authDataToSerialize.tokenSecret;
-      req.token = authDataToSerialize.token;
-      next();
-    });
+    next();
+    // req.user = authDataToSerialize.youtube;
+    // req.token = authDataToSerialize.token;
+    // jwt.verify(token, process.env.GOOGLE_CLIENT_SECRET, (err, authDataToSerialize) => {
+    //   if (err) {
+    //     return res.sendStatus(403);
+    //   }
+     
+    // });
   },
 
 

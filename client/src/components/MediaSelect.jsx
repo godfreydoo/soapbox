@@ -22,6 +22,7 @@ export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterDat
   return (
     <div className="media-select-container">
       <div className='button-container'>
+        <a href="/auth/google">Sign In with Google</a>
         <ButtonGroup
           orientation="vertical">
           <Button className={classes.youtube}
