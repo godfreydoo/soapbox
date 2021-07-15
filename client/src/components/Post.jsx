@@ -7,15 +7,30 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 const initialState = '';
+const cardStyles = makeStyles((theme) => ({
+  post: {
+    backgroundColor: '#c4302b',
+  },
+  media: {
+    backgroundColor: '#00ACEE',
+  },
+}));
 
 const Post = function(props) {
-
   const [tweet, setTweet] = useState('');
+  const classes = cardStyles();
 
   const handleOnChange = (e) => {
     setTweet(e.target.value);
+  };
+
+  const addMedia = function () {
+    console.log('Media attached');
   };
 
   const postTweet = function () {
@@ -45,8 +60,8 @@ const Post = function(props) {
   };
 
   return (
-    <>
-      <div>
+    <Grid item container direction="column" lg={12} spacing={4} >
+      <Grid item container lg={12} justifyContent="center">
         <TextField
           id="outlined-helperText"
           label="Message"
@@ -54,22 +69,32 @@ const Post = function(props) {
           variant="outlined"
           multiline={true}
           rows={4}
-          style={{width: 300}}
           value={tweet}
           onChange={handleOnChange}
+          fullWidth={true}
         />
-      </div>
-      <div>
-        <Button
-          endIcon={<SendIcon />}
-          variant="contained"
-          color="primary"
-          onClick={postTweet}
-        >
+      </Grid>
+      <Grid item container lg={12} justifyContent="center">
+        <ButtonGroup fullWidth={true}>
+          <Button
+            className={classes.post}
+            endIcon={<SendIcon />}
+            variant="contained"
+            color="primary"
+            onClick={postTweet}>
           Send
-        </Button>
-      </div>
-    </>
+          </Button>
+          <Button
+            className={classes.post}
+            endIcon={<PhotoLibraryIcon />}
+            variant="contained"
+            color="primary"
+            onClick={addMedia}>
+          Photo/Video
+          </Button>
+        </ButtonGroup>
+      </Grid>
+    </Grid>
 
   );
 };
