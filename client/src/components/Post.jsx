@@ -8,6 +8,9 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Schedule from './Schedule.jsx';
+import Grid from '@material-ui/core/Grid';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 const initialState = {
   sendAt: '',
@@ -15,16 +18,31 @@ const initialState = {
   twitterToken: ''
 };
 
+const cardStyles = makeStyles((theme) => ({
+  post: {
+    backgroundColor: '#c4302b',
+  },
+  media: {
+    backgroundColor: '#00ACEE',
+  },
+}));
+
 const Post = function(props) {
   const [tweet, setTweet] = useState({
     sendAt: '',
     twitterPayload: '',
     twitterToken: Cookies.get('twitter-auth-request')
   });
+  const classes = cardStyles();
 
   const handleStatusOnChange = (e) => {
     setTweet(prevDetails => { return { ...prevDetails, twitterPayload: e.target.value }; });
   };
+
+  const addMedia = function () {
+    console.log('Media attached');
+  };
+
   const postTweet = function () {
     var immediatePost = {
       method: 'post',
@@ -51,8 +69,8 @@ const Post = function(props) {
   };
 
   return (
-    <>
-      <div>
+    <Grid item container direction="column" lg={12} spacing={4} >
+      <Grid item container lg={12} justifyContent="center">
         <TextField
           id="outlined-helperText"
           label="Message"
@@ -60,23 +78,33 @@ const Post = function(props) {
           variant="outlined"
           multiline={true}
           rows={4}
-          style={{width: 300}}
           value={tweet.twitterPayload}
           onChange={handleStatusOnChange}
+          fullWidth={true}
         />
-      </div>
-      <div>
-        <Button
-          endIcon={<SendIcon />}
-          variant="contained"
-          color="primary"
-          onClick={postTweet}
-        >
+      </Grid>
+      <Grid item container lg={12} justifyContent="center">
+        <ButtonGroup fullWidth={true}>
+          <Button
+            className={classes.post}
+            endIcon={<SendIcon />}
+            variant="contained"
+            color="primary"
+            onClick={postTweet}>
           Send
-        </Button>
+          </Button>
+          <Button
+            className={classes.post}
+            endIcon={<PhotoLibraryIcon />}
+            variant="contained"
+            color="primary"
+            onClick={addMedia}>
+          Photo/Video
+          </Button>
+        </ButtonGroup>
         <Schedule setTweet={setTweet} date={tweet.sendAt}/>
-      </div>
-    </>
+      </Grid>
+    </Grid>
 
   );
 };

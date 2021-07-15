@@ -30,8 +30,7 @@ export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterDat
             }}
             endIcon={<YouTubeIcon />}
             variant="contained"
-            color="primary"
-          >
+            color="primary" >
             Youtube
           </Button>
           <Button className={classes.twitter}
@@ -40,8 +39,7 @@ export const MediaSelect = function({ getTwitterData, getYoutubeData, twitterDat
             }}
             endIcon={<TwitterIcon />}
             variant="contained"
-            color="primary"
-          >
+            color="primary" >
             Twitter
           </Button>
         </ButtonGroup>
