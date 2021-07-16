@@ -14,7 +14,7 @@ const oAuth = youtube.authenticate({
 });
 
 const storage = multer.diskStorage({
-  destination: './',
+  destination: './videos',
   filename(req, file, cb) {
     const newFileName = `${uuidv4()}-${file.originalname}`;
 
@@ -42,6 +42,7 @@ router.post('/upload', uploadVideoFile, (req, res) => {
 router.get('/oauth2/callback', (req, res) => {
   res.redirect('/dashboard');
   const { filename, title, description } = JSON.parse(req.query.state);
+  debugger;
   oAuth.getToken(req.query.code, (err, tokens) => {
     if (err) {
       console.log('Issue with /oauth2/callback getToken route', err);
@@ -49,7 +50,7 @@ router.get('/oauth2/callback', (req, res) => {
     }
     oAuth.setCredentials(tokens);
 
-    youtube.video.insert({
+    youtube.videos.insert({
       resource: {
         snippet: { title, description },
         status: { privacyStatus: 'private' }
@@ -63,7 +64,7 @@ router.get('/oauth2/callback', (req, res) => {
         console.log('Issue with /oauth2/callback video insert route', err);
         return;
       }
-      console.log('Video has been updated: ', data);
+      console.log('Video has been uploaded and will appear shortly');
     });
   });
 });

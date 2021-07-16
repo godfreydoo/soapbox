@@ -53,7 +53,7 @@ const Post = function (props) {
 
   useEffect(() => {
     setYouTube({sendAt: form.sendAt, payload: form });
-    setTweet({sendAt: form.sendAt, payload: form.description });
+    setTweet(prevData => { return {...prevData, sendAt: form.sendAt, payload: form.description }; });
   }, [form]);
 
   const handleFormData = (e) => {
@@ -63,6 +63,7 @@ const Post = function (props) {
 
   const handlePostRouting = () => {
     if (mediaSelected.youtube && mediaSelected.twitter) {
+      debugger;
       Promise.allSettled([postTweet(), postVideo()]);
     } else {
       if (mediaSelected.twitter) {
@@ -79,13 +80,13 @@ const Post = function (props) {
       method: 'post',
       url: '/twitter/tweet',
       header: {
-        'authorization': `Bearer ${tweet.token}`
+        'authorization': `Bearer ${Cookies.get('twitter-auth-request')}`
       },
       data: { status: tweet.payload }
     };
     var scheduledPost = {
       method: 'post',
-      url: '/jobs/schedule',
+      url: '/jobs/schedule-twitter',
       data: tweet
     };
     if (tweet.payload !== '') {
@@ -98,14 +99,14 @@ const Post = function (props) {
       alert('Tweet cannot be empty');
     }
   };
+  const postVideo = async function () {
 
-  const postVideo = function () {
+    var videoData = new FormData();
 
-    const videoData = new FormData();
+    await videoData.append('videoFile', youtube.payload.file);
+    await videoData.append('title', youtube.payload.title);
+    await videoData.append('description', youtube.payload.description);
 
-    videoData.append('videoFile'.youtube.payload.file);
-    videoData.append('title'.youtube.payload.title);
-    videoData.append('title'.youtube.payload.description);
 
     var immediatePost = {
       method: 'post',
@@ -114,12 +115,13 @@ const Post = function (props) {
     };
     var scheduledPost = {
       method: 'post',
-      url: '/',
+      url: '/jobs/schedule-youtube',
       data: {
         sendAt: youtube.sendAt,
         payload: videoData
       }
     };
+    debugger;
     if (youtube.payload !== '') {
       if (youtube.sendAt < new Date()) {
         axios(immediatePost).then(() => { setForm(initialState.form); setYouTube(initialState.form); }).catch(err => { console.log(err); });
