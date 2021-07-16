@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
-import YouTubeIcon from '@material-ui/icons/YouTube'; 
+import YouTubeIcon from '@material-ui/icons/YouTube';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,6 +17,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import { Link } from 'react-router-dom';
 import Compose from './Compose';
+import PropTypes from 'prop-types';
 
 
 const drawerWidth = 240;
@@ -83,12 +84,12 @@ const useStyles = makeStyles((theme) => ({
   },
   typeography: {
     flexGrow: 1,
-    align: "center"
+    align: 'center'
   },
 }));
 
 const cardStyles = makeStyles((theme) => ({
-  youtube: { 
+  youtube: {
     'margin-left': '5px',
     'margin-top': '1em',
     'height': '65px',
@@ -116,7 +117,7 @@ const cardStyles = makeStyles((theme) => ({
 }));
 
 const cardStylesOpen = makeStyles((theme) => ({
-  youtube: { 
+  youtube: {
     'margin-left': '5px',
     'margin-top': '1em',
     'height': '100px',
@@ -188,7 +189,7 @@ export default function MiniDrawer( {getYoutubeData, twitterAuth, twitterUsernam
           <Typography variant="h6" noWrap>
             Soapbox
           </Typography>
-          <Typography variant="h6" noWrap center>
+          <Typography variant="h6" noWrap>
             <div className='twitter-account-container'>
               {twitterUsername ? `${twitterUsername}'s Feed` : null}
             </div>
@@ -232,7 +233,7 @@ export default function MiniDrawer( {getYoutubeData, twitterAuth, twitterUsernam
             endIcon={<YouTubeIcon />}
             variant="contained"
             color="primary" >
-            {open ? "YouTube" : "YT"}
+            {open ? 'YouTube' : 'YT'}
           </Button>
           <Divider />
           <Button className={buttonclasses.twitter}
@@ -246,11 +247,11 @@ export default function MiniDrawer( {getYoutubeData, twitterAuth, twitterUsernam
             endIcon={<TwitterIcon />}
             variant="contained"
             color="primary" >
-            {open ? "Twitter" : "TW"}
+            {open ? 'Twitter' : 'TW'}
           </Button>
-        </List> 
+        </List>
         <Divider />
-        <Compose /> 
+        <Compose />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -258,3 +259,11 @@ export default function MiniDrawer( {getYoutubeData, twitterAuth, twitterUsernam
     </div>
   );
 }
+
+MiniDrawer.propTypes = {
+  setApplicationAuth: PropTypes.func,
+  twitterAuth: PropTypes.bool,
+  twitterUsername: PropTypes.string,
+  getTwitterData: PropTypes.func,
+  getYoutubeData: PropTypes.func
+};

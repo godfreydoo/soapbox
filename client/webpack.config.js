@@ -45,20 +45,20 @@ module.exports = {
     assetModuleFilename: 'images/[hash][ext][query]',
     clean: true
   },
-  optimization: {
-    minimize: false,
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-          reuseExistingChunk: true,
-        }
-      }
-    }
-  },
+  // optimization: {
+  //   minimize: false,
+  //   runtimeChunk: 'single',
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       vendor: {
+  //         test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+  //         name: 'vendors',
+  //         chunks: 'all',
+  //         reuseExistingChunk: true,
+  //       }
+  //     }
+  //   }
+  // },
   plugins: [
     new HtmlWebpackPlugin({
       template: `${SRC_DIR}/index.html`,

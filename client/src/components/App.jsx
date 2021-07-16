@@ -152,9 +152,9 @@ const App = props => {
           setApplicationAuth={setApplicationAuth}
           applicationAuth={applicationAuth} />
         <Grid container spacing={10}>
-          <Grid item lg={12}>
+          <Grid item={true} lg={12}>
           </Grid>
-          <Grid container item lg={2} spacing={2}>
+          <Grid container item={true} lg={2} spacing={2}>
             <Switch>
               <MediaSelect
                 twitterAuth={twitterAuth}
@@ -164,7 +164,7 @@ const App = props => {
                 setApplicationAuth={setApplicationAuth} />
             </Switch>
           </Grid>
-          <Grid container item lg={7} spacing={2}>
+          <Grid container item={true} lg={7} spacing={2}>
             {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics} />)
               : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics} />)
                 : null
@@ -173,12 +173,13 @@ const App = props => {
           <Grid container
             spacing={2}
             lg={3}
+            item={true}
             justifyContent="flex-start"
             alignItems="flex-start">
-            <Grid item container sm={12}>
+            <Grid item={true} container sm={12}>
               {twitterAuth ? <Analytics selected={currentSocialMedia} /> : null}
             </Grid>
-            <Grid item container sm={12}>
+            <Grid item={true} container sm={12}>
               {twitterAuth ? <MetricsTab
                 selected={currentSocialMedia}
                 activePostMetrics={activePostMetrics}
