@@ -33,7 +33,7 @@ const cardStyles = makeStyles((theme) => ({
   },
 }));
 
-export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterData, getYoutubeData, setApplicationAuth }) {
+const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterData, getYoutubeData, setApplicationAuth }) {
   const classes = cardStyles();
 
   return (
@@ -58,3 +58,5 @@ MediaSelect.propTypes = {
   getTwitterData: PropTypes.func,
   getYoutubeData: PropTypes.func
 };
+
+export default MediaSelect;

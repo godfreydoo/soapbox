@@ -18,6 +18,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import { Link } from 'react-router-dom';
 import Compose from './Compose';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 
 const drawerWidth = 240;

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NavLoggedIn = function({ setApplicationAuth }) {
+const NavLoggedIn = function({ setApplicationAuth }) {
   const classes = useStyles();
   return (
     <>
@@ -45,24 +45,6 @@ export const NavLoggedIn = function({ setApplicationAuth }) {
           </Link>
         </Toolbar>
       </AppBar>
-      {/* <nav className='navigation-container'>
-        <Link
-          className='nav-link'
-          to='/dashboard'>
-          <h3>Soapbox</h3>
-        </Link>
-        <ul className='navigation-links'>
-          <Link
-            className='nav-link'
-            to='/login'
-            onClick={() => {
-              setApplicationAuth(false);
-              axios.get('/auth/twitter/logout');
-            }}>
-            <li>Logout</li>
-          </Link>
-        </ul>
-      </nav> */}
     </>
   );
 };
@@ -70,3 +52,5 @@ export const NavLoggedIn = function({ setApplicationAuth }) {
 NavLoggedIn.propTypes = {
   setApplicationAuth: PropTypes.func
 };
+
+export default NavLoggedIn;
