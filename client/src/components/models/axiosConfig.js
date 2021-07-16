@@ -9,6 +9,19 @@ export const getTwitterPostsConfig = function(token) {
   };
 };
 
+export const getTwitterHashtagConfig = function(id) {
+  return {
+    method: 'post',
+    url: '/twitter/hashtag-data',
+    data: {
+      userId: `${id}`,
+      maxResults: '50'
+    }
+  };
+};
+
+//Below endpoints are 'paused'
+
 export const getTwitterUserConfig = function (token, id) {
   return {
     method: 'post',
@@ -22,18 +35,7 @@ export const getTwitterUserConfig = function (token, id) {
   };
 };
 
-export const getTwitterHashtagConfig = function(id) {
-  return {
-    method: 'post',
-    url: '/twitter/hashtag-data',
-    data: {
-      userId: `${id}`,
-      maxResults: '50'
-    }
-  };
-};
-
-export const getTwitterMetricsConfig = function() {
+export const getTwitterMetricsConfig = function(id) {
   return {
     method: 'post',
     url: '/twitter/metrics',

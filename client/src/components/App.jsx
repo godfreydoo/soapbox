@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
 import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
 import { getTwitterMetricsConfig, getTwitterPostsConfig } from './models/axiosConfig.js';
-import { getTwitterHashtagConfig } from './models/axiosConfig.js';
+import { getTwitterHashtagConfig, getTwitterUserConfig } from './models/axiosConfig.js';
 import Login from './Login.jsx';
 import Register from './Register.jsx';
 import NavLoggedIn from './NavLoggedIn.jsx';
@@ -44,7 +44,7 @@ const App = props => {
   const getTwitterData = function () {
     const token = Cookies.get('twitter-auth-request');
     const id = Cookies.get('id');
-    const twitterMetricsConfig = getTwitterMetricsConfig();
+    const twitterMetricsConfig = getTwitterMetricsConfig(id);
     const twitterUserConfig = getTwitterUserConfig(token, id);
     const twitterHashtagConfig = getTwitterHashtagConfig(id);
     const twitterPostConfig = getTwitterPostsConfig(token);
@@ -57,14 +57,6 @@ const App = props => {
         console.log(err, 'Failed to retrieve Twitter Post data');
       });
 
-    axios(twitterUserConfig)
-      .then(resVal => {
-        // setActiveAccountMetrics([resVal.data]);
-      })
-      .catch(err => {
-        console.log(err, 'Failed to retrieve Twitter User data');
-      });
-
     axios(twitterHashtagConfig)
       .then(resVal => {
         setTwitterAnalytics(transformTwitterData(resVal.data));
@@ -73,13 +65,21 @@ const App = props => {
         console.log('Failed to retrieve Twitter Hashtag data');
       });
 
-    axios(twitterMetricsConfig)
-      .then(resVal => {
-        setTwitterMetrics(resVal.data);
-      })
-      .catch(err => {
-        console.log('Failed to retrieve Twitter Metrics data');
-      });
+    // axios(twitterUserConfig)
+    //   .then(resVal => {
+    //     // setActiveAccountMetrics([resVal.data]);
+    //   })
+    //   .catch(err => {
+    //     console.log(err, 'Failed to retrieve Twitter User data');
+    //   });
+
+    // axios(twitterMetricsConfig)
+    //   .then(resVal => {
+    //     setTwitterMetrics(resVal.data);
+    //   })
+    //   .catch(err => {
+    //     console.log('Failed to retrieve Twitter Metrics data');
+    //   });
 
     setCurrentSocialMedia('twitter');
 

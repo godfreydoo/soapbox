@@ -74,7 +74,6 @@ router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
   try {
     const tweets = await client.get(`users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics,non_public_metrics&max_results=${req.body.maxResults}`);
 
-    console.log(tweets);
     res.status(200).end(JSON.stringify(tweets.data.data));
 
   } catch (err) {
