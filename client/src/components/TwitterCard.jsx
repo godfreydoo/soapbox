@@ -61,7 +61,6 @@ const TwitterCard = function(props) {
       {/* {avatar && (<Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}> */}
       {avatar && (<Card className={classes.root}>
         <CardHeader
-          titleTypographyProps={{color: 'red'}}
           title={name}
           subheader={`@${screenname}`}
           avatar={
