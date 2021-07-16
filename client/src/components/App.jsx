@@ -52,10 +52,19 @@ const App = props => {
       }
     };
 
-    axios.post('/twitter/hashtag-data', {
-      userId: '20702956',
-      maxResults: '50'
-    })
+    let metricsConfig = {
+      method: 'post',
+      url: '/twitter/metrics',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      data: {
+        userId: `${Cookies.get('id')}`,
+        maxResults: '25'
+      }
+    };
+
+    axios(metricsConfig)
       .then(resVal => {
         setCurrentSocialMedia('twitter');
         setTwitterMetrics(resVal.data);
@@ -64,11 +73,12 @@ const App = props => {
     axios(config)
       .then(resVal => {
         setTwitterPosts(resVal.data);
+        setActiveAccountMetrics(resVal.data);
         setCurrentSocialMedia('twitter');
       })
       .catch(err => {
         setCurrentSocialMedia('twitter');
-        console.log('Failed to retrieve twitter data');
+        console.log(err, 'Failed to retrieve twitter data');
       });
 
     if (!firstTwitterPrint) {
@@ -170,6 +180,7 @@ const App = props => {
             </Grid>
             <Grid item container sm={12}>
               {twitterAuth ? <MetricsTab
+                selected={currentSocialMedia}
                 activePostMetrics={activePostMetrics}
                 accountMetrics={activeAccountMetrics} /> : null}
             </Grid>

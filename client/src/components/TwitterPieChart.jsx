@@ -2,13 +2,6 @@ import React, { PureComponent } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 import PropTypes from 'prop-types';
 
-const data = [
-  { group: 'Group A', value: 400 },
-  { group: 'Group B', value: 300 },
-  { group: 'Group C', value: 300 },
-  { group: 'Group D', value: 200 },
-];
-
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
