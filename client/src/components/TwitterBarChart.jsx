@@ -8,6 +8,8 @@ export default class TwitterBarChart extends PureComponent {
   }
 
   render() {
+    const xkey = this.props.entity;
+
     return (
       <ResponsiveContainer width='100%' height={300}>
         <BarChart
@@ -22,13 +24,15 @@ export default class TwitterBarChart extends PureComponent {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="hashtag" />
+          <XAxis dataKey={xkey} />
           <YAxis dataKey="retweetAvg" />
           <YAxis dataKey="likesAvg" />
+          <YAxis dataKey="replyAvg" />
           <Tooltip />
           <Legend />
           <Bar dataKey="retweetAvg" fill="#8884d8" />
           <Bar dataKey="likesAvg" fill="#82ca9d" />
+          <Bar dataKey="replyAvg" fill="#ffc658" />
         </BarChart>
       </ResponsiveContainer>
     );
@@ -36,5 +40,6 @@ export default class TwitterBarChart extends PureComponent {
 }
 
 TwitterBarChart.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.array,
+  entity: PropTypes.string,
 };

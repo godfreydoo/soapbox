@@ -6,10 +6,12 @@ import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import CloseIcon from '@material-ui/icons/Close';
+import { alpha } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
+    width: '60%',
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -47,7 +49,7 @@ export default function ComposeModal(props) {
 }
 
 ComposeModal.propTypes = {
-  body: PropTypes.elementType,
+  body: PropTypes.object,
   header: PropTypes.string,
   handleOpenAndClose: PropTypes.func
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CreateIcon from '@material-ui/icons/Create';
-import Modal from './shared/Modal.jsx';
+import Modal from './Posting/Modal.jsx';
 import Post from './Post.jsx';
 import { cardStyles, cardStylesOpen, MiniDrawer } from './Sidebar.jsx';
 import PropTypes from 'prop-types';

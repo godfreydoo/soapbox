@@ -7,8 +7,8 @@ import TwitterAnalytics from './TwitterAnalytics.jsx';
 
 const Analytics = function (props) {
 
-  const analytics = props.selected && props.selected === 'twitter' ? (<div style={{ width: '100%' }}>
-    <TwitterAnalytics />
+  const analytics = props.selected && props.data && props.selected === 'twitter' ? (<div style={{ width: '100%' }}>
+    <TwitterAnalytics data={props.data} />
   </div>) : null;
 
   return (
@@ -18,6 +18,7 @@ const Analytics = function (props) {
 
 Analytics.propTypes = {
   selected: PropTypes.string,
+  data: PropTypes.array,
 };
 
 export default Analytics;

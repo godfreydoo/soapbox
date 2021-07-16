@@ -25,7 +25,7 @@ const TwitterList = function(props) {
       <Grid container className={classes.devin} spacing={2}>
         {twitterList && twitterList.map((tweet) => (
           <Grid item xs={12} sm={6} md={4} key={tweet.id}>
-            <TwitterCard tweet={tweet}/>
+            <TwitterCard tweet={tweet} setActivePostMetrics={props.setActivePostMetrics}/>
           </Grid>
         ))}
       </Grid>
@@ -34,7 +34,8 @@ const TwitterList = function(props) {
 };
 
 TwitterList.propTypes = {
-  twitterPosts: PropTypes.array
+  twitterPosts: PropTypes.array,
+  setActivePostMetrics: PropTypes.func,
 };
 
 export default TwitterList;

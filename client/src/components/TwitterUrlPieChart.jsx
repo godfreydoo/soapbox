@@ -18,7 +18,7 @@ const renderActiveShape = (props) => {
   return (
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.hashtag}
+        {payload.url}
       </text>
       <Sector
         cx={cx}
@@ -48,7 +48,7 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default class TwitterPieChart extends PureComponent {
+export default class TwitterUrlPieChart extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -87,6 +87,6 @@ export default class TwitterPieChart extends PureComponent {
   }
 }
 
-TwitterPieChart.propTypes = {
+TwitterUrlPieChart.propTypes = {
   data: PropTypes.array,
 };

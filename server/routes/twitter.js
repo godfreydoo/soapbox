@@ -65,6 +65,7 @@ router.post('/user', ensureTwitterAuthenticated, async (req, res) => {
 });
 
 router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
+  console.log('hello?', req.token, req.tokenSecret, req.body.userId, req.body.maxResults);
   const client = new Twitter2({
     consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line
     consumer_secret: process.env.CONSUMER_SECRET, // eslint-disable-line
@@ -75,8 +76,11 @@ router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
   try {
     const tweets = await client.get(`users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics,non_public_metrics&max_results=${req.body.maxResults}`);
 
+    console.log(tweets);
     res.status(200).end(JSON.stringify(tweets.data.data));
+
   } catch (err) {
+
     res.status(404).end('There was an error fetching Twitter data:', err);
   }
 
