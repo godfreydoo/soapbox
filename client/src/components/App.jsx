@@ -2,7 +2,7 @@ import YoutubeList from './YoutubeList.jsx';
 import YoutubeCard from './YoutubeCard.jsx';
 import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
-import Post from './Post.jsx';
+import Analytics from './Analytics.jsx';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { MediaSelect } from './MediaSelect.jsx';
@@ -18,17 +18,20 @@ import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
 import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
 import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
+import transformTwitterData from './transformTwitterData.js';
 
 import '../styles/style.css';
 import '../styles/analytics.css';
 import '../styles/login.css';
+import '../styles/register.css';
 import '../styles/metrics.css';
 import '../styles/modal.css';
 import '../styles/tiles.css';
-
+import '../styles/compose.css';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
+  const [twitterAnalytics, setTwitterAnalytics] = useState();
   const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
   const [youtubeData, setYoutubeData] = useState('');
   const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
@@ -41,8 +44,10 @@ const App = props => {
   const [youtubeAuth, setYoutubeAuth] = useState(getYoutubeAuthCookie());
 
   //currently uses hardcoded user info - will need to update to session/cookie info
-  const getTwitterData = function() {
+  const getTwitterData = function () {
     var token = Cookies.get('twitter-auth-request');
+    var id = Cookies.get('id');
+
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
@@ -51,8 +56,19 @@ const App = props => {
       }
     };
 
+    let userConfig = {
+      method: 'post',
+      url: '/twitter/user',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      data: {
+        userId: `${id}`
+      }
+    };
+
     axios.post('/twitter/hashtag-data', {
-      userId: '20702956',
+      userId: `${id}`,
       maxResults: '50'
     })
       .then(resVal => {
@@ -70,13 +86,13 @@ const App = props => {
               verified: results.data.verified,
               currentStatus: results.data.status.retweeted_status.text
             };
-            console.log(accountMetricData);
             setActiveAccountMetrics(accountMetricData);
           })
           .catch(err => {
             console.log(err);
             console.log('Failed to fetch twitter user data');
           });
+        setTwitterAnalytics(transformTwitterData(resVal.data));
       });
 
     axios(config)
@@ -86,7 +102,15 @@ const App = props => {
       })
       .catch(err => {
         setCurrentSocialMedia('twitter');
-        console.log('Failed to retrieve twitter data');
+        console.log(err, 'Failed to retrieve twitter data');
+      });
+
+    axios(userConfig)
+      .then(resVal => {
+        // setActiveAccountMetrics([resVal.data]);
+      })
+      .catch(err => {
+        console.log(err, 'Failed to retrieve twitter data');
       });
 
     if (!firstTwitterPrint) {
@@ -94,7 +118,7 @@ const App = props => {
     }
   };
 
-  const getYoutubeData = function() {
+  const getYoutubeData = function () {
     axios.post('/youtube/video', {
       channelId: 'UCYZclLEqVsyPKP9HW87tPag'
     })
@@ -115,11 +139,11 @@ const App = props => {
       });
   };
 
-  const getCurrentPath = function() {
+  const getCurrentPath = function () {
     return window.location.pathname;
   };
 
-  const unauthorizedPaths = function() {
+  const unauthorizedPaths = function () {
     if (getCurrentPath() !== '/login' || getCurrentPath() !== '/register') {
       return true;
     } else {
@@ -139,57 +163,62 @@ const App = props => {
   if (!applicationAuth) {
     return (
       <Router>
-        {unauthorizedPaths() ? <Redirect to='/login'/> : null}
+        {unauthorizedPaths() ? <Redirect to='/login' /> : null}
         <div id="app">
           <NavLoggedOut />
           <Route path='/register'>
             <Register />
           </Route>
           <Route path='/login'>
-            <Login setApplicationAuth={setApplicationAuth}/>
+            <Login setApplicationAuth={setApplicationAuth} />
           </Route>
         </div>
       </Router>
     );
   }
 
+  console.log(currentSocialMedia, twitterPosts);
+
   return (
     <Router>
       <div id="app">
         <NavLoggedIn
           setApplicationAuth={setApplicationAuth}
-          applicationAuth={applicationAuth}/>
-        <Grid container spacing={2}>
-          <Grid item lg={12}>
+          applicationAuth={applicationAuth} />
+        <Grid container spacing={10}>
+          <Grid item={true} lg={12}>
           </Grid>
-          <Grid container item lg={2} spacing={2}>
+          <Grid container item={true} lg={2} spacing={2}>
             <Switch>
               <MediaSelect
                 twitterAuth={twitterAuth}
                 twitterUsername={twitterUsername}
                 getTwitterData={getTwitterData}
-                getYoutubeData={getYoutubeData}/>
+                getYoutubeData={getYoutubeData}
+                setApplicationAuth={setApplicationAuth} />
             </Switch>
           </Grid>
-          <Grid container item lg={7} spacing={2}>
-            {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics}/>)
-              : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics}/>)
+          <Grid container item={true} lg={7} spacing={2}>
+            {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics} />)
+              : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics} />)
                 : null
             }
           </Grid>
-          <Grid container item
+          <Grid container
             spacing={2}
             lg={3}
+            item={true}
             justifyContent="flex-start"
             alignItems="flex-start">
-            <Grid item container sm={12}>
-              {twitterAuth ? <Post getTwitterData2={getTwitterData}/> : null}
-            </Grid>
-            <Grid item container sm={12}>
+            <Grid item={true} container sm={12}>
               {twitterAuth ? <MetricsTab
+                selected={currentSocialMedia}
                 activePostMetrics={activePostMetrics}
-                accountMetrics={activeAccountMetrics}/> : null}
+                accountMetrics={activeAccountMetrics} /> : null}
+              {twitterAuth ? <Analytics selected={currentSocialMedia} data={twitterAnalytics} /> : null}
             </Grid>
+            {/* <Grid item={true} container sm={12}> */}
+            {/* </Grid> */}
           </Grid>
         </Grid>
       </div>
