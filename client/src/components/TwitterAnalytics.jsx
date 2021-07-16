@@ -11,7 +11,7 @@ import TwitterPieChart from './TwitterPieChart';
 
 const cardStyles = makeStyles((theme) => ({
   analytics: {
-    backgroundColor: '#c4302b',
+    'backgroundColor': '#c4302b',
   },
 }));
 
