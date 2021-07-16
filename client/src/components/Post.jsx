@@ -62,9 +62,16 @@ const Post = function (props) {
   };
 
   const handlePostRouting = () => {
-    // console.log(mediaSelected);
-    // console.log(tweet);
-    // console.log(youtube);
+    if (mediaSelected.youtube && mediaSelected.twitter) {
+      Promise.allSettled([postTweet(), postVideo()]);
+    } else {
+      if (mediaSelected.twitter) {
+        postTweet();
+      }
+      if (mediaSelected.youtube) {
+        postVideo();
+      }
+    }
   };
 
   const postTweet = function () {
