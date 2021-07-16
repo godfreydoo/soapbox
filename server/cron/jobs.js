@@ -5,6 +5,8 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const date = require('date-and-time');
+const FormData = require('form-data');
+
 
 const logStream = fs.createWriteStream(path.join(__dirname, 'cron.log'));
 
@@ -22,25 +24,25 @@ const executeTwitterJob = async function (document) {
     data: { status: document.payload }
   };
   try {
-    let data = await axios(config);
+    await axios(config);
   } catch (err) {
-    console.error(err);
+    logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- cron executeTwitterJob has an error for ${document._id}\n`);
   }
 };
 
 const checkJobs = new CronJob('* * * * *', async function () {
   try {
-    let response = await TwitterJobs.find({ completed: false, sendAt: {$lte: new Date() } });
-    if (response.length > 0) {
-      const remainingJobsToRun = response.map( async (value, index) => {
+    let twitterResponse = await TwitterJobs.find({ completed: false, sendAt: {$lte: new Date() } });
+    if (twitterResponse.length > 0) {
+      const remainingTwitterJobsToRun = twitterResponse.map( async (value, index) => {
         await executeTwitterJob(value);
       });
-      const promisesToResolve = await Promise.allSettled(remainingJobsToRun);
+      const promisesToResolve = await Promise.allSettled(remainingTwitterJobsToRun);
       let res = await TwitterJobs.updateMany({ completed: false, sendAt: {$lte: new Date() } }, { $set: { completed: true } });
-      logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- ${response.length} job(s) ran and ${res.nModified} job(s) updated\n`);
+      logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- ${twitterResponse.length} Twitter job(s) ran and ${res.nModified} job(s) updated\n`);
     }
   } catch (err) {
-    console.error(err);
+    console.error('cron checkJobs has an error');
   }
 }, null, true, 'America/Los_Angeles');
 
@@ -51,7 +53,7 @@ const deleteJobs = new CronJob('*/30 * * * *', async function () {
     let res = await TwitterJobs.deleteMany({completed: true});
     logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- deleted ${res.deletedCount} completed jobs\n`);
   } catch (err) {
-    console.error(err);
+    console.error('cron deleteJobs has an error');
   }
 }, null, true, 'America/Los_Angeles');
 

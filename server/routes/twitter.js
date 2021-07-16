@@ -145,7 +145,6 @@ var analyzeTimeOfDay = function (data) {
     var createdAt = Date(data[i].created_at);
     var formattedDate = date.format(createdAt, 'hh:mm A [GMT]Z');
 
-    console.log(formattedDate);
   }
 
   return analytics;
