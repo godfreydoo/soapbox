@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TwitterBarChart from './TwitterBarChart';
+import TwitterPieChart from './TwitterPieChart';
 
 const cardStyles = makeStyles((theme) => ({
   analytics: {
@@ -39,9 +40,9 @@ const TwitterAnalytics = function () {
       record['replies'] = metrics.replies;
       record['likes'] = metrics.likes;
       record['totalTweets'] = metrics.totalTweets,
-      record['retweetAvg'] = metrics.retweetAvg,
-      record['replyAvg'] = metrics.replyAvg,
-      record['likesAvg'] = metrics.likesAvg;
+      record['retweetAvg'] = metrics.retweetAvg.toFixed(1),
+      record['replyAvg'] = metrics.replyAvg.toFixed(1),
+      record['likesAvg'] = metrics.likesAvg.toFixed(1);
 
       transformed.push(record);
     }
@@ -66,6 +67,9 @@ const TwitterAnalytics = function () {
     (<>
       <Grid item container lg={12} justifyContent="center">
         <TwitterBarChart data={twitterAnalytics} />
+      </Grid>
+      <Grid item container lg={12} justifyContent="center">
+        <TwitterPieChart data={twitterAnalytics} />
       </Grid>
       <Grid item container lg={12} justifyContent="center">
         <Button className={classes.analytics}
