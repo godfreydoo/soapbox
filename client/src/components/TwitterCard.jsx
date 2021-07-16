@@ -44,14 +44,10 @@ const TwitterCard = function(props) {
   const classes = cardStyles();
   const { text: message, favorite_count: favoriteCount, retweet_count: retweetCount, user: {profile_image_url: avatar, name, location, screen_name: screenname}, entities: { hashtags}} = props.tweet;
 
-  console.log(props.tweet);
-  console.log('hashtags', hashtags);
-
   const statistics = {
     Favorite: favoriteCount,
     Retweet: retweetCount
   };
-  console.log('statistics', statistics);
 
   const handleReply = function () {
 
