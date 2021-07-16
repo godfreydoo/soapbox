@@ -42,7 +42,6 @@ export const Register = function() {
       usernames: [twitterUsername, youtubeUsername]
     })
       .then(resVal => {
-        console.log(resVal);
         if (resVal.data !== 'OK. Redirecting to /user/login') {
           setErrorMsgs(resVal.data);
         } else {

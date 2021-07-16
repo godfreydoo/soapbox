@@ -64,7 +64,6 @@ router.post('/user', ensureTwitterAuthenticated, async (req, res) => {
 });
 
 router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
-  console.log('hello?', req.token, req.tokenSecret, req.body.userId, req.body.maxResults);
   const client = new Twitter2({
     consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line
     consumer_secret: process.env.CONSUMER_SECRET, // eslint-disable-line
@@ -114,7 +113,7 @@ var analyzeMetrics = function (entityType, data) {
   for (var i = 0; i < data.length; i++) {
     var entityArr = data[i].entities ? data[i].entities[entityType] || [] : [];
     for (var j = 0; j < entityArr.length; j++) {
-      var entity = entityArr[j][identifier];
+      var entity = entityType === 'urls' ? entityArr[j][identifier].slice(0, entityArr[j][identifier].indexOf('com') + 3) : entityArr[j][identifier];
       if (analytics[entity]) {
         analytics[entity].retweets += data[i].public_metrics.retweet_count;
         analytics[entity].replies += data[i].public_metrics.reply_count;
@@ -134,18 +133,6 @@ var analyzeMetrics = function (entityType, data) {
         analytics[entity].likesAvg = analytics[entity].likes;
       }
     }
-  }
-
-  return analytics;
-};
-
-var analyzeTimeOfDay = function (data) {
-  var analytics = {};
-
-  for (var i = 0; i < data.length; i++) {
-    var createdAt = Date(data[i].created_at);
-    var formattedDate = date.format(createdAt, 'hh:mm A [GMT]Z');
-
   }
 
   return analytics;
