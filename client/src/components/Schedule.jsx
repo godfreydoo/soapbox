@@ -24,7 +24,7 @@ const Schedule = (props) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justifyContent="space-around">
+      <Grid container justifyContent="flex-end">
         <KeyboardDatePicker
           margin="normal"
           id="date-picker-dialog"

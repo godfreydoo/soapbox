@@ -11,6 +11,9 @@ import Schedule from './Schedule.jsx';
 import Grid from '@material-ui/core/Grid';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { alpha } from '@material-ui/core/styles';
+import Checkbox from './Posting/Checkbox.jsx';
+import Input from '@material-ui/core/Input';
 
 const initialState = {
   sendAt: '',
@@ -22,6 +25,7 @@ const initialState = {
 const cardStyles = makeStyles((theme) => ({
   post: {
     backgroundColor: '#c4302b',
+    margin: '0 auto'
   },
   media: {
     backgroundColor: '#00ACEE',
@@ -29,20 +33,33 @@ const cardStyles = makeStyles((theme) => ({
 }));
 
 const Post = function (props) {
+  const classes = cardStyles();
   const [tweet, setTweet] = useState({
     sendAt: '',
     payload: '',
     token: Cookies.get('twitter-auth-request'),
     username: Cookies.get('username')
   });
-  const classes = cardStyles();
 
-  const handleStatusOnChange = (e) => {
-    setTweet(prevDetails => { return { ...prevDetails, payload: e.target.value }; });
-  };
+  const [youtube, setYouTube] = useState({
+    sendAt: '',
+    payload: {},
+  });
 
-  const addMedia = function () {
-    console.log('Media attached');
+  const [form, setForm] = useState({
+    sendAt: '',
+    title: '',
+    description: '',
+    file: '',
+  });
+
+  useEffect(() => {
+    setYouTube({sendAt: form.sendAt, payload: form });
+    setTweet({sendAt: form.sendAt, payload: form.description });
+  }, [form]);
+
+  const handleFormData = (e) => {
+    setForm(prevData => { return { ...prevData, [e.target.name]: e.target.value }; });
   };
 
   const postTweet = function () {
@@ -71,42 +88,76 @@ const Post = function (props) {
   };
 
   return (
-    <Grid item container direction="column" lg={12} spacing={4} >
-      <Grid item container lg={12} justifyContent="center">
-        <TextField
-          id="outlined-helperText"
-          label="Message"
-          placeholder="Type your message here!"
-          variant="outlined"
-          multiline={true}
-          rows={4}
-          value={tweet.payload}
-          onChange={handleStatusOnChange}
-          fullWidth={true}
-        />
+    <div>
+      <Grid item container direction="column" lg={12} spacing={4} >
+        <div className="post-container">
+          <section className="post-interface">
+            <section>
+              <Checkbox />
+            </section>
+            <TextField
+              style={{padding: '10px'}}
+              id="outlined-helperText"
+              name="title"
+              label="Title"
+              placeholder="Type your title here!"
+              variant="outlined"
+              multiline={true}
+              rows={2}
+              value={form.title}
+              maxLength={100}
+              onChange={handleFormData}
+              fullWidth={true}/>
+            <TextField
+              style={{padding: '10px'}}
+              id="outlined-helperText"
+              name="description"
+              label="Description"
+              placeholder="Type your description here!"
+              variant="outlined"
+              multiline={true}
+              rows={6}
+              value={form.description}
+              maxLength={5000}
+              onChange={handleFormData}
+              fullWidth={true}/>
+            <section>
+              <Input
+                type="file"
+                name="file"
+                placeholder="Add Video"
+                onChange={handleFormData}
+                disableUnderline={true}/>
+            </section>
+          </section>
+          <section className="post-preview">
+          Hello
+          </section>
+        </div>
+        <div>
+          <section className="post-submit">
+            <Grid item container lg={12} justifyContent="center">
+              <Button
+                className={classes.post}
+                endIcon={<SendIcon />}
+                variant="contained"
+                color="primary"
+                onClick={postTweet}>
+                Send Now
+              </Button>
+              <Button
+                className={classes.post}
+                endIcon={<PhotoLibraryIcon />}
+                variant="contained"
+                color="primary">
+                Schedule Later
+              </Button>
+              <Schedule setTweet={setTweet} date={tweet.sendAt} />
+            </Grid>
+          </section>
+        </div>
       </Grid>
-      <Grid item container lg={12} justifyContent="center">
-        <ButtonGroup fullWidth={true}>
-          <Button
-            className={classes.post}
-            endIcon={<SendIcon />}
-            variant="contained"
-            color="primary"
-            onClick={postTweet}>
-            Send
-          </Button>
-          <Button
-            className={classes.post}
-            endIcon={<PhotoLibraryIcon />}
-            variant="contained"
-            color="primary"
-            onClick={addMedia}>
-            Photo/Video
-          </Button>
-        </ButtonGroup>
-        <Schedule setTweet={setTweet} date={tweet.sendAt} />
-      </Grid>
-    </Grid>
+    </div>
   );
 };
 
