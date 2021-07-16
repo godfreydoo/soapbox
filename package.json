@@ -65,7 +65,7 @@
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
     },
     "testPathIgnorePatterns" : [
-      "<rootDir>/server/youtubeUpload.js"
+      "<rootDir>/server/routes/youtubeUpload.js"
     ]
   }
 }
