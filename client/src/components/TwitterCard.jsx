@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -18,7 +19,7 @@ import Typography from '@material-ui/core/Typography';
 const twitterTimeConverter = function (twTime) {
   const year = twTime.slice(-4);
   const month = twTime.slice(4, 7);
-  const day = twTime.slice(8, 9);
+  const day = twTime.slice(8, 10);
   if (day[0] === '0') {
     day = day[1];
   }

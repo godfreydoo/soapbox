@@ -16,7 +16,7 @@ const renderActiveShape = (props) => {
   const textAnchor = cos >= 0 ? 'start' : 'end';
 
   return (
-    <g>
+    <g className="charts">
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
         {payload.hashtag}
       </text>
