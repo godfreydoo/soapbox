@@ -59,26 +59,34 @@ const App = props => {
 
     axios(twitterHashtagConfig)
       .then(resVal => {
+        setTwitterMetrics(resVal.data);
         setTwitterAnalytics(transformTwitterData(resVal.data));
       })
       .catch(err => {
-        console.log('Failed to retrieve Twitter Hashtag data');
+        console.log(err, 'Failed to retrieve Twitter Hashtag data');
       });
 
-    // axios(twitterUserConfig)
-    //   .then(resVal => {
-    //     // setActiveAccountMetrics([resVal.data]);
-    //   })
-    //   .catch(err => {
-    //     console.log(err, 'Failed to retrieve Twitter User data');
-    //   });
+    axios(twitterUserConfig)
+      .then(resVal => {
+        const accountMetricData = {
+          followers: resVal.data.followers_count,
+          friends: resVal.data.friends_count,
+          posts: resVal.data.statuses_count,
+          verified: resVal.data.verified,
+          currentStatus: resVal.data.status.retweeted_status.text
+        };
+        setActiveAccountMetrics(accountMetricData);
+      })
+      .catch(err => {
+        console.log(err, 'Failed to retrieve Twitter User data');
+      });
 
     // axios(twitterMetricsConfig)
     //   .then(resVal => {
     //     setTwitterMetrics(resVal.data);
     //   })
     //   .catch(err => {
-    //     console.log('Failed to retrieve Twitter Metrics data');
+    //     console.log(err, 'Failed to retrieve Twitter Metrics data');
     //   });
 
     setCurrentSocialMedia('twitter');

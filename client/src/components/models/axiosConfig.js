@@ -20,8 +20,6 @@ export const getTwitterHashtagConfig = function(id) {
   };
 };
 
-//Below endpoints are 'paused'
-
 export const getTwitterUserConfig = function (token, id) {
   return {
     method: 'post',
