@@ -24,6 +24,7 @@ export default class TwitterBarChart extends PureComponent {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="hashtag" />
           <YAxis dataKey="retweetAvg" />
+          <YAxis dataKey="likesAvg" />
           <Tooltip />
           <Legend />
           <Bar dataKey="retweetAvg" fill="#8884d8" />

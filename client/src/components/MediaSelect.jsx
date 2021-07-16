@@ -39,11 +39,11 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
   return (
     <div className="media-select-container">
       <div className={classes.btncontainer}>
-        <MiniDrawer 
-          getYoutubeData={getYoutubeData} 
-          getTwitterData={getTwitterData} 
-          twitterAuth={twitterAuth} 
-          twitterUsername={twitterUsername} 
+        <MiniDrawer
+          getYoutubeData={getYoutubeData}
+          getTwitterData={getTwitterData}
+          twitterAuth={twitterAuth}
+          twitterUsername={twitterUsername}
           setApplicationAuth={setApplicationAuth}>
         </MiniDrawer>
       </div>
