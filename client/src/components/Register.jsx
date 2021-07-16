@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import clipart from './assets/Daco_6019216.png';
+import clipart from './assets/ai-in-social-media.jpeg';
 
 let errorID = 0;
 
@@ -134,7 +134,7 @@ const Register = function() {
           </Grid>
         </Grid>
         <Grid className='register-clipart-container'item spacing={3} justifyContent="center">
-          <img src="https://m.economictimes.com/thumb/msid-69417800,width-1200,height-900,resizemode-4,imgsize-205855/ai-in-social-media.jpg" className="register-clipart" alt="Soapbox clipart bird megaphone"/>
+          <img src={clipart} className="register-clipart" alt="Soapbox clipart girl social media"/>
         </Grid>
       </Grid>
     </div>
