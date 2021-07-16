@@ -10,27 +10,12 @@ import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
+import PropTypes from 'prop-types';
 
-const GreenCheckbox = withStyles({
-  root: {
-    color: green[400],
-    '&$checked': {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
-
-
-
-export default function CheckboxLabels() {
-  const [state, setState] = React.useState({
-    youtube: false,
-    twitter: false
-  });
+export default function CheckboxLabels(props) {
 
   const handleChange = (event) => {
-    setState(prevState => { return { ...state, [event.target.name]: event.target.checked }; });
+    props.setMediaSelected(prevState => { return { ...prevState, [event.target.name]: event.target.checked }; });
   };
 
   return (
@@ -46,3 +31,7 @@ export default function CheckboxLabels() {
     </FormGroup>
   );
 }
+
+CheckboxLabels.propTypes = {
+  setMediaSelected: PropTypes.func,
+};

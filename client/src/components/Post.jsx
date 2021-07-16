@@ -7,19 +7,31 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import Schedule from './Schedule.jsx';
+import Schedule from './Posting/Schedule.jsx';
 import Grid from '@material-ui/core/Grid';
-import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { alpha } from '@material-ui/core/styles';
 import Checkbox from './Posting/Checkbox.jsx';
 import Input from '@material-ui/core/Input';
 
 const initialState = {
-  sendAt: '',
-  payload: '',
-  token: '',
-  username: '',
+  tweet: {
+    sendAt: '',
+    payload: '',
+    token: '',
+    username: '',
+  },
+  youtube: {
+    sendAt: '',
+    payload: {},
+  },
+  form: {
+    sendAt: '',
+    title: '',
+    description: '',
+    file: null,
+  }
 };
 
 const cardStyles = makeStyles((theme) => ({
@@ -34,24 +46,10 @@ const cardStyles = makeStyles((theme) => ({
 
 const Post = function (props) {
   const classes = cardStyles();
-  const [tweet, setTweet] = useState({
-    sendAt: '',
-    payload: '',
-    token: Cookies.get('twitter-auth-request'),
-    username: Cookies.get('username')
-  });
-
-  const [youtube, setYouTube] = useState({
-    sendAt: '',
-    payload: {},
-  });
-
-  const [form, setForm] = useState({
-    sendAt: '',
-    title: '',
-    description: '',
-    file: '',
-  });
+  const [tweet, setTweet] = useState({ sendAt: '', payload: '', token: Cookies.get('twitter-auth-request'), username: Cookies.get('username') });
+  const [youtube, setYouTube] = useState({ sendAt: '', payload: {} });
+  const [form, setForm] = useState({ sendAt: '', title: '', description: '', file: null });
+  const [mediaSelected, setMediaSelected] = React.useState({ youtube: false, twitter: false });
 
   useEffect(() => {
     setYouTube({sendAt: form.sendAt, payload: form });
@@ -59,7 +57,14 @@ const Post = function (props) {
   }, [form]);
 
   const handleFormData = (e) => {
-    setForm(prevData => { return { ...prevData, [e.target.name]: e.target.value }; });
+    let value = event.target.name === 'file' ? event.target.files[0] : e.target.value;
+    setForm({...form, [e.target.name]: value });
+  };
+
+  const handlePostRouting = () => {
+    // console.log(mediaSelected);
+    // console.log(tweet);
+    // console.log(youtube);
   };
 
   const postTweet = function () {
@@ -67,7 +72,7 @@ const Post = function (props) {
       method: 'post',
       url: '/twitter/tweet',
       header: {
-        'authorization': `Bearer ${Cookies.get('twitter-auth-request')}`
+        'authorization': `Bearer ${tweet.token}`
       },
       data: { status: tweet.payload }
     };
@@ -78,12 +83,37 @@ const Post = function (props) {
     };
     if (tweet.payload !== '') {
       if (tweet.sendAt < new Date()) {
-        axios(immediatePost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
+        axios(immediatePost).then(() => { setForm(initialState.tweet); }).catch(err => { console.log(err); });
       } else {
-        axios(scheduledPost).then(() => { setTweet(initialState); }).catch(err => { console.log(err); });
+        axios(scheduledPost).then(() => { setTweet(initialState.tweet); }).catch(err => { console.log(err); });
       }
     } else {
       alert('Tweet cannot be empty');
+    }
+  };
+
+  const postVideo = function () {
+    var immediatePost = {
+      method: 'post',
+      url: '/youtube/video',
+      header: {
+        'authorization': 'Bearer fill me in'
+      },
+      data: form
+    };
+    var scheduledPost = {
+      method: 'post',
+      url: '/youtube/video',
+      data: form
+    };
+    if (form.payload !== '') {
+      if (youtube.sendAt < new Date()) {
+        axios(immediatePost).then(() => { setForm(initialState.youtube); }).catch(err => { console.log(err); });
+      } else {
+        axios(scheduledPost).then(() => { setForm(initialState.youtube); }).catch(err => { console.log(err); });
+      }
+    } else {
+      alert('YouTube details cannot be empty');
     }
   };
 
@@ -93,7 +123,7 @@ const Post = function (props) {
         <div className="post-container">
           <section className="post-interface">
             <section>
-              <Checkbox />
+              <Checkbox setMediaSelected={setMediaSelected}/>
             </section>
             <TextField
               style={{padding: '10px'}}
@@ -127,7 +157,8 @@ const Post = function (props) {
                 name="file"
                 placeholder="Add Video"
                 onChange={handleFormData}
-                disableUnderline={true}/>
+                disableUnderline={true}
+                accept="video/mp4"/>
             </section>
           </section>
           <section className="post-preview">
@@ -142,17 +173,18 @@ const Post = function (props) {
                 endIcon={<SendIcon />}
                 variant="contained"
                 color="primary"
-                onClick={postTweet}>
+                onClick={handlePostRouting}>
                 Send Now
               </Button>
               <Button
                 className={classes.post}
-                endIcon={<PhotoLibraryIcon />}
+                endIcon={<AccessTimeIcon />}
                 variant="contained"
-                color="primary">
+                color="primary"
+                onClick={handlePostRouting}>
                 Schedule Later
               </Button>
-              <Schedule setTweet={setTweet} date={tweet.sendAt} />
+              <Schedule setForm={setForm} date={form.sendAt} />
             </Grid>
           </section>
         </div>
