@@ -65,7 +65,6 @@ export default class TwitterPieChart extends PureComponent {
   }
 
   onPieEnter (_, index) {
-    console.log('on pie enter');
     this.setState({
       activeIndex: index,
     });
