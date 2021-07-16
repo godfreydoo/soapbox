@@ -178,13 +178,13 @@ const App = props => {
             alignItems="flex-start">
             <Grid item={true} container sm={12}>
               {twitterAuth ? <Analytics selected={currentSocialMedia} /> : null}
-            </Grid>
-            <Grid item={true} container sm={12}>
               {twitterAuth ? <MetricsTab
                 selected={currentSocialMedia}
                 activePostMetrics={activePostMetrics}
                 accountMetrics={activeAccountMetrics} /> : null}
             </Grid>
+            {/* <Grid item={true} container sm={12}> */}
+            {/* </Grid> */}
           </Grid>
         </Grid>
       </div>

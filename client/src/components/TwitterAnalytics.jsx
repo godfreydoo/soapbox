@@ -50,18 +50,18 @@ const TwitterAnalytics = function () {
     return transformed;
   };
 
-  const getTwitterAnalytics = function () {
-    var id = Cookies.get('id');
+  // const getTwitterAnalytics = function () {
+  //   var id = Cookies.get('id');
 
-    axios.post('/twitter/hashtag-data', {
-      userId: `${id}`,
-      maxResults: '50'
-    })
-      .then(resVal => {
-        setTwitterAnalytics(transformData(resVal.data));
-      })
-      .then(() => setClicked(true));
-  };
+  //   axios.post('/twitter/hashtag-data', {
+  //     userId: `${id}`,
+  //     maxResults: '50'
+  //   })
+  //     .then(resVal => {
+  //       setTwitterAnalytics(transformData(resVal.data));
+  //     })
+  //     .then(() => setClicked(true));
+  // };
 
   const getAnalyticsButton = clicked ?
     (<>
