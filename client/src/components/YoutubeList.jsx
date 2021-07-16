@@ -7,7 +7,7 @@ import YoutubePieChart from './YoutubePieChart.jsx';
 
 const ytListStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#ffe7e6',
+    // backgroundColor: '#ffe7e6',
   },
 }));
 

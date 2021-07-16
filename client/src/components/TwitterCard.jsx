@@ -15,21 +15,39 @@ import RepeatIcon from '@material-ui/icons/Repeat';
 import ShareIcon from '@material-ui/icons/Share';
 import Typography from '@material-ui/core/Typography';
 
+const twitterTimeConverter = function (twTime) {
+  const year = twTime.slice(-4);
+  const month = twTime.slice(4, 7);
+  const day = twTime.slice(8, 9);
+  if (day[0] === '0') {
+    day = day[1];
+  }
+  return `${month} ${day}, ${year}`;
+};
+
 const cardStyles = makeStyles((theme) => ({
   root: {
     borderRadius: 15,
     width: 'auto',
     transition: '.8s',
+    backgroundColor: '#f7fbff',
     '&:hover': {
       // borderRadius: 50'
       boxShadow: '0 5px 5px 2px #00ACEE',
       transform: 'scale(1.05)'
     }
   },
-  media: {
+  cardHeader: {
+    'font-weight': 'bold',
   },
   retweet: {
     transform: 'rotate(90deg)',
+  },
+  cardContent: {
+    '&:hover': {
+      backgroundColor: '#f0f7ff',
+    }
+
   },
   title: {
     // fontWeight: "fontWeightBold"
@@ -42,7 +60,7 @@ const cardStyles = makeStyles((theme) => ({
 
 const TwitterCard = function(props) {
   const classes = cardStyles();
-  const { text: message, favorite_count: favoriteCount, retweet_count: retweetCount, user: {profile_image_url: avatar, name, location, screen_name: screenname}, entities: { hashtags}} = props.tweet;
+  const { text: message, favorite_count: favoriteCount, retweet_count: retweetCount, created_at: posted, user: {profile_image_url: avatar, name, location, screen_name: screenname}, entities: { hashtags}} = props.tweet;
 
   const statistics = {
     Favorite: favoriteCount,
@@ -66,8 +84,9 @@ const TwitterCard = function(props) {
       {avatar && (<Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}>
         {/* {avatar && (<Card className={classes.root}> */}
         <CardHeader
-          title={name}
-          subheader={`@${screenname}`}
+          className={classes.cardHeader}
+          title={<b>{name}</b>}
+          subheader={`@${screenname} • ${twitterTimeConverter(posted)}`}
           avatar={
             <Avatar src={avatar}/>
           }
@@ -78,11 +97,11 @@ const TwitterCard = function(props) {
             />
           }
         />
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           {message}
           <br />
           <br />
-          {hashtags.length > 0 && hashtags.map((hash) => (`#${hash.text} `))}
+          {hashtags.length > 0 && hashtags.map((hash) => (<b style={{color: '#00ACEE'}}>{`#${hash.text} `}</b>))}
         </CardContent>
         <CardActions className={classes.cardActionsIcons}>
           <IconButton aria-label="reply">
