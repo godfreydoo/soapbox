@@ -6,8 +6,9 @@ import PropTypes from 'prop-types';
 import TwitterBarChart from './TwitterBarChart';
 
 const twitterListStyles = makeStyles((theme) => ({
-  root: {
+  devin: {
     backgroundColor: '#75ACEE',
+    'margin-left': '2em',
   },
 }));
 
@@ -20,8 +21,8 @@ const TwitterList = function(props) {
   }, [props.twitterPosts]);
 
   return (
-    <div styles={classes.parentDiv}>
-      <Grid container className={classes.root} spacing={2}>
+    <div className="twitter-list-container"styles={classes.parentDiv}>
+      <Grid container className={classes.devin} spacing={2}>
         {twitterList && twitterList.map((tweet) => (
           <Grid item xs={12} sm={6} md={4} key={tweet.id}>
             <TwitterCard tweet={tweet}/>
