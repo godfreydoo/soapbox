@@ -34,6 +34,7 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
     "cron": "^1.8.2",
     "date-and-time": "^1.0.1",
     "dotenv": "^10.0.0",
@@ -43,6 +44,8 @@
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.2",
+    "multer": "^1.4.2",
+    "open": "^8.2.1",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
@@ -50,6 +53,7 @@
     "twitter": "^1.7.1",
     "twitter-api-v2": "^1.1.1",
     "twitter-v2": "^1.1.0",
+    "uuid": "^3.4.0",
     "youtube-api": "^3.0.1"
   },
   "jest": {

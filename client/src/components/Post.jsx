@@ -90,9 +90,9 @@ const Post = function (props) {
     };
     if (tweet.payload !== '') {
       if (tweet.sendAt < new Date()) {
-        axios(immediatePost).then(() => { setForm(initialState.tweet); }).catch(err => { console.log(err); });
+        axios(immediatePost).then(() => { setForm(initialState.form); setTweet(initialState.youtube); }).catch(err => { console.log(err); });
       } else {
-        axios(scheduledPost).then(() => { setTweet(initialState.tweet); }).catch(err => { console.log(err); });
+        axios(scheduledPost).then(() => { setForm(initialState.form); setTweet(initialState.youtube); }).catch(err => { console.log(err); });
       }
     } else {
       alert('Tweet cannot be empty');
@@ -100,24 +100,31 @@ const Post = function (props) {
   };
 
   const postVideo = function () {
+
+    const videoData = new FormData();
+
+    videoData.append('videoFile'.youtube.payload.file);
+    videoData.append('title'.youtube.payload.title);
+    videoData.append('title'.youtube.payload.description);
+
     var immediatePost = {
       method: 'post',
-      url: '/youtube/video',
-      header: {
-        'authorization': 'Bearer fill me in'
-      },
-      data: form
+      url: '/api/youtube/upload',
+      data: videoData
     };
     var scheduledPost = {
       method: 'post',
-      url: '/youtube/video',
-      data: form
+      url: '/',
+      data: {
+        sendAt: youtube.sendAt,
+        payload: videoData
+      }
     };
-    if (form.payload !== '') {
+    if (youtube.payload !== '') {
       if (youtube.sendAt < new Date()) {
-        axios(immediatePost).then(() => { setForm(initialState.youtube); }).catch(err => { console.log(err); });
+        axios(immediatePost).then(() => { setForm(initialState.form); setYouTube(initialState.form); }).catch(err => { console.log(err); });
       } else {
-        axios(scheduledPost).then(() => { setForm(initialState.youtube); }).catch(err => { console.log(err); });
+        axios(scheduledPost).then(() => { setForm(initialState.form); setYouTube(initialState.form); }).catch(err => { console.log(err); });
       }
     } else {
       alert('YouTube details cannot be empty');
