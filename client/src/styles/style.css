@@ -93,3 +93,13 @@ img {
 .twitter-btn {
   backgroundColor: '#00ACEE',
 }
+
+
+@media screen and (max-width: 1280px) {
+  
+.twitter-list-container {
+  margin-left: 2.5em;
+
+}
+  
+}

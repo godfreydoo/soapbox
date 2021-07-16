@@ -2,8 +2,6 @@ import YoutubeList from './YoutubeList.jsx';
 import YoutubeCard from './YoutubeCard.jsx';
 import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
-import Post from './Post.jsx';
-import Compose from './Compose.jsx';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { MediaSelect } from './MediaSelect.jsx';
@@ -152,7 +150,8 @@ const App = props => {
                 twitterAuth={twitterAuth}
                 twitterUsername={twitterUsername}
                 getTwitterData={getTwitterData}
-                getYoutubeData={getYoutubeData} />
+                getYoutubeData={getYoutubeData}
+                setApplicationAuth={setApplicationAuth} />
             </Switch>
           </Grid>
           <Grid container item lg={7} spacing={2}>
@@ -166,9 +165,6 @@ const App = props => {
             lg={3}
             justifyContent="flex-start"
             alignItems="flex-start">
-            <Grid item container sm={12}>
-              {twitterAuth ? <Compose getTwitterData2={getTwitterData}/> : null}
-            </Grid>
             <Grid item container sm={12}>
               {twitterAuth ? <TwitterAnalytics selected={currentSocialMedia} /> : null}
             </Grid>
