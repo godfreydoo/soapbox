@@ -79,12 +79,18 @@ const YoutubeCard = function(props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [didClickedLikeDislike, setDidClickedLikeDislike] = useState(false);
   const { id, snippet: { channelId, channelTitle, title, description, publishedAt }, statistics} = props.yt;
-  const { likeCount, dislikeCount, viewCount } = statistics;
+  const { likeCount, dislikeCount, viewCount, favoriteCount, commentCount } = statistics;
   const [likes, setLikes] = useState(likeCount);
   const [dislikes, setDislikes] = useState(dislikeCount);
   const YTurl = `https://www.youtube.com/embed/${id}`;
   const avatar = 'https://yt3.ggpht.com/ytc/AKedOLR2ex_eFpC5a9xnkQqAYITEjBAYD1VUhTJmC0LN=s88-c-k-c0x00ffffff-no-rj';
-
+  const formatedStatistics = {
+    Likes: likeCount,
+    Dislikes: dislikeCount,
+    Views: viewCount,
+    Favorites: favoriteCount,
+    Comments: commentCount,
+  };
   const handleExpandClick = function() {
     setIsExpanded(!isExpanded);
   };
@@ -107,7 +113,7 @@ const YoutubeCard = function(props) {
   const classes = cardStyles();
 
   return (
-    <Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}>
+    <Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, formatedStatistics)}>
       <CardHeader
         className={classes.cardHeader}
         title={<b>{channelTitle}</b>}
