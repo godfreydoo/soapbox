@@ -19,15 +19,12 @@ const cardStyles = makeStyles((theme) => ({
   root: {
     borderRadius: 15,
     width: 'auto',
-<<<<<<< HEAD
-=======
     transition: '.8s',
     '&:hover': {
       // borderRadius: 50'
       boxShadow: '0 5px 5px 2px #00ACEE',
       transform: 'scale(1.05)'
     }
->>>>>>> main
   },
   media: {
   },

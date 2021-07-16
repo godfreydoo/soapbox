@@ -121,7 +121,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Mini variant drawer
+            Soapbox
           </Typography>
         </Toolbar>
       </AppBar>
@@ -139,6 +139,7 @@ export default function MiniDrawer() {
         }}
       >
         <div className={classes.toolbar}>
+          <p>Social Media Options</p>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
