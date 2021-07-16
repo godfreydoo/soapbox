@@ -1,7 +1,8 @@
 const { TwitterJobs } = require('../schema.js');
+const { YouTubeJobs } = require('../schema.js');
 
 module.exports = {
-  schedule: async function (method, headers, body, query, params) {
+  scheduleTwitter: async function (method, headers, body, query, params) {
     const task = new TwitterJobs(body);
     try {
       await task.save();

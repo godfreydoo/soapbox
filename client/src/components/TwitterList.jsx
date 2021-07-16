@@ -7,7 +7,7 @@ import TwitterBarChart from './TwitterBarChart';
 
 const twitterListStyles = makeStyles((theme) => ({
   devin: {
-    backgroundColor: '#75ACEE',
+    // backgroundColor: '#75ACEE',
     'margin-left': '2em',
   },
 }));

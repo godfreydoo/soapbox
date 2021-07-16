@@ -8,14 +8,12 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const port = 3000;
-
-// Start cron jobs
-
 const axios = require('axios');
+const cors = require('cors');
 
 let app = express();
 
-
+app.use(cors());
 app.use(cookieSession({
   name: 'twitter-auth-session',
   keys: ['key1', 'key2']
@@ -51,6 +49,7 @@ app.use('/twitter', require('./routes/twitter'));
 app.use('/auth/twitter', require('./routes/twitterAuth'));
 app.use('/auth/google', require('./routes/youtubeAuth'));
 app.use('/youtube', require('./routes/youtube'));
+app.use('/api/youtube', require('./routes/youtubeUpload'));
 app.use('/user', require('./routes/user'));
 app.use('/jobs', require('./routes/jobs'));
 app.use('/*', require('./routes/index'));
@@ -65,3 +64,5 @@ if (process.env.NODE_ENV !== 'test') {
 
 // used for testing and portability
 module.exports = app;
+
+
