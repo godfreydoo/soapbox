@@ -18,7 +18,7 @@ const MetricsTab = props => {
       {Object.keys(props.accountMetrics).map((accountMetricName, index) => <MetricCard
         key={index}
         name={accountMetricName}
-        metricData={Object.values(props.accountMetrics)[index]}
+        metricData={props.accountMetrics[accountMetricName]}
       />)}
     </div>
   )) : (props.activePostMetrics !== null ? (
@@ -28,7 +28,7 @@ const MetricsTab = props => {
       {Object.keys(props.activePostMetrics).map((postMetricName, index) => <MetricCard
         key={index}
         name={postMetricName}
-        metricData={Object.values(props.activePostMetrics)[index]}
+        metricData={props.activePostMetrics[postMetricName]}
       />)}
     </div>
   ) : (
