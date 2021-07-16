@@ -42,7 +42,12 @@ const cardStyles = makeStyles((theme) => ({
 
 const TwitterCard = function(props) {
   const classes = cardStyles();
-  const { text: message, user: {profile_image_url: avatar, name, location, screen_name: screenname}} = props.tweet;
+  const { text: message, favorite_count: favoriteCount, retweet_count: retweetCount, user: {profile_image_url: avatar, name, location, screen_name: screenname}, entities: { hashtags}} = props.tweet;
+
+  const statistics = {
+    Favorite: favoriteCount,
+    Retweet: retweetCount
+  };
 
   const handleReply = function () {
 
@@ -58,8 +63,8 @@ const TwitterCard = function(props) {
 
   return (
     <>
-      {/* {avatar && (<Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}> */}
-      {avatar && (<Card className={classes.root}>
+      {avatar && (<Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}>
+        {/* {avatar && (<Card className={classes.root}> */}
         <CardHeader
           title={name}
           subheader={`@${screenname}`}
@@ -75,6 +80,9 @@ const TwitterCard = function(props) {
         />
         <CardContent>
           {message}
+          <br />
+          <br />
+          {hashtags.length > 0 && hashtags.map((hash) => (`#${hash.text} `))}
         </CardContent>
         <CardActions className={classes.cardActionsIcons}>
           <IconButton aria-label="reply">
