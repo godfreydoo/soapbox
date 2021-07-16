@@ -98,6 +98,7 @@ const cardStyles = makeStyles((theme) => ({
     'margin-bottom': '20px',
     'border-radius': '100px',
     'width': '65px',
+    'transition': '.8s',
   },
   twitter: {
     'margin-left': '5px',
@@ -107,6 +108,7 @@ const cardStyles = makeStyles((theme) => ({
     'margin-bottom': '20px',
     'border-radius': '100px',
     'width': '65px',
+    'transition': '.8s',
   },
   btncontainer: {
     'display': 'flex',
@@ -135,6 +137,7 @@ const cardStylesOpen = makeStyles((theme) => ({
     'margin-bottom': '20px',
     'border-radius': '100px',
     'width': '100px',
+    'transition': '.8s',
   },
   twitter: {
     'margin-left': '5px',
@@ -144,6 +147,7 @@ const cardStylesOpen = makeStyles((theme) => ({
     'margin-bottom': '20px',
     'border-radius': '100px',
     'width': '100px',
+    'transition': '.8s',
   },
   btncontainer: {
     'display': 'flex',
