@@ -33,46 +33,26 @@ const cardStyles = makeStyles((theme) => ({
   },
 }));
 
-export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterData, getYoutubeData }) {
+export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterData, getYoutubeData, setApplicationAuth }) {
   const classes = cardStyles();
 
   return (
     <div className="media-select-container">
       <div className={classes.btncontainer}>
-        {/* <MiniDrawer> */}
-          <Button className={classes.youtube}
-            onClick={() => {
-              getYoutubeData();
-            }}
-            endIcon={<YouTubeIcon />}
-            variant="contained"
-            color="primary" >
-            Youtube
-          </Button>
-          <Button className={classes.twitter}
-            onClick={() => {
-              if (!twitterAuth) {
-                window.location.replace('/auth/twitter/callback');
-              } else {
-                getTwitterData();
-              }
-            }}
-            endIcon={<TwitterIcon />}
-            variant="contained"
-            color="primary" >
-            Twitter
-          </Button>
-        {/* </MiniDrawer> */}
-
-      </div>
-      <div className='twitter-account-container'>
-        {twitterUsername ? `${twitterUsername}'s Feed` : null}
+        <MiniDrawer 
+          getYoutubeData={getYoutubeData} 
+          getTwitterData={getTwitterData} 
+          twitterAuth={twitterAuth} 
+          twitterUsername={twitterUsername} 
+          setApplicationAuth={setApplicationAuth}>
+        </MiniDrawer>
       </div>
     </div>
   );
 };
 
 MediaSelect.propTypes = {
+  setApplicationAuth: PropTypes.bool,
   twitterAuth: PropTypes.bool,
   twitterUsername: PropTypes.string,
   getTwitterData: PropTypes.func,
