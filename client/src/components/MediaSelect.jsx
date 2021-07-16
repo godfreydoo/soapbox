@@ -4,15 +4,32 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import { makeStyles } from '@material-ui/core/styles';
+import MiniDrawer from './Sidebar';
 import PropTypes from 'prop-types';
+
 import axios from 'axios';
 
 const cardStyles = makeStyles((theme) => ({
   youtube: {
-    backgroundColor: '#c4302b',
-  },
+    'height': '100px',
+    'background-color': '#c4302b',
+    'margin-bottom': '20px',
+    'border-radius': '100px',
+    'width': '100px',
+  }, 
   twitter: {
-    backgroundColor: '#00ACEE',
+    'backgroundColor': '#00ACEE',
+    'margin-bottom': '20px',
+    'border-radius': '100px',
+    'width': '100px',
+    'height': '100px',
+  },
+  btncontainer: {
+    'display': 'flex',
+    'flex-direction': 'column',
+    'flex-wrap': 'wrap',
+    'align-items': 'stretch',
+    'align-content': 'space-around',
   },
 }));
 
@@ -21,10 +38,8 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
 
   return (
     <div className="media-select-container">
-      <div className='button-container'>
-        <a href="/auth/google">Sign In with Google</a>
-        <ButtonGroup
-          orientation="vertical">
+      <div className={classes.btncontainer}>
+        <MiniDrawer>
           <Button className={classes.youtube}
             onClick={() => {
               getYoutubeData();
@@ -47,7 +62,8 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
             color="primary" >
             Twitter
           </Button>
-        </ButtonGroup>
+        </MiniDrawer>
+      
       </div>
       <div className='twitter-account-container'>
         {twitterUsername ? `${twitterUsername}'s Feed` : null}

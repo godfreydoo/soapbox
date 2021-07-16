@@ -3,10 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import YoutubeCard from './YoutubeCard.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import YoutubePieChart from './YoutubePieChart.jsx';
 
 const ytListStyles = makeStyles((theme) => ({
   root: {
-    // backgroundColor: '#ffe7e6',
+    backgroundColor: '#ffe7e6',
   },
 }));
 
@@ -28,6 +29,7 @@ const YoutubeList = function(props) {
           </Grid>
         ))}
       </Grid>
+      <YoutubePieChart setActivePostMetrics={props.setActivePostMetrics}/>
     </div>
   );
 };

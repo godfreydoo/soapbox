@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 const cardStyles = makeStyles((theme) => ({
   root: {
     borderRadius: 15,
-    width: 360,
+    width: 'auto',
   },
   media: {
   },
