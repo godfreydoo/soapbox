@@ -28,7 +28,6 @@ import '../styles/metrics.css';
 import '../styles/modal.css';
 import '../styles/tiles.css';
 
-
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
   const [twitterAnalytics, setTwitterAnalytics] = useState();
@@ -77,7 +76,7 @@ const App = props => {
 
     axios(config)
       .then(resVal => {
-        setTwitterPosts();
+        setTwitterPosts(resVal.data);
         setCurrentSocialMedia('twitter');
       })
       .catch(err => {
@@ -156,6 +155,8 @@ const App = props => {
       </Router>
     );
   }
+
+  console.log(currentSocialMedia, twitterPosts);
 
   return (
     <Router>

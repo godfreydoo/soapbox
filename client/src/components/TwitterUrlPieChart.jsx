@@ -15,8 +15,6 @@ const renderActiveShape = (props) => {
   const ey = my;
   const textAnchor = cos >= 0 ? 'start' : 'end';
 
-  console.log(payload);
-
   return (
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
@@ -66,7 +64,6 @@ export default class TwitterUrlPieChart extends PureComponent {
   }
 
   render() {
-    console.log(this.props.data);
     return (
 
       <ResponsiveContainer width="100%" height={300}>
