@@ -103,3 +103,7 @@ img {
 }
   
 }
+
+.main-welcome {
+  width: -webkit-fill-available;
+}
