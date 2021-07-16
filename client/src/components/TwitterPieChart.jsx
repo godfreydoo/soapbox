@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
-  console.log(props);
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -65,7 +64,6 @@ export default class TwitterPieChart extends PureComponent {
   }
 
   render() {
-    console.log(this.props.data);
     return (
 
       <ResponsiveContainer width="100%" height={300}>

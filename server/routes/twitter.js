@@ -64,7 +64,6 @@ router.post('/user', ensureTwitterAuthenticated, async (req, res) => {
 });
 
 router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
-  console.log('hello?', req.token, req.tokenSecret, req.body.userId, req.body.maxResults);
   const client = new Twitter2({
     consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line
     consumer_secret: process.env.CONSUMER_SECRET, // eslint-disable-line

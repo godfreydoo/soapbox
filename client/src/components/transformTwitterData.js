@@ -34,7 +34,6 @@ var transformTwitterData = (data, metric) => {
     transformedUrlData.push(record);
   }
 
-  console.log(transformedHashtagData);
   return [transformedHashtagData, transformedUrlData];
 };
 
