@@ -115,6 +115,15 @@ const cardStyles = makeStyles((theme) => ({
     'align-items': 'stretch',
     'align-content': 'space-around',
   },
+  compose: {
+    'margin-left': '5px',
+    'margin-top': '1em',
+    'height': '65px',
+    'backgroundColor': 'primary',
+    'margin-bottom': '20px',
+    'border-radius': '100px',
+    'width': '65px',
+  }
 }));
 
 const cardStylesOpen = makeStyles((theme) => ({
@@ -143,10 +152,19 @@ const cardStylesOpen = makeStyles((theme) => ({
     'align-items': 'stretch',
     'align-content': 'space-around',
   },
+  compose: {
+    'margin-left': '5px',
+    'margin-top': '1em',
+    'height': '100px',
+    'backgroundColor': 'primary',
+    'margin-bottom': '20px',
+    'border-radius': '100px',
+    'width': '100px',
+  }
 }));
 
 
-export default function MiniDrawer( {getYoutubeData, twitterAuth, twitterUsername, getTwitterData, setApplicationAuth} ) {
+export default function MiniDrawer({ getYoutubeData, twitterAuth, twitterUsername, getTwitterData, setApplicationAuth }) {
   let buttonclasses;
   const classes = useStyles();
   const theme = useTheme();
@@ -252,7 +270,7 @@ export default function MiniDrawer( {getYoutubeData, twitterAuth, twitterUsernam
           </Button>
         </List>
         <Divider />
-        <Compose />
+        <Compose open={open}/>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -268,3 +286,5 @@ MiniDrawer.propTypes = {
   getTwitterData: PropTypes.func,
   getYoutubeData: PropTypes.func
 };
+
+export {cardStyles, cardStylesOpen};

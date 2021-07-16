@@ -11,6 +11,8 @@ import NavLoggedOut from './NavLoggedOut.jsx';
 import MediaSelect from './MediaSelect.jsx';
 import YoutubeList from './YoutubeList.jsx';
 import TwitterList from './TwitterList.jsx';
+import TwitterCard from './TwitterCard.jsx';
+import WelcomePage from './WelcomePage';
 import Analytics from './Analytics.jsx';
 import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
@@ -177,7 +179,7 @@ const App = props => {
           <Grid container item={true} lg={7} spacing={2}>
             {currentSocialMedia === 'youtube' ? (<YoutubeList youtubeData={youtubeData} setActivePostMetrics={setActivePostMetrics} />)
               : currentSocialMedia === 'twitter' ? (<TwitterList twitterPosts={twitterPosts} setActivePostMetrics={setActivePostMetrics} />)
-                : null
+                : <WelcomePage />
             }
           </Grid>
           <Grid container

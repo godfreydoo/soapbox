@@ -41,14 +41,14 @@ const cardStyles = makeStyles((theme) => ({
   root: {
     borderRadius: 15,
     transition: '.8s',
-    backgroundColor: '#fffafa',
+    backgroundColor: '##fafafa',
     '&:hover': {
       boxShadow: '0 5px 5px 2px #c4302b',
       transform: 'scale(1.05)'
     }
   },
   cardHeader: {
-    backgroundColor: '#fff5f5'
+    backgroundColor: '#fafafa'
   },
   cardActions: {
     justifyContent: 'center',
@@ -58,7 +58,7 @@ const cardStyles = makeStyles((theme) => ({
   },
   videoTitle: {
     '&:hover': {
-      backgroundColor: '#fff5f5'
+      backgroundColor: '#fafafa'
     }
   },
   media: {
