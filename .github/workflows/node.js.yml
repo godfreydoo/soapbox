@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ main ]
     paths-ignore:
-      - 'server/routes/youtubeUpload.js'
+      - '**/youtubeUpload.js'
 
 env:
   MONGO_URI: ${{ secrets.MONGO_URI }}
