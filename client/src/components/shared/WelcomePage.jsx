@@ -12,20 +12,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import youtubeImg from '../assets/youtube.png';
+import twitterImg from '../assets/Twitter-Logo.png';
 import Link from '@material-ui/core/Link';
-
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -59,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const cards = [{name: 'Youtube', image: './assets/youtube.png' }, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function WelcomePage() {
   const classes = useStyles();
@@ -80,7 +69,7 @@ export default function WelcomePage() {
           {/* Hero unit */}
           <div className={classes.heroContent}>
             <Container maxWidth="sm">
-              <CardMedia image="./assets/Daco_6019216.png"/>
+              <CardMedia src="./assets/youtube.png"/>
               <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               SoapBox
               </Typography>
@@ -88,8 +77,8 @@ export default function WelcomePage() {
               Be.Heard.
               </Typography>
               <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Welcome to SoapBox. Your hub for social media aggrigation. Find all of your favorite Social
-              Media applications in one place so you don't have to keep switching apps to keep up your presence.
+                {'Welcome to SoapBox. Your hub for social media aggrigation. Find all of your favorite Social\
+              Media applications in one place so you don\'t have to keep switching apps to keep up your presence.'}
               </Typography>
             
             </Container>
@@ -97,25 +86,40 @@ export default function WelcomePage() {
           <Container className={classes.cardGrid} maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={4}>
-              {cards.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image="https://source.unsplash.com/random"
-                      title="Image title"
-                    />
-                    <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                      </Typography>
-                      <Typography>
-                      This is a media card. You can use this section to describe the content.
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+              <Grid item xs={12} sm={6} md={4}>
+                <Card >
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image={youtubeImg}
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Your YouTube Channel
+                    </Typography>
+                    <Typography>
+                      View your videos, see metrics and upload videos right from here!
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Card >
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image={twitterImg}
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Your Twitter Feed
+                    </Typography>
+                    <Typography>
+                      See your Tweets, get analytics and write Tweets from one dashboard!
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
             </Grid>
           </Container>
         </main>
