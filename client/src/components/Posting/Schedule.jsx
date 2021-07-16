@@ -15,7 +15,7 @@ const Schedule = (props) => {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   useEffect(() => {
-    props.setTweet(prevDetails => { return { ...prevDetails, sendAt: selectedDate }; });
+    props.setForm(prevDetails => { return { ...prevDetails, sendAt: selectedDate }; });
   }, [selectedDate]); // eslint-disable-line
 
   const handleDateChange = (date) => {
@@ -24,7 +24,7 @@ const Schedule = (props) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justifyContent="space-around">
+      <Grid container justifyContent="flex-end">
         <KeyboardDatePicker
           margin="normal"
           id="date-picker-dialog"
@@ -50,7 +50,7 @@ const Schedule = (props) => {
 };
 
 Schedule.propTypes = {
-  setTweet: PropTypes.func,
+  setForm: PropTypes.func,
   sendAt: PropTypes.string
 };
 

@@ -27,6 +27,7 @@ import '../styles/register.css';
 import '../styles/metrics.css';
 import '../styles/modal.css';
 import '../styles/tiles.css';
+import '../styles/compose.css';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
