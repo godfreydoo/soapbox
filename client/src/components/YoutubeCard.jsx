@@ -41,14 +41,30 @@ const cardStyles = makeStyles((theme) => ({
   root: {
     borderRadius: 15,
     transition: '.8s',
+    backgroundColor: '#fffafa',
     '&:hover': {
       boxShadow: '0 5px 5px 2px #c4302b',
       transform: 'scale(1.05)'
     }
   },
+  cardHeader: {
+    backgroundColor: '#fff5f5'
+  },
+  cardActions: {
+    justifyContent: 'center',
+    margin: 'auto',
+    alignItems: 'center',
+
+  },
+  videoTitle: {
+    '&:hover': {
+      backgroundColor: '#fff5f5'
+    }
+  },
   media: {
-    width: 360,
-    height: 202.50
+    justifyContent: 'center',
+    margin: 'auto',
+    alignItems: 'center',
   },
   desc: {
     maxHeight: 300,
@@ -93,8 +109,8 @@ const YoutubeCard = function(props) {
   return (
     <Card className={classes.root} onClick={props.setActivePostMetrics.bind(null, statistics)}>
       <CardHeader
-        title={channelTitle}
-        // subheader="5 months ago"
+        className={classes.cardHeader}
+        title={<b>{channelTitle}</b>}
         avatar={
           <Avatar src={avatar}/>
         }
@@ -106,25 +122,26 @@ const YoutubeCard = function(props) {
         }
       />
       <CardMedia
+        justify="center"
         className={classes.media}
         title={title}
         component='iframe'
         src={YTurl}
       />
-      <CardActions>
-        <IconButton aria-label="like" id="like" onClick={handleLike}>
+      <CardActions className={classes.cardActions}>
+        <IconButton size="small" aria-label="like" id="like" onClick={handleLike}>
           <ThumbUpIcon />
           {likes}
         </IconButton>
-        <IconButton aria-label="dislike" id="dislike" onClick={handleDislike}>
+        <IconButton size="small" aria-label="dislike" id="dislike" onClick={handleDislike}>
           <ThumbDownAltIcon />
           {dislikes}
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton size="small" aria-label="share">
           <ShareIcon />
         </IconButton>
       </CardActions>
-      <CardContent>
+      <CardContent className={classes.videoTitle}>
         <b>{title}</b><br/>
         {viewCount} views • {ytTimeConverter(publishedAt)}
       </CardContent>
@@ -132,7 +149,7 @@ const YoutubeCard = function(props) {
         {!isExpanded ? <IconButton><ExpandMoreIcon onClick={handleExpandClick}></ExpandMoreIcon></IconButton>
           : <IconButton><ExpandLessIcon onClick={handleExpandClick}></ExpandLessIcon></IconButton>}
       </CardActions>
-      {isExpanded && <CardContent>{description}</CardContent>}
+      {isExpanded && <CardContent className={classes.desc}>{description}</CardContent>}
     </Card>
   );
 };
