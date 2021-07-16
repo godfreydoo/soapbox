@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
 import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
 import { getTwitterMetricsConfig, getTwitterPostsConfig } from './models/axiosConfig.js';
+import { getTwitterHashtagConfig } from './models/axiosConfig.js';
 import Login from './Login.jsx';
 import Register from './Register.jsx';
 import NavLoggedIn from './NavLoggedIn.jsx';
@@ -15,6 +16,7 @@ import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Cookies from 'js-cookie';
+import transformTwitterData from './transformTwitterData.js';
 
 import '../styles/style.css';
 import '../styles/analytics.css';
@@ -23,6 +25,7 @@ import '../styles/register.css';
 import '../styles/metrics.css';
 import '../styles/modal.css';
 import '../styles/tiles.css';
+import '../styles/compose.css';
 
 const App = props => {
   const [applicationAuth, setApplicationAuth] = useState(getAppAuthCookie());
@@ -30,6 +33,7 @@ const App = props => {
   const [twitterUsername, setTwitterUsername] = useState(getTwitterUsername());
   const [youtubeAuth, setYoutubeAuth] = useState(getYoutubeAuthCookie());
   const [twitterMetrics, setTwitterMetrics] = useState(null);
+  const [twitterAnalytics, setTwitterAnalytics] = useState(null);
   const [twitterPosts, setTwitterPosts] = useState(null);
   const [youtubeData, setYoutubeData] = useState(null);
   const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
@@ -39,23 +43,42 @@ const App = props => {
 
   const getTwitterData = function () {
     const token = Cookies.get('twitter-auth-request');
+    const id = Cookies.get('id');
     const twitterMetricsConfig = getTwitterMetricsConfig();
+    const twitterUserConfig = getTwitterUserConfig(token, id);
+    const twitterHashtagConfig = getTwitterHashtagConfig(id);
     const twitterPostConfig = getTwitterPostsConfig(token);
-
-    axios(twitterMetricsConfig)
-      .then(resVal => {
-        setTwitterMetrics(resVal.data);
-      })
-      .catch(err => {
-        console.log('Failed to retrieve Twitter Metrics');
-      });
 
     axios(twitterPostConfig)
       .then(resVal => {
         setTwitterPosts(resVal.data);
       })
       .catch(err => {
-        console.log('Failed to retrieve Twitter Feed');
+        console.log(err, 'Failed to retrieve Twitter Post data');
+      });
+
+    axios(twitterUserConfig)
+      .then(resVal => {
+        // setActiveAccountMetrics([resVal.data]);
+      })
+      .catch(err => {
+        console.log(err, 'Failed to retrieve Twitter User data');
+      });
+
+    axios(twitterHashtagConfig)
+      .then(resVal => {
+        setTwitterAnalytics(transformTwitterData(resVal.data));
+      })
+      .catch(err => {
+        console.log('Failed to retrieve Twitter Hashtag data');
+      });
+
+    axios(twitterMetricsConfig)
+      .then(resVal => {
+        setTwitterMetrics(resVal.data);
+      })
+      .catch(err => {
+        console.log('Failed to retrieve Twitter Metrics data');
       });
 
     setCurrentSocialMedia('twitter');
@@ -124,6 +147,8 @@ const App = props => {
     );
   }
 
+  console.log(currentSocialMedia, twitterPosts);
+
   return (
     <Router>
       <div id="app">
@@ -156,10 +181,11 @@ const App = props => {
             justifyContent="flex-start"
             alignItems="flex-start">
             <Grid item={true} container sm={12}>
-              {twitterAuth ? <Analytics selected={currentSocialMedia} /> : null}
               {twitterAuth ? <MetricsTab
+                selected={currentSocialMedia}
                 activePostMetrics={activePostMetrics}
                 accountMetrics={activeAccountMetrics} /> : null}
+              {twitterAuth ? <Analytics selected={currentSocialMedia} data={twitterAnalytics} /> : null}
             </Grid>
             {/* <Grid item={true} container sm={12}> */}
             {/* </Grid> */}

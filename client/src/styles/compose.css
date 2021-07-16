@@ -1,0 +1,25 @@
+.post-container {
+  display: flex;
+}
+
+.post-container > section {
+  padding: 20px !important;
+  margin: 20px !important;
+}
+
+.post-interface {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-basis: 100%;
+  flex: 1;
+  align-items: center;
+}
+
+.post-preview {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  align-items: center;
+}
