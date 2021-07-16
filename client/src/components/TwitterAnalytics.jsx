@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TwitterBarChart from './TwitterBarChart';
 import TwitterPieChart from './TwitterPieChart';
+import TwitterUrlPieChart from './TwitterUrlPieChart';
 
 const cardStyles = makeStyles((theme) => ({
   analytics: {
@@ -15,88 +16,40 @@ const cardStyles = makeStyles((theme) => ({
   },
 }));
 
-const TwitterAnalytics = function () {
-  const [clicked, setClicked] = useState(false);
-  const [twitterAnalytics, setTwitterAnalytics] = useState([]);
+const TwitterAnalytics = function (props) {
 
-  const classes = cardStyles();
-
-  const handleClick = (e) => {
-    if (!clicked) {
-      getTwitterAnalytics();
-    } else {
-      setClicked(false);
-    }
-  };
-
-  const transformData = (data) => {
-    var transformed = [];
-
-    for (var key in data.hashtagData) {
-      var metrics = data.hashtagData[key];
-      var record = {};
-      record['hashtag'] = `#${key}`;
-      record['retweets'] = metrics.retweets;
-      record['replies'] = metrics.replies;
-      record['likes'] = metrics.likes;
-      record['totalTweets'] = metrics.totalTweets,
-      record['retweetAvg'] = metrics.retweetAvg.toFixed(1),
-      record['replyAvg'] = metrics.replyAvg.toFixed(1),
-      record['likesAvg'] = metrics.likesAvg.toFixed(1);
-
-      transformed.push(record);
-    }
-
-    return transformed;
-  };
-
-  // const getTwitterAnalytics = function () {
-  //   var id = Cookies.get('id');
-
-  //   axios.post('/twitter/hashtag-data', {
-  //     userId: `${id}`,
-  //     maxResults: '50'
-  //   })
-  //     .then(resVal => {
-  //       setTwitterAnalytics(transformData(resVal.data));
-  //     })
-  //     .then(() => setClicked(true));
-  // };
-
-  const getAnalyticsButton = clicked ?
+  const showAnalytics = props.data &&
     (<>
       <Grid item container lg={12} justifyContent="center">
-        <TwitterBarChart data={twitterAnalytics} />
+        <div>Average metrics by hashtag</div>
+        <TwitterBarChart data={props.data[0]} entity="hashtag" />
       </Grid>
       <Grid item container lg={12} justifyContent="center">
-        <TwitterPieChart data={twitterAnalytics} />
+        <div>Total retweets by hashtag</div>
+        <TwitterPieChart data={props.data[0]} />
       </Grid>
       <Grid item container lg={12} justifyContent="center">
-        <Button className={classes.analytics}
-          onClick={handleClick}
-          variant="contained"
-          color="primary" >
-          Hide Analytics
-        </Button>
+        <div>Average metrics by url link</div>
+        <TwitterBarChart data={props.data[1]} entity="url" />
+      </Grid>
+      <Grid item container lg={12} justifyContent="center">
+        <div>Total retweets by url link</div>
+        <TwitterUrlPieChart data={props.data[1]} />
       </Grid>
     </>
-    ) :
-    (<Grid item container lg={12} justifyContent="center">
-      <Button className={classes.analytics}
-        onClick={handleClick}
-        variant="contained"
-        color="primary" >
-        Get Analytics
-      </Button>
-    </Grid>);
+    );
 
   return (
     <div styles={{ width: '100%' }}>
       <Grid item container direction="column" lg={12} spacing={4} >
-        {getAnalyticsButton}
+        {showAnalytics}
       </Grid>
     </div>
   );
+};
+
+TwitterAnalytics.propTypes = {
+  data: PropTypes.array,
 };
 
 export default TwitterAnalytics;

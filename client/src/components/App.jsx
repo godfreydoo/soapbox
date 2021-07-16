@@ -18,6 +18,7 @@ import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
 import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
 import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
+import transformTwitterData from './transformTwitterData.js';
 
 import '../styles/style.css';
 import '../styles/analytics.css';
@@ -30,6 +31,7 @@ import '../styles/tiles.css';
 
 const App = props => {
   const [twitterMetrics, setTwitterMetrics] = useState('');
+  const [twitterAnalytics, setTwitterAnalytics] = useState();
   const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
   const [youtubeData, setYoutubeData] = useState('');
   const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
@@ -44,6 +46,8 @@ const App = props => {
   //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function () {
     var token = Cookies.get('twitter-auth-request');
+    var id = Cookies.get('id');
+
     let config = {
       method: 'get',
       url: '/twitter/home-timeline',
@@ -52,32 +56,40 @@ const App = props => {
       }
     };
 
-    let metricsConfig = {
+    let userConfig = {
       method: 'post',
-      url: '/twitter/metrics',
+      url: '/twitter/user',
       headers: {
         'Authorization': `Bearer ${token}`
       },
       data: {
-        userId: `${Cookies.get('id')}`,
-        maxResults: '25'
+        userId: `${id}`
       }
     };
 
-    axios(metricsConfig)
+    axios.post('/twitter/hashtag-data', {
+      userId: `${id}`,
+      maxResults: '50'
+    })
       .then(resVal => {
-        setCurrentSocialMedia('twitter');
-        setTwitterMetrics(resVal.data);
+        setTwitterAnalytics(transformTwitterData(resVal.data));
       });
 
     axios(config)
       .then(resVal => {
-        setTwitterPosts(resVal.data);
-        setActiveAccountMetrics(resVal.data);
+        setTwitterPosts();
         setCurrentSocialMedia('twitter');
       })
       .catch(err => {
         setCurrentSocialMedia('twitter');
+        console.log(err, 'Failed to retrieve twitter data');
+      });
+
+    axios(userConfig)
+      .then(resVal => {
+        // setActiveAccountMetrics([resVal.data]);
+      })
+      .catch(err => {
         console.log(err, 'Failed to retrieve twitter data');
       });
 
@@ -177,11 +189,11 @@ const App = props => {
             justifyContent="flex-start"
             alignItems="flex-start">
             <Grid item={true} container sm={12}>
-              {twitterAuth ? <Analytics selected={currentSocialMedia} /> : null}
               {twitterAuth ? <MetricsTab
                 selected={currentSocialMedia}
                 activePostMetrics={activePostMetrics}
                 accountMetrics={activeAccountMetrics} /> : null}
+              {twitterAuth ? <Analytics selected={currentSocialMedia} data={twitterAnalytics} /> : null}
             </Grid>
             {/* <Grid item={true} container sm={12}> */}
             {/* </Grid> */}
