@@ -167,9 +167,6 @@ const Post = function (props) {
               </label>
             </section>
           </section>
-          <section className="post-preview">
-            Hello
-          </section>
         </div>
         <div>
           <section className="post-submit">
