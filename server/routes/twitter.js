@@ -75,7 +75,6 @@ router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
   try {
     const tweets = await client.get(`users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics,non_public_metrics&max_results=${req.body.maxResults}`);
 
-    console.log(tweets);
     res.status(200).end(JSON.stringify(tweets.data.data));
 
   } catch (err) {
@@ -115,7 +114,7 @@ var analyzeMetrics = function (entityType, data) {
   for (var i = 0; i < data.length; i++) {
     var entityArr = data[i].entities ? data[i].entities[entityType] || [] : [];
     for (var j = 0; j < entityArr.length; j++) {
-      var entity = entityArr[j][identifier];
+      var entity = entityType === 'urls' ? entityArr[j][identifier].slice(0, entityArr[j][identifier].indexOf('com') + 3) : entityArr[j][identifier];
       if (analytics[entity]) {
         analytics[entity].retweets += data[i].public_metrics.retweet_count;
         analytics[entity].replies += data[i].public_metrics.reply_count;
@@ -135,19 +134,6 @@ var analyzeMetrics = function (entityType, data) {
         analytics[entity].likesAvg = analytics[entity].likes;
       }
     }
-  }
-
-  return analytics;
-};
-
-var analyzeTimeOfDay = function (data) {
-  var analytics = {};
-
-  for (var i = 0; i < data.length; i++) {
-    var createdAt = Date(data[i].created_at);
-    var formattedDate = date.format(createdAt, 'hh:mm A [GMT]Z');
-
-    console.log(formattedDate);
   }
 
   return analytics;

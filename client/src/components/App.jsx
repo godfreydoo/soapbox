@@ -69,7 +69,7 @@ const App = props => {
 
     axios.post('/twitter/hashtag-data', {
       userId: `${id}`,
-      maxResults: '50'
+      maxResults: '25'
     })
       .then(resVal => {
         setTwitterAnalytics(transformTwitterData(resVal.data));
@@ -156,8 +156,6 @@ const App = props => {
       </Router>
     );
   }
-
-  console.log(currentSocialMedia, twitterPosts);
 
   return (
     <Router>

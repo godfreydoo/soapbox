@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+  console.log(props);
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -42,7 +43,7 @@ const renderActiveShape = (props) => {
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value}`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`${(percent * 100).toFixed(1)}% of total retweets`}
+        {`${(percent * 100).toFixed(1)}%`}
       </text>
     </g>
   );
@@ -64,6 +65,7 @@ export default class TwitterPieChart extends PureComponent {
   }
 
   render() {
+    console.log(this.props.data);
     return (
 
       <ResponsiveContainer width="100%" height={300}>
