@@ -40,28 +40,28 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
     <div className="media-select-container">
       <div className={classes.btncontainer}>
         {/* <MiniDrawer> */}
-          <Button className={classes.youtube}
-            onClick={() => {
-              getYoutubeData();
-            }}
-            endIcon={<YouTubeIcon />}
-            variant="contained"
-            color="primary" >
+        <Button className={classes.youtube}
+          onClick={() => {
+            getYoutubeData();
+          }}
+          endIcon={<YouTubeIcon />}
+          variant="contained"
+          color="primary" >
             Youtube
-          </Button>
-          <Button className={classes.twitter}
-            onClick={() => {
-              if (!twitterAuth) {
-                window.location.replace('/auth/twitter/callback');
-              } else {
-                getTwitterData();
-              }
-            }}
-            endIcon={<TwitterIcon />}
-            variant="contained"
-            color="primary" >
+        </Button>
+        <Button className={classes.twitter}
+          onClick={() => {
+            if (!twitterAuth) {
+              window.location.replace('/auth/twitter/callback');
+            } else {
+              getTwitterData();
+            }
+          }}
+          endIcon={<TwitterIcon />}
+          variant="contained"
+          color="primary" >
             Twitter
-          </Button>
+        </Button>
         {/* </MiniDrawer> */}
 
       </div>

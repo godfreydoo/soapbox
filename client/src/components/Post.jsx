@@ -11,7 +11,6 @@ import Schedule from './Schedule.jsx';
 import Grid from '@material-ui/core/Grid';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import TwitterAnalytics from './TwitterAnalytics.jsx';
 
 const initialState = {
   sendAt: '',
@@ -71,10 +70,6 @@ const Post = function (props) {
     }
   };
 
-  const analytics = props.selected && props.selected === 'twitter' ? (<div style={{ width: '100%' }}>
-    <TwitterAnalytics />
-  </div>) : null;
-
   return (
     <Grid item container direction="column" lg={12} spacing={4} >
       <Grid item container lg={12} justifyContent="center">
@@ -111,16 +106,12 @@ const Post = function (props) {
         </ButtonGroup>
         <Schedule setTweet={setTweet} date={tweet.sendAt} />
       </Grid>
-      <Grid item container lg={12} justifyContent="center">
-        {analytics}
-      </Grid>
     </Grid>
   );
 };
 
 Post.propTypes = {
   getTwitterData2: PropTypes.func,
-  selected: PropTypes.string,
 };
 
 export default Post;

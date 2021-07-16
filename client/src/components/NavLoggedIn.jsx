@@ -39,6 +39,7 @@ export const NavLoggedIn = function({ setApplicationAuth }) {
             onClick={() => {
               setApplicationAuth(false);
               axios.get('/auth/twitter/logout');
+              window.location.reload();
             }}>
             <Button color="inherit">Logout</Button>
           </Link>
