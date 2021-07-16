@@ -14,15 +14,7 @@ const UserSchema = new mongoose.Schema({
 
 const TwitterJobsSchema = new mongoose.Schema({
   completed: { type: Boolean, default: false },
-  sendAt: { type: Date, default: Date.now },
-  payload: mongoose.Schema.Types.Mixed,
-  token: { type: String },
-  username: { type: String }
-});
-
-const YouTubeJobsSchema = new mongoose.Schema({
-  completed: { type: Boolean, default: false },
-  sendAt: { type: Date, default: Date.now },
+  sendAt: { type: Date },
   payload: mongoose.Schema.Types.Mixed,
   token: { type: String },
   username: { type: String }
@@ -30,10 +22,8 @@ const YouTubeJobsSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 const TwitterJobs = mongoose.model('TwitterJobs', TwitterJobsSchema);
-const YouTubeJobs = mongoose.model('YouTubeJobs', YouTubeJobsSchema);
 
 module.exports = {
   User,
   TwitterJobs,
-  YouTubeJobs
 };

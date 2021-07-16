@@ -75,7 +75,6 @@ router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
   try {
     const tweets = await client.get(`users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics,non_public_metrics&max_results=${req.body.maxResults}`);
 
-    console.log(tweets);
     res.status(200).end(JSON.stringify(tweets.data.data));
 
   } catch (err) {
@@ -147,7 +146,6 @@ var analyzeTimeOfDay = function (data) {
     var createdAt = Date(data[i].created_at);
     var formattedDate = date.format(createdAt, 'hh:mm A [GMT]Z');
 
-    console.log(formattedDate);
   }
 
   return analytics;
