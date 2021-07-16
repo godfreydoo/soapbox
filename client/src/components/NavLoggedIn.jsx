@@ -39,29 +39,12 @@ export const NavLoggedIn = function({ setApplicationAuth }) {
             onClick={() => {
               setApplicationAuth(false);
               axios.get('/auth/twitter/logout');
+              window.location.reload();
             }}>
             <Button color="inherit">Logout</Button>
           </Link>
         </Toolbar>
       </AppBar>
-      {/* <nav className='navigation-container'>
-        <Link
-          className='nav-link'
-          to='/dashboard'>
-          <h3>Soapbox</h3>
-        </Link>
-        <ul className='navigation-links'>
-          <Link
-            className='nav-link'
-            to='/login'
-            onClick={() => {
-              setApplicationAuth(false);
-              axios.get('/auth/twitter/logout');
-            }}>
-            <li>Logout</li>
-          </Link>
-        </ul>
-      </nav> */}
     </>
   );
 };
