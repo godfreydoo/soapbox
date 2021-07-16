@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const Register = function() {
+const Register = function() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password1, setPassword1] = useState('');
@@ -141,3 +141,5 @@ export const Register = function() {
     </div>
   );
 };
+
+export default Register;

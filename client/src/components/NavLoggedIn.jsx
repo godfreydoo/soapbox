@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NavLoggedIn = function({ setApplicationAuth }) {
+const NavLoggedIn = function({ setApplicationAuth }) {
   const classes = useStyles();
   return (
     <>
@@ -52,3 +52,5 @@ export const NavLoggedIn = function({ setApplicationAuth }) {
 NavLoggedIn.propTypes = {
   setApplicationAuth: PropTypes.func
 };
+
+export default NavLoggedIn;

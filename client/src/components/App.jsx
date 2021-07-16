@@ -1,23 +1,20 @@
-import YoutubeList from './YoutubeList.jsx';
-import YoutubeCard from './YoutubeCard.jsx';
-import TwitterList from './TwitterList.jsx';
-import TwitterCard from './TwitterCard.jsx';
-import Analytics from './Analytics.jsx';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { MediaSelect } from './MediaSelect.jsx';
-import { NavLoggedIn } from './NavLoggedIn.jsx';
-import { NavLoggedOut } from './NavLoggedOut.jsx';
-import { Login } from './Login.jsx';
-import { Register } from './Register.jsx';
+import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
+import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
+import { getTwitterMetricsConfig, getTwitterPostsConfig } from './models/axiosConfig.js';
+import Login from './Login.jsx';
+import Register from './Register.jsx';
+import NavLoggedIn from './NavLoggedIn.jsx';
+import NavLoggedOut from './NavLoggedOut.jsx';
+import MediaSelect from './MediaSelect.jsx';
+import YoutubeList from './YoutubeList.jsx';
+import TwitterList from './TwitterList.jsx';
+import Analytics from './Analytics.jsx';
 import MetricsTab from './metrics/MetricsTab';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
-import { reqq } from '../../../server/routes/reqq.js';
-import mockTwitter2 from './mockTwitter.js';
 import Cookies from 'js-cookie';
-import { getAppAuthCookie, getTwitterAuthCookie } from './controllers/getCookies.js';
-import { getYoutubeAuthCookie, getTwitterUsername } from './controllers/getCookies.js';
 
 import '../styles/style.css';
 import '../styles/analytics.css';
@@ -27,49 +24,41 @@ import '../styles/metrics.css';
 import '../styles/modal.css';
 import '../styles/tiles.css';
 
-
 const App = props => {
-  const [twitterMetrics, setTwitterMetrics] = useState('');
-  const [twitterPosts, setTwitterPosts] = useState(mockTwitter2);
-  const [youtubeData, setYoutubeData] = useState('');
+  const [applicationAuth, setApplicationAuth] = useState(getAppAuthCookie());
+  const [twitterAuth, setTwitterAuth] = useState(getTwitterAuthCookie());
+  const [twitterUsername, setTwitterUsername] = useState(getTwitterUsername());
+  const [youtubeAuth, setYoutubeAuth] = useState(getYoutubeAuthCookie());
+  const [twitterMetrics, setTwitterMetrics] = useState(null);
+  const [twitterPosts, setTwitterPosts] = useState(null);
+  const [youtubeData, setYoutubeData] = useState(null);
   const [activeAccountMetrics, setActiveAccountMetrics] = useState(null);
   const [activePostMetrics, setActivePostMetrics] = useState(null);
   const [currentSocialMedia, setCurrentSocialMedia] = useState(null);
-  const [applicationAuth, setApplicationAuth] = useState(getAppAuthCookie());
-  const [twitterAuth, setTwitterAuth] = useState(getTwitterAuthCookie());
   const [firstTwitterPrint, setFirstTwitterPrint] = useState(false);
-  const [twitterUsername, setTwitterUsername] = useState(getTwitterUsername());
-  const [youtubeAuth, setYoutubeAuth] = useState(getYoutubeAuthCookie());
 
-  //currently uses hardcoded user info - will need to update to session/cookie info
   const getTwitterData = function () {
-    var token = Cookies.get('twitter-auth-request');
-    let config = {
-      method: 'get',
-      url: '/twitter/home-timeline',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    };
+    const token = Cookies.get('twitter-auth-request');
+    const twitterMetricsConfig = getTwitterMetricsConfig();
+    const twitterPostConfig = getTwitterPostsConfig(token);
 
-    axios.post('/twitter/hashtag-data', {
-      userId: '20702956',
-      maxResults: '50'
-    })
+    axios(twitterMetricsConfig)
       .then(resVal => {
-        setCurrentSocialMedia('twitter');
         setTwitterMetrics(resVal.data);
-      });
-
-    axios(config)
-      .then(resVal => {
-        setTwitterPosts(resVal.data);
-        setCurrentSocialMedia('twitter');
       })
       .catch(err => {
-        setCurrentSocialMedia('twitter');
-        console.log('Failed to retrieve twitter data');
+        console.log('Failed to retrieve Twitter Metrics');
       });
+
+    axios(twitterPostConfig)
+      .then(resVal => {
+        setTwitterPosts(resVal.data);
+      })
+      .catch(err => {
+        console.log('Failed to retrieve Twitter Feed');
+      });
+
+    setCurrentSocialMedia('twitter');
 
     if (!firstTwitterPrint) {
       setFirstTwitterPrint(true);

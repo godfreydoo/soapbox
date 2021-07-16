@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const Login = function({ setApplicationAuth }) {
+const Login = function({ setApplicationAuth }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsgs, setErrorMsgs] = useState([]);
@@ -121,3 +121,5 @@ export const Login = function({ setApplicationAuth }) {
 Login.propTypes = {
   setApplicationAuth: PropTypes.func
 };
+
+export default Login;

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NavLoggedOut = function() {
+const NavLoggedOut = function() {
   const classes = useStyles();
   return (
     <>
@@ -54,3 +54,5 @@ export const NavLoggedOut = function() {
     </>
   );
 };
+
+export default NavLoggedOut;
