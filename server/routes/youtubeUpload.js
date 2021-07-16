@@ -28,20 +28,20 @@ const uploadVideoFile = multer({
 
 router.post('/upload', uploadVideoFile, (req, res) => {
   if (req.file) {
-    const filename = req.file.filename;
-    const { title, description } = req.body;
+    const filename = `./videos/${req.file.filename}`;
+    const { title, description, sendAt } = req.body;
 
     open(oAuth.generateAuthUrl({
       "access_type": 'offline', // eslint-disable-line
       "scope": 'https://www.googleapis.com/auth/youtube.upload', // eslint-disable-line
-      "state": JSON.stringify({ filename, title, description }) // eslint-disable-line
+      "state": JSON.stringify({ filename, title, description, sendAt }) // eslint-disable-line
     }));
   }
 });
 
 router.get('/oauth2/callback', (req, res) => {
   res.redirect('/dashboard');
-  const { filename, title, description } = JSON.parse(req.query.state);
+  const { filename, title, description, sendAt } = JSON.parse(req.query.state);
   debugger;
   oAuth.getToken(req.query.code, (err, tokens) => {
     if (err) {
@@ -53,7 +53,7 @@ router.get('/oauth2/callback', (req, res) => {
     youtube.videos.insert({
       resource: {
         snippet: { title, description },
-        status: { privacyStatus: 'private' }
+        status: { privacyStatus: 'private', publishAt: sendAt }
       },
       part: 'snippet,status',
       media: {

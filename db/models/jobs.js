@@ -10,15 +10,6 @@ module.exports = {
       console.error(err);
     }
   },
-  scheduleYouTube: async function (method, headers, body, query, params, file) {
-    const task = new YouTubeJobs(body);
-    console.log(task, body, file);
-    try {
-      await task.save();
-    } catch (err) {
-      console.error(err);
-    }
-  },
   getSchedule: async function (method, headers, body, query, params) {
     try {
       let response = await TwitterJobs.find({});

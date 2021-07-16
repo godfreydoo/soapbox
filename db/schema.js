@@ -20,18 +20,10 @@ const TwitterJobsSchema = new mongoose.Schema({
   username: { type: String }
 });
 
-const YouTubeJobsSchema = new mongoose.Schema({
-  completed: { type: Boolean, default: false },
-  sendAt: { type: Date },
-  payload: mongoose.Schema.Types.Mixed,
-});
-
 const User = mongoose.model('User', UserSchema);
 const TwitterJobs = mongoose.model('TwitterJobs', TwitterJobsSchema);
-const YouTubeJobs = mongoose.model('YouTubeJobs', YouTubeJobsSchema);
 
 module.exports = {
   User,
   TwitterJobs,
-  YouTubeJobs
 };

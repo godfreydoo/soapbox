@@ -4,4 +4,4 @@ client/dist/*
 cron.log
 .credentials.json
 *.mp4
-*videos
+videos/*

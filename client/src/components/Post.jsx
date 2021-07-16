@@ -14,6 +14,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { alpha } from '@material-ui/core/styles';
 import Checkbox from './Posting/Checkbox.jsx';
 import Input from '@material-ui/core/Input';
+import PermMediaIcon from '@material-ui/icons/PermMedia';
 
 const initialState = {
   tweet: {
@@ -57,13 +58,12 @@ const Post = function (props) {
   }, [form]);
 
   const handleFormData = (e) => {
-    let value = event.target.name === 'file' ? event.target.files[0] : e.target.value;
+    let value = e.target.name === 'file' ? e.target.files[0] : e.target.value;
     setForm({...form, [e.target.name]: value });
   };
 
   const handlePostRouting = () => {
     if (mediaSelected.youtube && mediaSelected.twitter) {
-      debugger;
       Promise.allSettled([postTweet(), postVideo()]);
     } else {
       if (mediaSelected.twitter) {
@@ -99,35 +99,24 @@ const Post = function (props) {
       alert('Tweet cannot be empty');
     }
   };
-  const postVideo = async function () {
+
+  const postVideo = function () {
 
     var videoData = new FormData();
 
-    await videoData.append('videoFile', youtube.payload.file);
-    await videoData.append('title', youtube.payload.title);
-    await videoData.append('description', youtube.payload.description);
-
+    videoData.append('videoFile', youtube.payload.file);
+    videoData.append('title', youtube.payload.title);
+    videoData.append('description', youtube.payload.description);
+    videoData.append('sendAt', youtube.sendAt.toISOString());
 
     var immediatePost = {
       method: 'post',
       url: '/api/youtube/upload',
       data: videoData
     };
-    var scheduledPost = {
-      method: 'post',
-      url: '/jobs/schedule-youtube',
-      data: {
-        sendAt: youtube.sendAt,
-        payload: videoData
-      }
-    };
-    debugger;
+
     if (youtube.payload !== '') {
-      if (youtube.sendAt < new Date()) {
-        axios(immediatePost).then(() => { setForm(initialState.form); setYouTube(initialState.form); }).catch(err => { console.log(err); });
-      } else {
-        axios(scheduledPost).then(() => { setForm(initialState.form); setYouTube(initialState.form); }).catch(err => { console.log(err); });
-      }
+      axios(immediatePost).then(() => { setForm(initialState.form); setYouTube(initialState.form); }).catch(err => { console.log(err); });
     } else {
       alert('YouTube details cannot be empty');
     }
@@ -168,17 +157,18 @@ const Post = function (props) {
               onChange={handleFormData}
               fullWidth={true}/>
             <section>
-              <Input
-                type="file"
-                name="file"
-                placeholder="Add Video"
-                onChange={handleFormData}
-                disableUnderline={true}
-                accept="video/mp4"/>
+              <label className="upload-file-button">
+                <input
+                  type="file"
+                  name="file"
+                  placeholder="Add Media"
+                  onChange={handleFormData}
+                  accept="video/mp4" />
+              </label>
             </section>
           </section>
           <section className="post-preview">
-          Hello
+            Hello
           </section>
         </div>
         <div>
