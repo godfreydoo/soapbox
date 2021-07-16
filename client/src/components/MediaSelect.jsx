@@ -12,7 +12,7 @@ import axios from 'axios';
 const cardStyles = makeStyles((theme) => ({
   youtube: {
     'height': '100px',
-    'background-color': '#c4302b',
+    'backgroundColor': '#c4302b',
     'margin-bottom': '20px',
     'border-radius': '100px',
     'width': '100px',
@@ -39,11 +39,11 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
   return (
     <div className="media-select-container">
       <div className={classes.btncontainer}>
-        <MiniDrawer 
-          getYoutubeData={getYoutubeData} 
-          getTwitterData={getTwitterData} 
-          twitterAuth={twitterAuth} 
-          twitterUsername={twitterUsername} 
+        <MiniDrawer
+          getYoutubeData={getYoutubeData}
+          getTwitterData={getTwitterData}
+          twitterAuth={twitterAuth}
+          twitterUsername={twitterUsername}
           setApplicationAuth={setApplicationAuth}>
         </MiniDrawer>
       </div>
@@ -52,7 +52,7 @@ export const MediaSelect = function({ twitterAuth, twitterUsername, getTwitterDa
 };
 
 MediaSelect.propTypes = {
-  setApplicationAuth: PropTypes.bool,
+  setApplicationAuth: PropTypes.func,
   twitterAuth: PropTypes.bool,
   twitterUsername: PropTypes.string,
   getTwitterData: PropTypes.func,

@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
-import YouTubeIcon from '@material-ui/icons/YouTube'; 
+import YouTubeIcon from '@material-ui/icons/YouTube';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const cardStyles = makeStyles((theme) => ({
-  youtube: { 
+  youtube: {
     'margin-left': '5px',
     'margin-top': '1em',
     'height': '65px',
@@ -117,7 +117,7 @@ const cardStyles = makeStyles((theme) => ({
 }));
 
 const cardStylesOpen = makeStyles((theme) => ({
-  youtube: { 
+  youtube: {
     'margin-left': '5px',
     'margin-top': '1em',
     'height': '100px',
@@ -189,7 +189,7 @@ export default function MiniDrawer({ getYoutubeData, twitterAuth, twitterUsernam
           <Typography variant="h6" noWrap>
             Soapbox
           </Typography>
-          <Typography variant="h6" noWrap center="true">
+          <Typography variant="h6" noWrap>
             <div className='twitter-account-container'>
               {twitterUsername ? `${twitterUsername}'s Feed` : null}
             </div>
@@ -249,9 +249,9 @@ export default function MiniDrawer({ getYoutubeData, twitterAuth, twitterUsernam
             color="primary" >
             {open ? 'Twitter' : 'TW'}
           </Button>
-        </List> 
+        </List>
         <Divider />
-        <Compose /> 
+        <Compose />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -260,11 +260,10 @@ export default function MiniDrawer({ getYoutubeData, twitterAuth, twitterUsernam
   );
 }
 
-// MiniDrawer.propTypes = {
-//   getYoutubeData: PropTypes.func,
-//   twitterAuth: PropTypes.bool,
-//   setApplicationAuth: PropTypes.func,
-//   twitterUsername: PropTypes.string,
-//   getTwitterData: PropTypes.func,
-//   getYoutubeData: PropTypes.func
-// };
+MiniDrawer.propTypes = {
+  setApplicationAuth: PropTypes.func,
+  twitterAuth: PropTypes.bool,
+  twitterUsername: PropTypes.string,
+  getTwitterData: PropTypes.func,
+  getYoutubeData: PropTypes.func
+};

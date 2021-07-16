@@ -34,7 +34,7 @@ const YoutubeList = function(props) {
 
 YoutubeList.propTypes = {
   setActivePostMetrics: PropTypes.func,
-  youtubeData: PropTypes.string | PropTypes.object,
+  youtubeData: PropTypes.number,
 };
 
 export default YoutubeList;
