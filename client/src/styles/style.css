@@ -103,3 +103,27 @@ img {
 }
   
 }
+
+.main-welcome {
+  width: -webkit-fill-available;
+}
+
+.MuiGrid-spacing-xs-10 > .MuiGrid-item {
+  justify-content: center;
+}
+
+.MuiGrid-container {
+  justify-content: space-evenly;
+}
+
+.MuiToolbar-root {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.charts {
+  z-index: 100;
+}
