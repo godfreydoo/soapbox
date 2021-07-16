@@ -9,7 +9,8 @@ const { ensureTwitterAuthenticated } = require('../../config/auth');
 router.post('/hashtag-data', async (req, res) => {
   const twitterEndPoint = `https://api.twitter.com/2/users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.maxResults}`;
   const bearerToken = `Bearer ${process.env.BEARER_TOKEN}`;
-
+  console.log("THIS IS IN THE HASHTAG ROUTE");
+  
   const options = {
     method: 'GET',
     url: twitterEndPoint,
@@ -20,7 +21,7 @@ router.post('/hashtag-data', async (req, res) => {
 
   try {
     const results = await axios(options);
-
+console.log('RESULTS', results);
     var aggregateData = { hashtagData: analyzeMetrics('hashtags', results.data.data), urlData: analyzeMetrics('urls', results.data.data) };
 
     res.status(200).json(aggregateData);

@@ -33,7 +33,7 @@ router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/login', scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload', 'https://www.googleapis.com/auth/yt-analytics.readonly', 'https://www.googleapis.com/auth/yt-analytics-monetary.readonly', 'https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtubepartner' ] }),
   function(req, res) {
     res.cookie('google-auth-request', req.authInfo);
-    res.redirect('/auth/google/ytreports');
+    res.redirect('/');
   });
 
 router.get('/logout', (req, res) => {
@@ -44,7 +44,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/ytreports', ensureGoogleAuthenticated, async (req, res) => {
-  console.log('REQCOOKIES', process.env.GOOGLE_BEARER);
+  // console.log('REQCOOKIES', process.env.GOOGLE_BEARER);
   // debugger;
   const ytAnalyticsEndPoint = 'https://youtubeanalytics.googleapis.com/v2/reports?endDate=2021-05-01&ids=channel%3D%3DMINE&metrics=views%2Ccomments%2Clikes%2Cdislikes%2CestimatedMinutesWatched%2CaverageViewDuration&startDate=2017-01-01';
   const bearerToken = `Bearer ${req.cookies['google-auth-request']}`;
