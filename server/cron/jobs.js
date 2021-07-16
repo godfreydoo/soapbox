@@ -5,7 +5,6 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const date = require('date-and-time');
-const FormData = require('form-data');
 
 
 const logStream = fs.createWriteStream(path.join(__dirname, 'cron.log'));
@@ -23,6 +22,7 @@ const executeTwitterJob = async function (document) {
     },
     data: { status: document.payload }
   };
+  debugger;
   try {
     await axios(config);
   } catch (err) {
@@ -32,14 +32,14 @@ const executeTwitterJob = async function (document) {
 
 const checkJobs = new CronJob('* * * * *', async function () {
   try {
-    let twitterResponse = await TwitterJobs.find({ completed: false, sendAt: {$lte: new Date() } });
-    if (twitterResponse.length > 0) {
-      const remainingTwitterJobsToRun = twitterResponse.map( async (value, index) => {
+    let response = await TwitterJobs.find({ completed: false, sendAt: {$lte: new Date() } });
+    if (response.length > 0) {
+      const remainingTwitterJobsToRun = response.map( async (value, index) => {
         await executeTwitterJob(value);
       });
       const promisesToResolve = await Promise.allSettled(remainingTwitterJobsToRun);
       let res = await TwitterJobs.updateMany({ completed: false, sendAt: {$lte: new Date() } }, { $set: { completed: true } });
-      logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- ${twitterResponse.length} Twitter job(s) ran and ${res.nModified} job(s) updated\n`);
+      logStream.write(`${date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')} -- ${response.length} Twitter job(s) ran and ${res.nModified} job(s) updated\n`);
     }
   } catch (err) {
     console.error('cron checkJobs has an error');

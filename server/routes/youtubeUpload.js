@@ -43,7 +43,6 @@ router.post('/upload', uploadVideoFile, (req, res) => {
 router.get('/oauth2/callback', (req, res) => {
   res.redirect('/dashboard');
   const { filename, title, description, sendAt } = JSON.parse(req.query.state);
-  debugger;
   oAuth.getToken(req.query.code, (err, tokens) => {
     if (err) {
       console.log('Issue with /oauth2/callback getToken route', err);

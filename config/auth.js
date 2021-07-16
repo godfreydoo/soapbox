@@ -34,7 +34,7 @@ module.exports = {
     //   if (err) {
     //     return res.sendStatus(403);
     //   }
-     
+
     // });
   },
 
@@ -48,7 +48,6 @@ module.exports = {
     } else {
       token = req.headers.authorization.split(' ')[1];
     }
-    debugger;
     if (token == null) {
       return res.sendStatus(401);
     }
