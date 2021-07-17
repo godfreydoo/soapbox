@@ -9,9 +9,9 @@
 
 
 # Soapbox
-- Social media aggregation application allowing the user to view post and analytics data from various social media platforms. Current functionality includes YouTube and Twitter.
-- Users can switch between social media outlets and view their home timeline (Twitter) or view their currently uploaded videos (YouTube).
-- Metrics and analytics for Twitter and YouTube can be seen below:
+Social media aggregation application allowing the user to view post and analytics data from various social media platforms. Current functionality includes YouTube and Twitter social media platforms. Users can switch between social media outlets and view their home timeline (Twitter) or view their currently uploaded videos (YouTube).
+
+Metrics and analytics for Twitter and YouTube can be seen below:
 
 - Twitter
   - Average number of retweets/likes per hashtag usage
@@ -27,11 +27,11 @@
   - Favorites
   - Comments
 
-Metrics and analytics for Twitter include retweet, hashtag, and URL tracking . Metrics and analytics for Youtube include, likes, dislikes, views, favorites, and comments.
+Metrics and analytics for Twitter include retweets, hashtags, and URL tracking . Metrics and analytics for YouTube includes likes, dislikes, views, favorites, and comments.
 
 
 ## Functionality
-Below outlines major functionalities for a minimum viable product, achieved over a four-day period of coding
+Below outlines major functionalities for a minimum viable product, achieved over a four-day period of coding and planning.
 
 ### Register and Login:
 
@@ -77,8 +77,7 @@ Client is built with React Router and MaterialUI, compiled with Babel,  and bund
 
 Server is built with Express, and MongoDB is interacted through Mongoose. Initial authentication is implemented via Passport and various local strategies, alongside with the use of JSON Web Tokens. Interaction with YouTube and Twitter are done through external libraries for security and convenience. Scheduler for scheduled posting is done with Cron.
 
-
-### - Dependencies and devDependencies
+Dependencies and devDependencies can be found here:
 * [Client](client/package.json)
 * [Server](server/package.json)
 
@@ -105,7 +104,7 @@ Google Developer account to have access to Google Oauth2 credentials.
 * Authorised redirect URIs as http://localhost:3000/api/youtube/oauth2/callback
 6. Copy client_id, client_id_secret, and the redirect URIs into your .env file
 
-- Twitter Developer account to have access to Twitter Oauth2 credentials
+Twitter Developer account to have access to Twitter Oauth2 credentials.
 
 ## Team
 * [Devin Hight](https://github.com/dhightnm)
