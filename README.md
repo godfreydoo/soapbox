@@ -43,7 +43,7 @@ Below outlines major functionalities for a minimum viable product, achieved over
 
 ### YouTube Feed:
 
-![](YouTubeFeed.gif)
+![](YoutubeFeed.gif)
 
 ### Batch Posting:
 
