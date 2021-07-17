@@ -2,7 +2,7 @@ import YoutubeList from './YoutubeList.jsx';
 import YoutubeCard from './YoutubeCard.jsx';
 import TwitterList from './TwitterList.jsx';
 import TwitterCard from './TwitterCard.jsx';
-import WelcomePage from './shared/WelcomePage.jsx';
+import WelcomePage from './WelcomePage';
 import Analytics from './Analytics.jsx';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';

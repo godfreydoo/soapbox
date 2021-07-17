@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const ytListStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#ffe7e6',
+    backgroundColor: '#fafafa',
   },
 }));
 
