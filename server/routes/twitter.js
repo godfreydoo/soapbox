@@ -8,7 +8,7 @@ const { ensureTwitterAuthenticated } = require('../../config/auth');
 
 router.post('/hashtag-data', async (req, res) => {
   const twitterEndPoint = `https://api.twitter.com/2/users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.maxResults}`;
-  const bearerToken = `Bearer ${process.env.BEARER_TOKEN}`;
+  const bearerToken = `Bearer ${process.env.TWITTER_BEARER_TOKEN}`;
   //console.log("THIS IS IN THE HASHTAG ROUTE");
 
   const options = {
@@ -32,8 +32,8 @@ router.post('/hashtag-data', async (req, res) => {
 
 router.get('/home-timeline', ensureTwitterAuthenticated, async (req, res) => {
   const client = new Twitter({
-    "consumer_key": process.env.CONSUMER_KEY, // eslint-disable-line
-    "consumer_secret": process.env.CONSUMER_SECRET, // eslint-disable-line
+    "consumer_key": process.env.TWITTER_CONSUMER_KEY, // eslint-disable-line
+    "consumer_secret": process.env.TWITTER_CONSUMER_SECRET, // eslint-disable-line
     "access_token_key": req.token, // eslint-disable-line
     "access_token_secret": req.tokenSecret // eslint-disable-line
   });
@@ -49,8 +49,8 @@ router.get('/home-timeline', ensureTwitterAuthenticated, async (req, res) => {
 router.post('/user', ensureTwitterAuthenticated, async (req, res) => {
 
   const client = new Twitter({
-    consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line
-    consumer_secret: process.env.CONSUMER_SECRET, // eslint-disable-line
+    consumer_key: process.env.TWITTER_CONSUMER_KEY, // eslint-disable-line
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET, // eslint-disable-line
     access_token_key: req.token, // eslint-disable-line
     access_token_secret: req.tokenSecret, // eslint-disable-line
   });
@@ -65,8 +65,8 @@ router.post('/user', ensureTwitterAuthenticated, async (req, res) => {
 
 router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
   const client = new Twitter2({
-    consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line
-    consumer_secret: process.env.CONSUMER_SECRET, // eslint-disable-line
+    consumer_key: process.env.TWITTER_CONSUMER_KEY, // eslint-disable-line
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET, // eslint-disable-line
     access_token_key: req.token, // eslint-disable-line
     access_token_secret: req.tokenSecret, // eslint-disable-line
   });
@@ -86,8 +86,8 @@ router.post('/metrics', ensureTwitterAuthenticated, async (req, res) => {
 
 router.post('/tweet', ensureTwitterAuthenticated, async (req, res) => {
   const client = new Twitter({
-    consumer_key: process.env.CONSUMER_KEY, // eslint-disable-line
-    consumer_secret: process.env.CONSUMER_SECRET, // eslint-disable-line
+    consumer_key: process.env.TWITTER_CONSUMER_KEY, // eslint-disable-line
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET, // eslint-disable-line
     access_token_key: req.token, // eslint-disable-line
     access_token_secret: req.tokenSecret, // eslint-disable-line
   });
