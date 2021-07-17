@@ -14,6 +14,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { alpha } from '@material-ui/core/styles';
 import Checkbox from './Posting/Checkbox.jsx';
 import Input from '@material-ui/core/Input';
+import PermMediaIcon from '@material-ui/icons/PermMedia';
 
 const initialState = {
   tweet: {
@@ -53,11 +54,11 @@ const Post = function (props) {
 
   useEffect(() => {
     setYouTube({sendAt: form.sendAt, payload: form });
-    setTweet({sendAt: form.sendAt, payload: form.description });
+    setTweet(prevData => { return {...prevData, sendAt: form.sendAt, payload: form.description }; });
   }, [form]);
 
   const handleFormData = (e) => {
-    let value = event.target.name === 'file' ? event.target.files[0] : e.target.value;
+    let value = e.target.name === 'file' ? e.target.files[0] : e.target.value;
     setForm({...form, [e.target.name]: value });
   };
 
@@ -79,20 +80,20 @@ const Post = function (props) {
       method: 'post',
       url: '/twitter/tweet',
       header: {
-        'authorization': `Bearer ${tweet.token}`
+        'authorization': `Bearer ${Cookies.get('twitter-auth-request')}`
       },
       data: { status: tweet.payload }
     };
     var scheduledPost = {
       method: 'post',
-      url: '/jobs/schedule',
+      url: '/jobs/schedule-twitter',
       data: tweet
     };
     if (tweet.payload !== '') {
       if (tweet.sendAt < new Date()) {
-        axios(immediatePost).then(() => { setForm(initialState.tweet); }).catch(err => { console.log(err); });
+        axios(immediatePost).then(() => { setForm(initialState.form); setTweet(initialState.youtube); }).catch(err => { console.log(err); });
       } else {
-        axios(scheduledPost).then(() => { setTweet(initialState.tweet); }).catch(err => { console.log(err); });
+        axios(scheduledPost).then(() => { setForm(initialState.form); setTweet(initialState.youtube); }).catch(err => { console.log(err); });
       }
     } else {
       alert('Tweet cannot be empty');
@@ -100,25 +101,22 @@ const Post = function (props) {
   };
 
   const postVideo = function () {
+
+    var videoData = new FormData();
+
+    videoData.append('videoFile', youtube.payload.file);
+    videoData.append('title', youtube.payload.title);
+    videoData.append('description', youtube.payload.description);
+    videoData.append('sendAt', youtube.sendAt.toISOString());
+
     var immediatePost = {
       method: 'post',
-      url: '/youtube/video',
-      header: {
-        'authorization': 'Bearer fill me in'
-      },
-      data: form
+      url: '/api/youtube/upload',
+      data: videoData
     };
-    var scheduledPost = {
-      method: 'post',
-      url: '/youtube/video',
-      data: form
-    };
-    if (form.payload !== '') {
-      if (youtube.sendAt < new Date()) {
-        axios(immediatePost).then(() => { setForm(initialState.youtube); }).catch(err => { console.log(err); });
-      } else {
-        axios(scheduledPost).then(() => { setForm(initialState.youtube); }).catch(err => { console.log(err); });
-      }
+
+    if (youtube.payload !== '') {
+      axios(immediatePost).then(() => { setForm(initialState.form); setYouTube(initialState.form); }).catch(err => { console.log(err); });
     } else {
       alert('YouTube details cannot be empty');
     }
@@ -159,17 +157,15 @@ const Post = function (props) {
               onChange={handleFormData}
               fullWidth={true}/>
             <section>
-              <Input
-                type="file"
-                name="file"
-                placeholder="Add Video"
-                onChange={handleFormData}
-                disableUnderline={true}
-                accept="video/mp4"/>
+              <label className="upload-file-button">
+                <input
+                  type="file"
+                  name="file"
+                  placeholder="Add Media"
+                  onChange={handleFormData}
+                  accept="video/mp4" />
+              </label>
             </section>
-          </section>
-          <section className="post-preview">
-          Hello
           </section>
         </div>
         <div>

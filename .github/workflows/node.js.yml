@@ -6,6 +6,8 @@ name: Node.js CI
 on:
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - '**/youtubeUpload.js'
 
 env:
   MONGO_URI: ${{ secrets.MONGO_URI }}
@@ -13,6 +15,9 @@ env:
   CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
   GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
   GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+  YOUTUBE_UPLOAD_CLIENT_ID: ${{ secrets.YOUTUBE_UPLOAD_CLIENT_ID }}
+  YOUTUBE_UPLOAD_CLIENT_SECRET: ${{ secrets.YOUTUBE_UPLOAD_CLIENT_SECRET }}
+  YOUTUBE_UPLOAD_REDIRECT_URI: ${{ secrets.YOUTUBE_UPLOAD_REDIRECT_URI }}
 
 jobs:
   build:

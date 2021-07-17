@@ -33,7 +33,7 @@ router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/login', scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/youtube.upload', 'https://www.googleapis.com/auth/yt-analytics.readonly', 'https://www.googleapis.com/auth/yt-analytics-monetary.readonly', 'https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtubepartner' ] }),
   function(req, res) {
     res.cookie('google-auth-request', req.authInfo);
-    res.redirect('/auth/google/ytreports');
+    res.redirect('/');
   });
 
 router.get('/logout', (req, res) => {

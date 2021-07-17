@@ -158,8 +158,6 @@ const App = props => {
     );
   }
 
-  console.log(currentSocialMedia, twitterPosts);
-
   return (
     <Router>
       <div id="app">
