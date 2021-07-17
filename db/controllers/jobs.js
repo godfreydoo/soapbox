@@ -2,9 +2,18 @@ const model = require('../models');
 const axios = require('axios');
 
 module.exports = {
-  schedule: async function (req, res) {
+  scheduleTwitter: async function (req, res) {
     try {
-      await model.jobs.schedule(req.method, req.headers, req.body, req.query, req.params);
+      await model.jobs.scheduleTwitter(req.method, req.headers, req.body, req.query, req.params);
+      res.end();
+    } catch (err) {
+      console.error(err);
+      res.status(418); // I'm a teapot
+    }
+  },
+  scheduleYouTube: async function (req, res) {
+    try {
+      await model.jobs.scheduleYouTube(req.method, req.headers, req.body, req.query, req.params, req.file);
       res.end();
     } catch (err) {
       console.error(err);
