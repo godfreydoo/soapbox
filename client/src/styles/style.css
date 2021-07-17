@@ -123,3 +123,7 @@ img {
   justify-content: space-between;
   flex-wrap: nowrap;
 }
+
+.charts {
+  z-index: 100;
+}

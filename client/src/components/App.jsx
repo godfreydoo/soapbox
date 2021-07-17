@@ -70,7 +70,7 @@ const App = props => {
 
     axios.post('/twitter/hashtag-data', {
       userId: `${id}`,
-      maxResults: '50'
+      maxResults: '25'
     })
       .then(resVal => {
         setTwitterAnalytics(transformTwitterData(resVal.data));
