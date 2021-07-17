@@ -108,9 +108,9 @@ Google Developer account to have access to Google Oauth2 credentials.
 - Twitter Developer account to have access to Twitter Oauth2 credentials
 
 ## Team
-[Devin Hight](https://github.com/dhightnm)
-[Tea Skela](https://github.com/tskela)
-[Gabriel Wright](https://github.com/wrightgabriel0220)
-[Godfrey Doo](https://github.com/godfreydoo)
-[Francis Yao](https://github.com/franciskyao)
-[Will Weindel](https://github.com/will-weindel)
+* [Devin Hight](https://github.com/dhightnm)
+* [Tea Skela](https://github.com/tskela)
+* [Gabriel Wright](https://github.com/wrightgabriel0220)
+* [Godfrey Doo](https://github.com/godfreydoo)
+* [Francis Yao](https://github.com/franciskyao)
+* [Will Weindel](https://github.com/will-weindel)
