@@ -15,7 +15,7 @@ export const getTwitterHashtagConfig = function(id) {
     url: '/twitter/hashtag-data',
     data: {
       userId: `${id}`,
-      maxResults: '50'
+      maxResults: '25'
     }
   };
 };
@@ -39,7 +39,7 @@ export const getTwitterMetricsConfig = function(id) {
     url: '/twitter/metrics',
     data: {
       userId: `${id}`,
-      maxResults: '50'
+      maxResults: '25'
     }
   };
 };
