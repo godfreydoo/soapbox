@@ -16,12 +16,15 @@ const redis = require('redis');
 const redisPort = 6379;
 const redisClient = redis.createClient(redisPort);
 
-redisClient.on('error', function(error) {
-  if (error) {
-    console.log('Redis client is not connected ', error);
-  }
-});
-console.log('Redis client connected ');
+if (process.env.NODE_ENV !== 'test') {
+  redisClient.on('error', function(error) {
+    if (error) {
+      console.log('Redis client is not connected ', error);
+    }
+  });
+  console.log('Redis client connected ');
+}
+
 
 
 module.exports = {
