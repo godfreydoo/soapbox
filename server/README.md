@@ -8,4 +8,4 @@
 #### Task Scheduler
 * Cron scheduler to check for upcoming task(s), executes them concurrently, updates them for tracking, and removes completed tasks.
 
-![](cron-diagram.png)
+![](https://github.com/blue-ocean-picard/soapbox/blob/e66347e9fd26871797c37de49a11f22537119af8/cron-diagram.png)
