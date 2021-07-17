@@ -1,6 +1,8 @@
 require('dotenv').config({ path: '../.env' });
 const router = require('express').Router();
 const axios = require('axios');
+const { redisClient } = require('../../db/index');
+const { cacheVideo } = require('../../config/cache');
 
 router.get('/channel-stats', async (req, res) => {
   try {
@@ -15,7 +17,15 @@ router.get('/channel-stats', async (req, res) => {
 });
 
 //gets video Ids by channel Id
-router.post('/video', (req, res) => {
+router.post('/video', cacheVideo, (req, res) => {
+  /*
+  Retrieve youtube videos
+
+  Without cache: 443ms
+  With cache: 3ms
+  Cache duration: 600 seconds
+  */
+
   try {
     // console.log(req.body, req.query, req.params);
 
@@ -31,6 +41,7 @@ router.post('/video', (req, res) => {
           stats.forEach(videoStats => { allVideoStats.push(videoStats.data.items); });
           // console.log(allVideoStats);
           allVideoStats.pop();
+          redisClient.setex('video', 600, JSON.stringify(allVideoStats));
           res.json(allVideoStats);
         });
     });

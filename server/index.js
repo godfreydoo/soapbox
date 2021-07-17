@@ -1,7 +1,7 @@
 require('dotenv').config({ path: '../.env' });
 const express = require('express');
 const path = require('path');
-const db = require('../db');
+const mongoDB = require('../db');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
@@ -57,7 +57,7 @@ app.use('/*', require('./routes/index'));
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {
-    const { checkJobs, consoleEveryMinute, deleteJobs} = require('./cron/jobs.js');
+    const { checkJobs, deleteJobs} = require('./cron/jobs.js');
     console.log(`Listening on port ${port}`);
   });
 }

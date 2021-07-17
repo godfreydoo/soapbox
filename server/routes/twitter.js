@@ -5,6 +5,7 @@ const Twitter = require('twitter');
 const Twitter2 = require('twitter-v2');
 const date = require('date-and-time');
 const { ensureTwitterAuthenticated } = require('../../config/auth');
+const { redisClient } = require('../../db/index');
 
 router.post('/hashtag-data', async (req, res) => {
   const twitterEndPoint = `https://api.twitter.com/2/users/${req.body.userId}/tweets?tweet.fields=created_at,entities,public_metrics&max_results=${req.body.maxResults}`;
@@ -38,12 +39,34 @@ router.get('/home-timeline', ensureTwitterAuthenticated, async (req, res) => {
     "access_token_secret": req.tokenSecret // eslint-disable-line
   });
 
-  client.get('statuses/home_timeline', function (err, tweets, response) {
+  /*
+  Retrieve twitter home timeline
+
+  Without cache: 1.8s
+  With cache: 850 ms
+  Cache duration: 60 seconds
+  */
+  redisClient.get('tweets', (err, data) => {
     if (err) {
       throw err;
+    } else {
+      if (!data) {
+        client.get('statuses/home_timeline', function (err, tweets, response) {
+          if (err) {
+            throw err;
+          }
+          // implement a 60 second cache
+          redisClient.setex('tweets', 60, JSON.stringify(tweets));
+          res.status(200).json(tweets);
+        });
+      } else {
+        res.status(200).json(JSON.parse(data));
+      }
     }
-    res.status(200).json(tweets);
   });
+
+
+
 });
 
 router.post('/user', ensureTwitterAuthenticated, async (req, res) => {
