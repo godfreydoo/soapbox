@@ -1,6 +1,5 @@
 require('dotenv').config({ path: '../../config/.env' });
 const router = require('express').Router();
-// const credentials = require('../.credentials.json');
 const { v4: uuidv4 } = require('uuid');
 const multer = require('multer');
 const open = require('open');
@@ -9,8 +8,8 @@ const fs = require('fs');
 
 const oAuth = youtube.authenticate({
   "type": 'oauth', // eslint-disable-line
-  "client_id": process.env.YOUTUBE_UPLOAD_CLIENT_ID, // eslint-disable-line
-  "client_secret": process.env.YOUTUBE_UPLOAD_CLIENT_SECRET, // eslint-disable-line
+  "client_id": process.env.GOOGLE_CLIENT_ID, // eslint-disable-line
+  "client_secret": process.env.GOOGLE_CLIENT_SECRET, // eslint-disable-line
   "redirect_url": process.env.YOUTUBE_UPLOAD_REDIRECT_URI, // eslint-disable-line
 });
 

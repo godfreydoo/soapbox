@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 
 module.exports = function(passport) {
   passport.use(new TwitterStrategy({
-    consumerKey: process.env.CONSUMER_KEY,
-    consumerSecret: process.env.CONSUMER_SECRET,
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
     callbackURL: '/auth/twitter/callback',
   },
   function(token, tokenSecret, profile, cb) {
@@ -14,7 +14,7 @@ module.exports = function(passport) {
       tokenSecret: tokenSecret,
       twitter: profile.username
     };
-    const accessToken = jwt.sign(authDataToSerialize, process.env.ACCESS_TOKEN_SECRET);
+    const accessToken = jwt.sign(authDataToSerialize, process.env.TWITTER_ACCESS_TOKEN_SECRET);
     return cb(null, profile, accessToken);
   }));
 

@@ -34,7 +34,7 @@ module.exports = {
     //   if (err) {
     //     return res.sendStatus(403);
     //   }
-     
+
     // });
   },
 
@@ -52,7 +52,7 @@ module.exports = {
     if (token == null) {
       return res.sendStatus(401);
     }
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, authDataToSerialize) => {
+    jwt.verify(token, process.env.TWITTER_ACCESS_TOKEN_SECRET, (err, authDataToSerialize) => {
       if (err) {
         return res.sendStatus(403);
       }
