@@ -14,10 +14,9 @@ mongoDB.once('open', () => {
 
 const redis = require('redis');
 const redisPort = 6379;
-let redisClient;
+const redisClient = redis.createClient(redisPort);
 
 if (process.env.NODE_ENV !== 'test') {
-  redisClient = redis.createClient(redisPort);
   redisClient.on('error', function(error) {
     if (error) {
       console.log('Redis client is not connected ', error);

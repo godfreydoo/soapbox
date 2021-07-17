@@ -44,7 +44,7 @@ const userIncorrectLogin = {
 };
 
 
-xdescribe('Authentication routes', () => {
+describe('Authentication routes', () => {
   var server, agent;
 
   beforeEach((done) => {
