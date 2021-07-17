@@ -85,8 +85,8 @@ Dependencies and devDependencies can be found here:
 
 ## Architecture
 For more information on client and server code / logic, you can find them here
-* [Client](client/Client%Architecture/README.md)
-* [Server](server/Server%Architecture/README.md)
+* [Client](client/README.md)
+* [Server](server/README.md)
 
 
 
