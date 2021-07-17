@@ -35,7 +35,7 @@ Below outlines major functionalities for a minimum viable product, achieved over
 
 ### Register and Login:
 
-![](Register:Login.gif)
+![](RegisterLogin.gif)
 
 ### Twitter Home Timeline:
 

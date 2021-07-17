@@ -20,7 +20,7 @@
 * youtubeList - array of data to be mapped into the YoutubeCard component
 
 #### YoutubeCard States
-* isExpanded - should video description diplayed be expanded
+* isExpanded - should video description displayed be expanded
 * didClickedLikeDislike - was the like/dislike button clicked already
 
 #### TwitterList States
