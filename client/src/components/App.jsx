@@ -73,6 +73,26 @@ const App = props => {
       maxResults: '25'
     })
       .then(resVal => {
+        setCurrentSocialMedia('twitter');
+        setTwitterMetrics(resVal.data);
+        axios.post('/twitter/user', {
+          userId: '20702956',
+          maxResults: '50'
+        })
+          .then(results => {
+            let accountMetricData = {
+              followers: results.data.followers_count,
+              friends: results.data.friends_count,
+              posts: results.data.statuses_count,
+              verified: results.data.verified,
+              currentStatus: results.data.status.retweeted_status.text
+            };
+            setActiveAccountMetrics(accountMetricData);
+          })
+          .catch(err => {
+            console.log(err);
+            console.log('Failed to fetch twitter user data');
+          });
         setTwitterAnalytics(transformTwitterData(resVal.data));
       });
 
