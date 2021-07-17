@@ -6,3 +6,6 @@
 * The server utilizes Express architecture, implementing Passport to assist in authentication. The three main server routes are Twitter (authentication, db interaction and calls to Twitter API), YouTube (authentication, db interaction and calls to Youtube API), and User-posting (db interaction).
 
 #### Task Scheduler
+* Cron scheduler to check for upcoming task(s), executes them concurrently, updates them for tracking, and task to remove completed tasks.
+
+![](cron-diagram.png)
